@@ -21,6 +21,11 @@ if (process.env.NODE_ENV === 'production' && fs.existsSync(frontendPath)) {
   console.log('Running as API-only server');
 }
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'Portfolio Backend API is running!', status: 'healthy' });
+});
+
 // API Routes
 app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
@@ -38,11 +43,6 @@ app.post('/api/contact', async (req, res) => {
     console.error('Error sending message:', error);
     res.status(500).json({ success: false, message: 'Failed to send message' });
   }
-});
-
-// Health check endpoint
-app.get('/', (req, res) => {
-  res.json({ message: 'Portfolio Backend API is running!', status: 'healthy' });
 });
 
 // Serve React app for any other routes only if frontend exists
