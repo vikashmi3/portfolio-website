@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,7 +14,6 @@ app.use(express.json());
 
 // Only serve static files if frontend build exists (for full-stack deployment)
 const frontendPath = path.join(__dirname, '../frontend/build');
-const fs = require('fs');
 if (process.env.NODE_ENV === 'production' && fs.existsSync(frontendPath)) {
   app.use(express.static(frontendPath));
   console.log('Serving static files from:', frontendPath);
