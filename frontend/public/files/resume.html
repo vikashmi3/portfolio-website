@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikash Mishra - Resume</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7ff;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4f46e5, #7e22ce);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .contact a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        
+        .contact a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .main {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4f46e5;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .item-subtitle {
+            font-size: 1rem;
+            color: #4f46e5;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-date {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-description {
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .skill {
+            background-color: #f3f4f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        
+        .skill-category {
+            margin-bottom: 1rem;
+        }
+        
+        .skill-category-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-link {
+            display: block;
+            margin-top: 0.5rem;
+            color: #4f46e5;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .project-link:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .main {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="name">Vikash Mishra</h1>
+            <p class="title">Software Engineer</p>
+            <div class="contact">
+                <a href="mailto:study.vikashmishra@email.com">study.vikashmishra@email.com</a>
+                <span>|</span>
+                <a href="https://github.com/vikashmi3/" target="_blank">GitHub</a>
+                <span>|</span>
+                <a href="https://www.linkedin.com/in/er-vikash-mishra-ba198b181" target="_blank">LinkedIn</a>
+                <span>|</span>
+                <span>Mumbai, Maharashtra, India</span>
+            </div>
+        </header>
+        
+        <div class="main">
+            <section class="section">
+                <h2 class="section-title">Summary</h2>
+                <p class="item-description">
+                    Passionate Full Stack Developer with expertise in modern web technologies and mobile app development.
+                    Specializing in building scalable web applications using React.js, Node.js, and modern databases.
+                    Committed to creating innovative solutions that make a difference in people's lives.
+                </p>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Education</h2>
+                
+                <div class="item">
+                    <h3 class="item-title">BE-Bachelor of Engineering, Computer Engineering</h3>
+                    <p class="item-subtitle">University of Mumbai</p>
+                    <p class="item-date">2022 - 2025 | CGPA: 7.10</p>
+                    <p class="item-description">
+                        Completed BE in Computer Engineering with focus on software development, algorithms, and system design.
+                    </p>
+                </div>
+                
+                <div class="item">
+                    <h3 class="item-title">Diploma in Engineering, Computer Engineering</h3>
+                    <p class="item-subtitle">Viva College of Diploma Engineering & Technology (MSBTE)</p>
+                    <p class="item-date">2018 - 2021 | Percentage: 85.43%</p>
+                    <p class="item-description">
+                        Completed Diploma in Computer Engineering with strong foundation in programming and computer systems.
+                    </p>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Skills</h2>
+                
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Programming Languages</h3>
+                    <div class="skills">
+                        <span class="skill">C</span>
+                        <span class="skill">C++</span>
+                        <span class="skill">Java</span>
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">Python</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Web Technologies</h3>
+                    <div class="skills">
+                        <span class="skill">HTML5</span>
+                        <span class="skill">CSS3</span>
+                        <span class="skill">React.js</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">Express.js</span>
+                        <span class="skill">Tailwind CSS</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Development</h3>
+                    <div class="skills">
+                        <span class="skill">Android Development</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Tools & Platforms</h3>
+                    <div class="skills">
+                        <span class="skill">Git</span>
+                        <span class="skill">Docker</span>
+                        <span class="skill">MongoDB</span>
+                        <span class="skill">AWS</span>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Experience</h2>
+                
+                <div class="item">
+                    <h3 class="item-title">Judge - TechBlitz Competition</h3>
+                    <p class="item-subtitle">Vidyavardhani's College of Engineering & Technology</p>
+                    <p class="item-date">2025</p>
+                    <p class="item-description">
+                        Invited as a judge for TechBlitz technical competition, evaluating innovative projects and providing mentorship to engineering students.
+                    </p>
+                </div>
+                
+                <div class="item">
+                    <h3 class="item-title">Android Developer Intern</h3>
+                    <p class="item-subtitle">InfoSec Developers</p>
+                    <p class="item-date">2021</p>
+                    <p class="item-description">
+                        Developed Android applications focusing on mobile security and user experience. Worked with Java/Kotlin, Android SDK, and implemented security best practices in mobile development.
+                    </p>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Projects</h2>
+                
+                <div class="item">
+                    <h3 class="item-title">Blockchain E-Commerce Platform</h3>
+                    <p class="item-description">
+                        A secure MERN stack e-commerce application with blockchain integration for transaction verification and transparency.
+                    </p>
+                    <div class="skills">
+                        <span class="skill">React</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">MongoDB</span>
+                        <span class="skill">Express</span>
+                        <span class="skill">Blockchain</span>
+                    </div>
+                    <a href="https://github.com/vikashmi3/nexa-shop-blockchain-ecommerce" class="project-link" target="_blank">
+                        GitHub Repository
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <h3 class="item-title">Ridesharing Android App</h3>
+                    <p class="item-description">
+                        Mobile ridesharing application built with Flutter and Dart, using Firebase for backend services and real-time location tracking.
+                    </p>
+                    <div class="skills">
+                        <span class="skill">Flutter</span>
+                        <span class="skill">Dart</span>
+                        <span class="skill">Firebase</span>
+                        <span class="skill">Google Maps API</span>
+                    </div>
+                    <a href="https://github.com/vikashmi3/ridesharing-app" class="project-link" target="_blank">
+                        GitHub Repository
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <h3 class="item-title">Portfolio Website</h3>
+                    <p class="item-description">
+                        Modern, responsive portfolio website built with React.js frontend and Node.js backend.
+                    </p>
+                    <div class="skills">
+                        <span class="skill">React</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">Tailwind CSS</span>
+                        <span class="skill">Framer Motion</span>
+                    </div>
+                    <a href="https://github.com/vikashmi3/vikash-portfolio" class="project-link" target="_blank">
+                        GitHub Repository
+                    </a>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Certifications</h2>
+                
+                <div class="item">
+                    <h3 class="item-title">Computer Vision: Getting Started with GluonCV</h3>
+                    <p class="item-subtitle">AWS by Coursera</p>
+                    <p class="item-date">2024</p>
+                    <p class="item-description">
+                        Completed AWS certification on computer vision using GluonCV framework, covering image processing and deep learning techniques.
+                    </p>
+                </div>
+                
+                <div class="item">
+                    <h3 class="item-title">ML & AI Workshop Certificate</h3>
+                    <p class="item-subtitle">IBM and IIT Roorkee</p>
+                    <p class="item-date">2024</p>
+                    <p class="item-description">
+                        Completed comprehensive workshop on Machine Learning and Artificial Intelligence covering advanced algorithms and practical applications.
+                    </p>
+                </div>
+                
+                <div class="item">
+                    <h3 class="item-title">Workshop on Sports Analysis</h3>
+                    <p class="item-subtitle">Royals School of Business</p>
+                    <p class="item-date">2024</p>
+                    <p class="item-description">
+                        Completed workshop on sports data analysis, learning statistical methods and analytical techniques for sports performance evaluation.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
