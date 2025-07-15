@@ -12,14 +12,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Only serve static files if frontend build exists (for full-stack deployment)
-const frontendPath = path.join(__dirname, '../frontend/build');
-if (process.env.NODE_ENV === 'production' && fs.existsSync(frontendPath)) {
-  app.use(express.static(frontendPath));
-  console.log('Serving static files from:', frontendPath);
-} else {
-  console.log('Running as API-only server');
-}
+// Running as API-only server
+console.log('Running as API-only server');
 
 // Health check endpoint
 app.get('/', (req, res) => {
@@ -45,12 +39,7 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Serve React app for any other routes only if frontend exists
-if (process.env.NODE_ENV === 'production' && fs.existsSync(frontendPath)) {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-  });
-}
+// API-only server - no catch-all route needed
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
