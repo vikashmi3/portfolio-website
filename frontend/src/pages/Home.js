@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Typed from 'typed.js';
-import { FaGithub, FaLinkedin, FaTwitter, FaDownload } from 'react-icons/fa';
+import { FaDownload } from 'react-icons/fa';
 import SplashScreen from '../components/SplashScreen';
 
 const Home = () => {

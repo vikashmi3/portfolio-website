@@ -2,8 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,7 +10,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Running as API-only server
 console.log('Running as API-only server');
 
 // Health check endpoint
@@ -38,8 +35,6 @@ app.post('/api/contact', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to send message' });
   }
 });
-
-// API-only server - no catch-all route needed
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
