@@ -23,7 +23,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               alt="Vikash R Mishra" 
               className="w-8 h-8 rounded-full object-cover border border-primary"
             />
-            <span className="text-xl font-bold gradient-text">Vikash R Mishra</span>
+            <span className="text-xl font-bold gradient-text">Vikash Mishra</span>
           </Link>
           
           <div className="hidden md:block">
