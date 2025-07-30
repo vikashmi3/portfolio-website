@@ -1436,7 +1436,27 @@ public class BankAccountDemo {
 }`,
             explanation: "Advanced bank account system demonstrating comprehensive OOP concepts including encapsulation, method overloading, transaction history, daily limits, transfers, and business logic validation."
           }
-            code: `public class BankAccount {
+        ]
+      },
+      {
+        week: 3,
+        title: "Inheritance and Polymorphism",
+        topics: [
+          "Inheritance concepts",
+          "Method overriding",
+          "Super keyword",
+          "Abstract classes and methods",
+          "Interfaces and implementation"
+        ],
+        practicals: [
+          "Create inheritance hierarchies",
+          "Implement interfaces",
+          "Build polymorphic applications"
+        ],
+        examples: [
+          {
+            title: "Vehicle Inheritance Hierarchy",
+            code: `// Abstract base class
     // Private instance variables (encapsulation)
     private String accountNumber;
     private String accountHolder;
