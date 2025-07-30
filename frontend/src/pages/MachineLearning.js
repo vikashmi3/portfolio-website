@@ -985,6 +985,11 @@ if __name__ == "__main__":
         ],
         examples: []
       },
+      {
+        week: 21,
+        title: "Final Project",
+        topics: [],
+        practicals: [],
         examples: []
       }
     ],
