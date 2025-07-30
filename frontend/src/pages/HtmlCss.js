@@ -13,7 +13,7 @@ import {
   FaChevronUp,
   FaDownload,
   FaProjectDiagram,
-  FaAlgorithm,
+
   FaPalette,
   FaDesktop,
   FaMobile

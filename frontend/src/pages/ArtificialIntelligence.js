@@ -13,7 +13,7 @@ import {
   FaChevronUp,
   FaDownload,
   FaProjectDiagram,
-  FaAlgorithm,
+
   FaBrain,
   FaRobot,
   FaEye,
@@ -578,7 +578,7 @@ if __name__ == "__main__":
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
-                <FaAlgorithm />
+                <FaCogs />
                 Algorithms
               </button>
               <button 

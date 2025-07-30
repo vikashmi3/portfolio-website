@@ -13,7 +13,7 @@ import {
   FaChevronUp,
   FaDownload,
   FaProjectDiagram,
-  FaAlgorithm,
+
   FaLaptopCode
 } from 'react-icons/fa';
 
@@ -1370,7 +1370,7 @@ public class LibraryManagementSystem {
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
-                <FaAlgorithm />
+                <FaCogs />
                 Algorithms
               </button>
               <button 
