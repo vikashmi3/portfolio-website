@@ -378,7 +378,7 @@ def main():
     print(f"format(): {message2}")
     
     # % formatting (older style)
-    message3 = "Hello, %s! You are %d years old and earn \$%.2f" % (name, age, salary)
+    message3 = "Hello, %s! You are %d years old and earn $%.2f" % (name, age, salary)
     print(f"% formatting: {message3}")
     
     # String methods

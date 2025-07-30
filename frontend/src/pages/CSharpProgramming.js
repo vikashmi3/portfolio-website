@@ -389,7 +389,7 @@ namespace CSharpFundamentals
             Console.WriteLine($"Interpolated: {message}");
             
             // Verbatim strings
-            string path = @"C:\Users\Developer\Documents\file.txt";
+            string path = @"C:\\Users\\Developer\\Documents\\file.txt";
             Console.WriteLine($"Verbatim string: {path}");
             
             // ===== METHOD CALLS =====

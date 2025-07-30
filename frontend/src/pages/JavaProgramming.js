@@ -7,9 +7,7 @@ import {
   FaClipboardList,
   FaFileAlt,
   FaBook,
-  FaUsers,
   FaCode,
-  FaPlay,
   FaCopy,
   FaChevronDown,
   FaChevronUp
