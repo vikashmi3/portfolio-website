@@ -75,20 +75,20 @@ df['sales_amount'] = df['sales_amount'].clip(lower=50)  # Ensure positive sales
 
 print("Dataset Overview:")
 print(f"Shape: {df.shape}")
-print(f"\\nFirst 5 rows:")
+print(f"\nFirst 5 rows:")
 print(df.head())
 
-print(f"\\nData Types:")
+print(f"\nData Types:")
 print(df.dtypes)
 
-print(f"\\nBasic Statistics:")
+print(f"\nBasic Statistics:")
 print(df.describe())
 
 # Data cleaning and preprocessing
-print("\\n=== Data Cleaning ===")
+print("\n=== Data Cleaning ===")
 
 # Check for missing values
-print(f"Missing values:\\n{df.isnull().sum()}")
+print(f"Missing values:\n{df.isnull().sum()}")
 
 # Remove outliers using IQR method
 def remove_outliers(df, column):
@@ -108,7 +108,7 @@ df_clean['day_of_week'] = df_clean['date'].dt.day_name()
 df_clean['revenue'] = df_clean['sales_amount'] * df_clean['quantity']
 df_clean['profit_margin'] = df_clean['revenue'] * 0.2  # Assume 20% profit margin
 
-print("\\n=== Exploratory Data Analysis ===")
+print("\n=== Exploratory Data Analysis ===")
 
 # Sales by product
 product_sales = df_clean.groupby('product').agg({
@@ -117,7 +117,7 @@ product_sales = df_clean.groupby('product').agg({
     'customer_satisfaction': 'mean'
 }).round(2)
 
-print("\\nSales by Product:")
+print("\nSales by Product:")
 print(product_sales.sort_values('revenue', ascending=False))
 
 # Sales by region
@@ -127,7 +127,7 @@ region_sales = df_clean.groupby('region').agg({
     'sales_amount': 'mean'
 }).round(2)
 
-print("\\nSales by Region:")
+print("\nSales by Region:")
 print(region_sales.sort_values('revenue', ascending=False))
 
 # Monthly trends
@@ -136,7 +136,7 @@ monthly_sales = df_clean.groupby('month').agg({
     'quantity': 'sum'
 }).round(2)
 
-print("\\nMonthly Sales Trends:")
+print("\nMonthly Sales Trends:")
 print(monthly_sales)
 
 # Customer segmentation by age
@@ -150,18 +150,18 @@ age_analysis = df_clean.groupby('age_group').agg({
     'sales_amount': 'mean'
 }).round(2)
 
-print("\\nCustomer Analysis by Age Group:")
+print("\nCustomer Analysis by Age Group:")
 print(age_analysis)
 
 # Correlation analysis
-print("\\n=== Correlation Analysis ===")
+print("\n=== Correlation Analysis ===")
 numeric_columns = ['sales_amount', 'quantity', 'customer_age', 'customer_satisfaction', 'revenue']
 correlation_matrix = df_clean[numeric_columns].corr()
-print("\\nCorrelation Matrix:")
+print("\nCorrelation Matrix:")
 print(correlation_matrix.round(3))
 
 # Advanced analytics
-print("\\n=== Advanced Analytics ===")
+print("\n=== Advanced Analytics ===")
 
 # Top performing products by satisfaction
 top_products = df_clean.groupby('product').agg({
@@ -173,7 +173,7 @@ top_products = df_clean.groupby('product').agg({
 top_products['satisfaction_rank'] = top_products['customer_satisfaction'].rank(ascending=False)
 top_products['revenue_rank'] = top_products['revenue'].rank(ascending=False)
 
-print("\\nProduct Performance Analysis:")
+print("\nProduct Performance Analysis:")
 print(top_products.sort_values('customer_satisfaction', ascending=False))
 
 # Seasonal analysis
@@ -190,11 +190,11 @@ seasonal_analysis = df_clean.groupby('season').agg({
     'quantity': 'sum'
 }).round(2)
 
-print("\\nSeasonal Analysis:")
+print("\nSeasonal Analysis:")
 print(seasonal_analysis)
 
 # Statistical insights
-print("\\n=== Statistical Insights ===")
+print("\n=== Statistical Insights ===")
 
 # Revenue distribution by region and product
 pivot_table = df_clean.pivot_table(
@@ -205,7 +205,7 @@ pivot_table = df_clean.pivot_table(
     fill_value=0
 ).round(2)
 
-print("\\nRevenue Distribution (Region vs Product):")
+print("\nRevenue Distribution (Region vs Product):")
 print(pivot_table)
 
 # Customer lifetime value estimation
@@ -215,11 +215,11 @@ customer_metrics = df_clean.groupby(['region', 'age_group']).agg({
     'quantity': 'mean'
 }).round(2)
 
-print("\\nCustomer Metrics by Region and Age:")
+print("\nCustomer Metrics by Region and Age:")
 print(customer_metrics)
 
 # Export results
-print("\\n=== Data Export ===")
+print("\n=== Data Export ===")
 # Save cleaned data
 df_clean.to_csv('cleaned_sales_data.csv', index=False)
 print("Cleaned data saved to 'cleaned_sales_data.csv'")
@@ -233,7 +233,7 @@ summary_stats = {
     'date_range': f"{df_clean['date'].min()} to {df_clean['date'].max()}"
 }
 
-print("\\nSummary Statistics:")
+print("\nSummary Statistics:")
 for key, value in summary_stats.items():
     print(f"{key}: {value}")`,
             explanation: "Comprehensive data analysis workflow showing data loading, cleaning, exploration, statistical analysis, and insights generation using pandas and NumPy."
@@ -291,7 +291,7 @@ df['age'] = df['age'].clip(22, 65)
 df['education_years'] = df['education_years'].clip(12, 20)
 df['experience'] = df['experience'].clip(0, 30)
 
-print("=== Advanced Data Visualization ===\\n")
+print("=== Advanced Data Visualization ===\n")
 
 # 1. Distribution Analysis
 fig, axes = plt.subplots(2, 3, figsize=(18, 12))
@@ -334,7 +334,7 @@ plt.tight_layout()
 plt.show()
 
 # 2. Correlation Analysis
-print("\\n=== Correlation Analysis ===")
+print("\n=== Correlation Analysis ===")
 
 # Calculate correlation matrix
 numeric_cols = ['age', 'income', 'education_years', 'experience', 'satisfaction']
@@ -358,14 +358,14 @@ for i in range(len(correlation_matrix.columns)):
             print(f"{correlation_matrix.columns[i]} vs {correlation_matrix.columns[j]}: {corr_val:.3f}")
 
 # 3. Statistical Testing
-print("\\n=== Statistical Testing ===")
+print("\n=== Statistical Testing ===")
 
 # T-test: Income difference between genders
 male_income = df[df['gender'] == 'Male']['income']
 female_income = df[df['gender'] == 'Female']['income']
 
 t_stat, p_value = stats.ttest_ind(male_income, female_income)
-print(f"\\nT-test for income difference between genders:")
+print(f"\nT-test for income difference between genders:")
 print(f"T-statistic: {t_stat:.3f}")
 print(f"P-value: {p_value:.3f}")
 print(f"Significant difference: {'Yes' if p_value < 0.05 else 'No'}")
@@ -373,13 +373,13 @@ print(f"Significant difference: {'Yes' if p_value < 0.05 else 'No'}")
 # ANOVA: Satisfaction across departments
 dept_groups = [df[df['department'] == dept]['satisfaction'] for dept in df['department'].unique()]
 f_stat, p_value_anova = stats.f_oneway(*dept_groups)
-print(f"\\nANOVA for satisfaction across departments:")
+print(f"\nANOVA for satisfaction across departments:")
 print(f"F-statistic: {f_stat:.3f}")
 print(f"P-value: {p_value_anova:.3f}")
 print(f"Significant difference: {'Yes' if p_value_anova < 0.05 else 'No'}")
 
 # 4. Advanced Visualizations
-print("\\n=== Advanced Visualizations ===")
+print("\n=== Advanced Visualizations ===")
 
 # Pair plot for relationships
 plt.figure(figsize=(12, 10))
@@ -388,7 +388,7 @@ plt.suptitle('Pair Plot Analysis', y=1.02, fontsize=14, fontweight='bold')
 plt.show()
 
 # 5. Interactive Plotly Visualizations
-print("\\nCreating interactive visualizations...")
+print("\nCreating interactive visualizations...")
 
 # Interactive scatter plot
 fig_scatter = px.scatter(df, x='age', y='income', color='department', 
@@ -443,7 +443,7 @@ fig_dashboard.update_layout(height=800, title_text="Employee Analytics Dashboard
 fig_dashboard.show()
 
 # 6. Statistical Summary Report
-print("\\n=== Statistical Summary Report ===")
+print("\n=== Statistical Summary Report ===")
 
 summary_report = {
     'Dataset Size': len(df),
@@ -455,12 +455,12 @@ summary_report = {
     'Gender Distribution': f"{(df['gender'] == 'Female').sum()}/{(df['gender'] == 'Male').sum()} (F/M)"
 }
 
-print("\\nKey Insights:")
+print("\nKey Insights:")
 for key, value in summary_report.items():
     print(f"• {key}: {value}")
 
 # Export visualizations
-print("\\n=== Exporting Results ===")
+print("\n=== Exporting Results ===")
 print("Visualizations created and displayed.")
 print("Interactive plots opened in browser.")
 print("Statistical analysis completed.")`,
