@@ -1,8 +1,19 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss');
 const Contact = require('../models/Contact');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
+
+// Rate limiting for contact form (more restrictive)
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 3, // Limit each IP to 3 contact requests per windowMs
+  message: { message: 'Too many contact requests, please try again later.' }
+});
 
 // Configure nodemailer
 const transporter = nodemailer.createTransport({

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Programming & Technical Learning</title>
+    <link rel="stylesheet" href="courses.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="header-title">Programming & Technical Courses</h1>
+            <p class="header-subtitle">Master the skills that matter in today's tech world</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search courses..." class="search-input">
+                </div>
+                
+                <div class="filters">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="programming">Programming Languages</option>
+                        <option value="web">Web Development</option>
+                        <option value="database">Databases</option>
+                        <option value="data-science">Data Science & AI/ML</option>
+                        <option value="framework">Frameworks & Tools</option>
+                    </select>
+                    
+                    <select id="levelFilter" class="filter-select">
+                        <option value="">All Levels</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Popular Courses Section -->
+            <section class="popular-courses">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Popular Courses
+                </h2>
+                <div class="courses-grid" id="popularCourses">
+                    <!-- Popular courses will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- All Courses Section -->
+            <section class="all-courses">
+                <h2 class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    All Courses
+                </h2>
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- All courses will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No courses found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Programming Courses. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="courses.js"></script>
+</body>
+</html>

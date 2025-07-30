@@ -92,12 +92,20 @@ const Home = () => {
                 View Resume
               </a>
             </div>
-            <Link 
-              to="/projects" 
-              className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-medium transition-colors inline-block"
-            >
-              View My Work
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link 
+                to="/projects" 
+                className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-lg font-medium transition-colors inline-block text-center"
+              >
+                View My Work
+              </Link>
+              <Link 
+                to="/courses" 
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 rounded-lg font-medium transition-colors inline-block text-center"
+              >
+                Explore Courses
+              </Link>
+            </div>
           </motion.div>
 
           <motion.div
