@@ -370,15 +370,15 @@ def main():
     salary = 75000.50
     
     # f-strings (Python 3.6+)
-    message1 = f"Hello, {name}! You are {age} years old and earn ${salary:,.2f}"
+    message1 = f"Hello, {name}! You are {age} years old and earn \${salary:,.2f}"
     print(f"f-string: {message1}")
     
     # .format() method
-    message2 = "Hello, {}! You are {} years old and earn ${:,.2f}".format(name, age, salary)
+    message2 = "Hello, {}! You are {} years old and earn \${:,.2f}".format(name, age, salary)
     print(f"format(): {message2}")
     
     # % formatting (older style)
-    message3 = "Hello, %s! You are %d years old and earn $%.2f" % (name, age, salary)
+    message3 = "Hello, %s! You are %d years old and earn \$%.2f" % (name, age, salary)
     print(f"% formatting: {message3}")
     
     # String methods
@@ -673,7 +673,7 @@ print(f"Difference: {set1 - set2}")`,
         """Deposit money to account"""
         if amount > 0:
             self._balance += amount
-            print(f"Deposited ${amount:.2f}. New balance: ${self._balance:.2f}")
+            print(f"Deposited \${amount:.2f}. New balance: \${self._balance:.2f}")
         else:
             print("Invalid deposit amount!")
     
@@ -681,7 +681,7 @@ print(f"Difference: {set1 - set2}")`,
         """Withdraw money from account"""
         if 0 < amount <= self._balance:
             self._balance -= amount
-            print(f"Withdrew ${amount:.2f}. New balance: ${self._balance:.2f}")
+            print(f"Withdrew \${amount:.2f}. New balance: \${self._balance:.2f}")
             return True
         else:
             print("Invalid withdrawal amount or insufficient funds!")
@@ -689,7 +689,7 @@ print(f"Difference: {set1 - set2}")`,
     
     def __str__(self):
         """String representation"""
-        return f"Account({self.__account_number}, {self.account_holder}, ${self._balance:.2f})"
+        return f"Account({self.__account_number}, {self.account_holder}, \${self._balance:.2f})"
     
     def __repr__(self):
         """Developer representation"""
@@ -716,10 +716,10 @@ class SavingsAccount(BankAccount):
         """Add interest to account"""
         interest = self._balance * self.interest_rate
         self._balance += interest
-        print(f"Interest added: ${interest:.2f}. New balance: ${self._balance:.2f}")
+        print(f"Interest added: \${interest:.2f}. New balance: \${self._balance:.2f}")
     
     def __str__(self):
-        return f"SavingsAccount({self.account_number}, {self.account_holder}, ${self._balance:.2f}, {self.interest_rate*100}%)"
+        return f"SavingsAccount({self.account_number}, {self.account_holder}, \${self._balance:.2f}, {self.interest_rate*100}%)"
 
 # Usage example
 print("=== Bank Account Demo ===")
