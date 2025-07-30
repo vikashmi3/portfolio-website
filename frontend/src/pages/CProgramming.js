@@ -14,7 +14,7 @@ import {
   FaChevronUp,
   FaDownload,
   FaProjectDiagram,
-  FaAlgorithm
+
 } from 'react-icons/fa';
 
 // This is the main CProgramming component
@@ -975,7 +975,7 @@ int main() {
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
-                <FaAlgorithm />
+                <FaCogs />
                 Algorithms
               </button>
               <button 

@@ -940,7 +940,7 @@ if __name__ == "__main__":
                     className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 rounded-lg p-6"
                   >
                     <div className="flex items-center gap-4 mb-4">
-                      <FaAlgorithm className="text-blue-500 text-3xl" />
+                      <FaCogs className="text-blue-500 text-3xl" />
                       <div>
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white">AI Algorithms Guide</h3>
                         <p className="text-gray-600 dark:text-gray-300 text-sm">Search, reasoning, and optimization</p>
