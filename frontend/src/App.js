@@ -6,6 +6,18 @@ import Home from './pages/Home';
 import About from './pages/About';
 import CourseDetail from './pages/CourseDetail';
 import CProgramming from './pages/CProgramming';
+import CppProgramming from './pages/CppProgramming';
+import JavaProgramming from './pages/JavaProgramming';
+import PythonProgramming from './pages/PythonProgramming';
+import ReactJS from './pages/ReactJS';
+import CSharpProgramming from './pages/CSharpProgramming';
+import NodeJS from './pages/NodeJS';
+import HTMLCSSMastery from './pages/HTMLCSSMastery';
+import JavaScriptFundamentals from './pages/JavaScriptFundamentals';
+import MachineLearning from './pages/MachineLearning';
+import AndroidDevelopment from './pages/AndroidDevelopment';
+import DataScience from './pages/DataScience';
+import MySQL from './pages/MySQL';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
@@ -49,6 +61,18 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/courses/:courseId" element={<CourseDetail />} />
           <Route path="/c-programming" element={<CProgramming />} />
+          <Route path="/cpp-programming" element={<CppProgramming />} />
+          <Route path="/java-programming" element={<JavaProgramming />} />
+          <Route path="/python-programming" element={<PythonProgramming />} />
+          <Route path="/react-js" element={<ReactJS />} />
+          <Route path="/csharp-programming" element={<CSharpProgramming />} />
+          <Route path="/nodejs" element={<NodeJS />} />
+          <Route path="/html-css-mastery" element={<HTMLCSSMastery />} />
+          <Route path="/javascript-fundamentals" element={<JavaScriptFundamentals />} />
+          <Route path="/machine-learning" element={<MachineLearning />} />
+          <Route path="/android-development" element={<AndroidDevelopment />} />
+          <Route path="/data-science" element={<DataScience />} />
+          <Route path="/mysql" element={<MySQL />} />
         </Routes>
         <Footer />
       </div>

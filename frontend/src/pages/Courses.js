@@ -433,9 +433,33 @@ const Courses = () => {
 
   // Enrollment functions
   const openEnrollModal = (course) => {
-    // If it's the C Programming course (ID 1), redirect directly to the course page
-    if (course.id === 1) {
-      navigate('/c-programming');
+    // Direct navigation to course pages
+    const courseRoutes = {
+      1: '/c-programming',
+      2: '/cpp-programming', 
+      3: '/java-programming',
+      4: '/java-programming', // Advanced Java -> Java Programming
+      5: '/python-programming',
+      6: '/csharp-programming',
+      7: '/javascript-fundamentals',
+      8: '/html-css-mastery',
+      9: '/html-css-mastery', // Full Stack -> HTML CSS
+      10: '/mysql',
+      11: '/nodejs', // MongoDB -> Node.js
+      12: '/data-science',
+      13: '/data-science', // Data Analytics
+      14: '/machine-learning',
+      15: '/machine-learning', // AI -> ML
+      16: '/react-js',
+      17: '/nodejs',
+      18: '/nodejs', // Django -> Node.js for now
+      19: '/javascript-fundamentals', // Git -> JavaScript
+      20: '/javascript-fundamentals', // Software Testing -> JavaScript
+      21: '/android-development'
+    };
+    
+    if (courseRoutes[course.id]) {
+      navigate(courseRoutes[course.id]);
       return;
     }
     
