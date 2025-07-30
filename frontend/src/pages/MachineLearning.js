@@ -259,7 +259,7 @@ def make_predictions(model, scaler, feature_columns, new_data):
     prediction = model.predict(sample_scaled)
     
     print(f"\\nPrediction for sample house:")
-    print(f"Predicted Price: ${prediction[0]:.2f}k")
+    print(f"Predicted Price: \${prediction[0]:.2f}k")
     
     return prediction
 
