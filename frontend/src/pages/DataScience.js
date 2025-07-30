@@ -448,7 +448,7 @@ print("\n=== Statistical Summary Report ===")
 summary_report = {
     'Dataset Size': len(df),
     'Average Age': f"{df['age'].mean():.1f} years",
-    'Median Income': f"${df['income'].median():,.0f}",
+    'Median Income': f"\${df['income'].median():,.0f}",
     'Satisfaction Score': f"{df['satisfaction'].mean():.2f}/5.0",
     'Most Common Department': df['department'].mode()[0],
     'Remote Work Percentage': f"{(df['remote_work'].sum() / len(df) * 100):.1f}%",
