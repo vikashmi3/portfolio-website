@@ -9,3 +9,4 @@
 
 [build.environment]
   REACT_APP_API_URL = "https://your-portfolio-backend.onrender.com"
+  CI = "false"
