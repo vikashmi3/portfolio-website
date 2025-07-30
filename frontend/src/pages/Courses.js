@@ -182,11 +182,47 @@ const Courses = () => {
       id: 4,
       name: "Advanced Java",
       description: "Enterprise Java development with Spring Boot, Hibernate, microservices, and advanced design patterns.",
-      duration: "16 weeks",
+      fullDescription: "Take your Java skills to the next level with advanced topics including I/O streams, multithreading, JDBC, servlets, JSP, Spring framework, web services, and enterprise application development. Master enterprise-level concepts and frameworks that make Java suitable for large-scale, production-ready applications.",
+      duration: "20 weeks",
       level: "Advanced",
       category: "programming",
       reviews: 156,
-      icon: <FaCode />
+      popular: true,
+      icon: <FaCode />,
+      instructor: "Dr. James Rodriguez",
+      lessons: 200,
+      projects: 50,
+      prerequisites: "Solid understanding of Core Java, OOP concepts, Collections Framework",
+      syllabus: [
+        "Advanced I/O and File Handling",
+        "Multithreading and Concurrency",
+        "JDBC and Database Connectivity",
+        "Servlets and JSP",
+        "Spring Framework Fundamentals",
+        "Spring Boot and Microservices",
+        "Web Services (REST & SOAP)",
+        "Security and Best Practices",
+        "Testing and Deployment",
+        "Enterprise Project Development"
+      ],
+      features: [
+        "200+ comprehensive lessons",
+        "50+ enterprise projects",
+        "Spring Framework mastery",
+        "Database connectivity (JDBC)",
+        "Web development (Servlets, JSP)",
+        "RESTful web services",
+        "Multithreading and concurrency",
+        "Design patterns implementation",
+        "Testing with JUnit and Mockito",
+        "Build tools (Maven, Gradle)",
+        "Security best practices",
+        "Performance optimization",
+        "Microservices architecture",
+        "Cloud deployment strategies",
+        "Lifetime access",
+        "Community support"
+      ]
     },
     {
       id: 5,
@@ -438,7 +474,7 @@ const Courses = () => {
       1: '/c-programming',
       2: '/cpp-programming', 
       3: '/java-programming',
-      4: '/java-programming', // Advanced Java -> Java Programming
+      4: '/advanced-java', // Advanced Java
       5: '/python-programming',
       6: '/csharp-programming',
       7: '/javascript-fundamentals',
@@ -449,7 +485,7 @@ const Courses = () => {
       12: '/data-science',
       13: '/data-science', // Data Analytics
       14: '/machine-learning',
-      15: '/machine-learning', // AI -> ML
+      15: '/artificial-intelligence', // AI
       16: '/react-js',
       17: '/nodejs',
       18: '/nodejs', // Django -> Node.js for now
