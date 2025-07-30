@@ -8,6 +8,10 @@ import CourseDetail from './pages/CourseDetail';
 import CProgramming from './pages/CProgramming';
 import CppProgramming from './pages/CppProgramming';
 import JavaProgramming from './pages/JavaProgramming';
+import AdvancedJava from './pages/AdvancedJava';
+import HtmlCss from './pages/HtmlCss';
+import JavaScript from './pages/JavaScript';
+import ArtificialIntelligence from './pages/ArtificialIntelligence';
 import PythonProgramming from './pages/PythonProgramming';
 import ReactJS from './pages/ReactJS';
 import CSharpProgramming from './pages/CSharpProgramming';
@@ -63,6 +67,10 @@ function App() {
           <Route path="/c-programming" element={<CProgramming />} />
           <Route path="/cpp-programming" element={<CppProgramming />} />
           <Route path="/java-programming" element={<JavaProgramming />} />
+          <Route path="/advanced-java" element={<AdvancedJava />} />
+          <Route path="/html-css" element={<HtmlCss />} />
+          <Route path="/javascript" element={<JavaScript />} />
+          <Route path="/artificial-intelligence" element={<ArtificialIntelligence />} />
           <Route path="/python-programming" element={<PythonProgramming />} />
           <Route path="/react-js" element={<ReactJS />} />
           <Route path="/csharp-programming" element={<CSharpProgramming />} />
