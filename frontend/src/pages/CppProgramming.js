@@ -45,6 +45,54 @@ const CppProgramming = () => {
         ],
         examples: [
           {
+            title: "Hello World Program",
+            code: `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}`,
+            explanation: "The classic first program in C++. Demonstrates basic syntax, main function, and output using cout."
+          },
+          {
+            title: "Variables and Data Types",
+            code: `#include <iostream>
+using namespace std;
+
+int main() {
+    int age = 25;
+    double salary = 55000.50;
+    char grade = 'A';
+    bool isEmployed = true;
+    
+    cout << "Age: " << age << endl;
+    cout << "Salary: $" << salary << endl;
+    cout << "Grade: " << grade << endl;
+    cout << "Employed: " << (isEmployed ? "Yes" : "No") << endl;
+    return 0;
+}`,
+            explanation: "Shows declaration and initialization of different C++ data types and output formatting."
+          },
+          {
+            title: "User Input and Output",
+            code: `#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string name;
+    int age;
+    cout << "Enter your name: ";
+    getline(cin, name);
+    cout << "Enter your age: ";
+    cin >> age;
+    cout << "Hello, " << name << ". You are " << age << " years old." << endl;
+    return 0;
+}`,
+            explanation: "Demonstrates input using cin and getline, and output using cout."
+          },
+          {
             title: "Basic Class Implementation",
             code: `#include <iostream>
 #include <string>
@@ -96,6 +144,34 @@ int main() {
     return 0;
 }`,
             explanation: "Demonstrates basic class structure with private data members, constructors, destructors, and member functions with proper encapsulation."
+          },
+          {
+            title: "Simple OOP: Inheritance and Method Overriding",
+            code: `#include <iostream>
+using namespace std;
+
+class Animal {
+public:
+    void speak() {
+        cout << "Animal speaks" << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void speak() {
+        cout << "Dog barks" << endl;
+    }
+};
+
+int main() {
+    Animal a;
+    Dog d;
+    a.speak(); // Animal speaks
+    d.speak(); // Dog barks
+    return 0;
+}`,
+            explanation: "Shows inheritance and method overriding in C++. The Dog class inherits from Animal and overrides the speak() method."
           }
         ]
       },
@@ -659,20 +735,20 @@ int main() {
             )}
             
             {activeTab === 'examples' && (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {courseDetails.syllabus.map((week, weekIndex) => (
                   week.examples && (
-                    <div key={weekIndex} className="mb-8">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                    <div key={weekIndex} className="mb-12">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                         Week {week.week}: {week.title}
                       </h3>
-                      <div className="space-y-4">
+                      <div className="grid md:grid-cols-2 gap-8">
                         {week.examples.map((example, exampleIndex) => (
                           <motion.div
                             key={exampleIndex}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
+                            className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-lg"
                           >
                             <div 
                               className="bg-gray-50 dark:bg-gray-700 p-4 cursor-pointer flex items-center justify-between"
@@ -693,7 +769,6 @@ int main() {
                                 <FaChevronDown className="text-gray-500" />
                               }
                             </div>
-                            
                             {expandedExample === `${weekIndex}-${exampleIndex}` && (
                               <div className="p-4">
                                 <p className="text-gray-600 dark:text-gray-300 mb-4">

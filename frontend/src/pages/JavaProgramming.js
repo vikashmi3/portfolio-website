@@ -32,28 +32,384 @@ const JavaProgramming = () => {
     level: "Beginner",
     instructor: "Dr. Jennifer Smith",
     introduction: {
-      overview: "Java is a powerful, object-oriented programming language developed by Sun Microsystems (now Oracle). It follows the principle of 'Write Once, Run Anywhere' (WORA), making it platform-independent through the Java Virtual Machine (JVM).",
-      keyFeatures: [
-        "Platform Independence - Java bytecode runs on any system with JVM",
-        "Object-Oriented - Everything in Java is an object (except primitives)",
-        "Memory Management - Automatic garbage collection",
-        "Strong Type System - Compile-time type checking",
-        "Rich API - Extensive standard library",
-        "Multithreading - Built-in support for concurrent programming",
-        "Security - Built-in security features and sandboxing",
-        "Enterprise Ready - Robust for large-scale applications",
-        "JVM Internals - Class loading, Just-In-Time (JIT) compilation, and memory areas (Heap, Stack, Method Area, etc.)",
-        "Java 8+ Features - Lambdas, Streams, Optional, new Date/Time API, default methods in interfaces"
+      overview: "Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible. It is a general-purpose programming language intended to let application developers write once, run anywhere (WORA), meaning that compiled Java code can run on all platforms that support Java without the need for recompilation.",
+      history: [
+        "1991 - James Gosling, Mike Sheridan, and Patrick Naughton initiated the Java language project",
+        "1995 - Sun Microsystems released Java 1.0 with the promise of Write Once, Run Anywhere",
+        "1997 - Java 1.1 was released with many new features including inner classes, JavaBeans, JDBC, RMI",
+        "1998 - Java 2 (J2SE 1.2) introduced Swing API, Collections framework, and JIT compiler",
+        "2000 - J2SE 1.3 brought HotSpot JVM, JavaSound, JNDI",
+        "2002 - J2SE 1.4 introduced assert keyword, regular expressions, exception chaining",
+        "2004 - J2SE 5.0 added generics, metadata annotations, autoboxing, enumerations",
+        "2006 - Java SE 6 brought scripting language support, JDBC 4.0",
+        "2011 - Java SE 7 introduced try-with-resources, diamond operator, strings in switch",
+        "2014 - Java SE 8 brought lambda expressions, stream API, default methods",
+        "2017 - Java SE 9 introduced modules, JShell, private methods in interfaces",
+        "2018 - Java SE 10 added local variable type inference (var keyword)",
+        "2018 - Java SE 11 LTS brought HTTP client API, string methods",
+        "2019 - Java SE 12 introduced switch expressions (preview)",
+        "2019 - Java SE 13 brought text blocks (preview)",
+        "2020 - Java SE 14 added pattern matching for instanceof (preview)",
+        "2020 - Java SE 15 brought sealed classes (preview)",
+        "2021 - Java SE 16 added records, pattern matching for instanceof",
+        "2021 - Java SE 17 LTS introduced sealed classes, pattern matching enhancements"
       ],
+      features: [
+        "Simple - Java syntax is based on C++ but simplified and improved",
+        "Object-Oriented - Everything in Java is an object except primitive data types",
+        "Platform Independent - Java bytecode can run on any platform with JVM",
+        "Secure - Java provides security features like bytecode verification, secure class loading",
+        "Robust - Strong memory management, exception handling, type checking",
+        "Architecture Neutral - Java compiler generates bytecode that is architecture neutral",
+        "Portable - Java programs can be easily moved from one platform to another",
+        "Dynamic - Java supports dynamic loading of classes and interfaces",
+        "Interpreted - Java bytecode is interpreted by JVM at runtime",
+        "High Performance - Just-In-Time (JIT) compiler improves performance",
+        "Multithreaded - Java supports multithreaded programming for concurrent execution",
+        "Distributed - Java supports distributed computing through RMI, EJB"
+      ],
+      architecture: {
+        jvm: {
+          title: "Java Virtual Machine (JVM)",
+          description: "JVM is a runtime environment that executes Java bytecode. It provides platform independence by abstracting the underlying operating system.",
+          components: [
+            "Class Loader Subsystem - Loads, links and initializes classes and interfaces",
+            "Runtime Data Areas - Memory areas used during program execution",
+            "Execution Engine - Executes the bytecode instructions",
+            "Native Method Interface - Interface to native method libraries",
+            "Native Method Libraries - Libraries written in other languages like C, C++"
+          ],
+          memoryAreas: [
+            "Method Area - Stores class-level data like class definitions, method definitions, constant pool",
+            "Heap Area - Stores objects and instance variables, divided into Young and Old generation",
+            "Stack Area - Stores method call frames, local variables, and partial results",
+            "PC (Program Counter) Register - Stores address of currently executing instruction",
+            "Native Method Stack - Stores native method information"
+          ]
+        },
+        jre: {
+          title: "Java Runtime Environment (JRE)",
+          description: "JRE provides the runtime environment in which Java bytecode can be executed. It includes JVM and core libraries.",
+          components: [
+            "Java Virtual Machine (JVM)",
+            "Core Libraries (java.lang, java.util, java.io, etc.)",
+            "Supporting Files (property files, resource files)"
+          ]
+        },
+        jdk: {
+          title: "Java Development Kit (JDK)",
+          description: "JDK is a software development environment used for developing Java applications. It includes JRE plus development tools.",
+          tools: [
+            "javac - Java compiler that converts source code to bytecode",
+            "java - Java interpreter that executes Java applications",
+            "javadoc - Documentation generator for Java source code",
+            "jar - Archive tool for packaging Java applications",
+            "jdb - Java debugger for debugging Java programs",
+            "javap - Class file disassembler",
+            "jconsole - JVM monitoring and management console",
+            "jvisualvm - Visual profiling tool"
+          ]
+        }
+      },
+      keyFeatures: [
+        "Write Once, Run Anywhere (WORA) - Platform independence through bytecode",
+        "Object-Oriented Programming - Encapsulation, Inheritance, Polymorphism, Abstraction",
+        "Automatic Memory Management - Garbage collection handles memory allocation/deallocation",
+        "Strong Type System - Static type checking at compile time",
+        "Rich Standard Library - Comprehensive API for common programming tasks",
+        "Multithreading Support - Built-in concurrency and parallel programming",
+        "Security Features - Bytecode verification, secure class loading, sandboxing",
+        "Exception Handling - Robust error handling mechanism with try-catch-finally",
+        "Dynamic Loading - Classes loaded on demand at runtime",
+        "Reflection API - Inspect and modify program behavior at runtime",
+        "Networking Support - Built-in support for network programming",
+        "Database Connectivity - JDBC for database operations"
+      ],
+      dataTypes: {
+        primitive: {
+          title: "Primitive Data Types",
+          description: "Java has 8 primitive data types that are predefined by the language and named by a reserved keyword.",
+          types: [
+            {
+              name: "byte",
+              size: "8-bit",
+              range: "-128 to 127",
+              defaultValue: "0",
+              example: "byte b = 100;"
+            },
+            {
+              name: "short",
+              size: "16-bit",
+              range: "-32,768 to 32,767",
+              defaultValue: "0",
+              example: "short s = 10000;"
+            },
+            {
+              name: "int",
+              size: "32-bit",
+              range: "-2,147,483,648 to 2,147,483,647",
+              defaultValue: "0",
+              example: "int i = 100000;"
+            },
+            {
+              name: "long",
+              size: "64-bit",
+              range: "-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807",
+              defaultValue: "0L",
+              example: "long l = 100000L;"
+            },
+            {
+              name: "float",
+              size: "32-bit",
+              range: "approximately ±3.40282347E+38F (6-7 significant decimal digits)",
+              defaultValue: "0.0f",
+              example: "float f = 234.5f;"
+            },
+            {
+              name: "double",
+              size: "64-bit",
+              range: "approximately ±1.79769313486231570E+308 (15 significant decimal digits)",
+              defaultValue: "0.0d",
+              example: "double d = 123.4;"
+            },
+            {
+              name: "boolean",
+              size: "1-bit",
+              range: "true or false",
+              defaultValue: "false",
+              example: "boolean flag = true;"
+            },
+            {
+              name: "char",
+              size: "16-bit",
+              range: "0 to 65,535 (Unicode characters)",
+              defaultValue: "'\\u0000'",
+              example: "char c = 'A';"
+            }
+          ]
+        },
+        nonPrimitive: {
+          title: "Non-Primitive (Reference) Data Types",
+          description: "Non-primitive data types are created by the programmer and are not predefined by Java.",
+          types: [
+            {
+              name: "String",
+              description: "Sequence of characters",
+              example: "String name = \"Java Programming\";"
+            },
+            {
+              name: "Arrays",
+              description: "Collection of similar data types",
+              example: "int[] numbers = {1, 2, 3, 4, 5};"
+            },
+            {
+              name: "Classes",
+              description: "User-defined blueprint for creating objects",
+              example: "Student student = new Student();"
+            },
+            {
+              name: "Interfaces",
+              description: "Contract that classes can implement",
+              example: "List<String> list = new ArrayList<>();"
+            }
+          ]
+        }
+      },
+      operators: {
+        arithmetic: {
+          title: "Arithmetic Operators",
+          operators: [
+            {
+              symbol: "+",
+              name: "Addition",
+              description: "Adds two operands",
+              example: "int sum = a + b;"
+            },
+            {
+              symbol: "-",
+              name: "Subtraction",
+              description: "Subtracts second operand from first",
+              example: "int diff = a - b;"
+            },
+            {
+              symbol: "*",
+              name: "Multiplication",
+              description: "Multiplies two operands",
+              example: "int product = a * b;"
+            },
+            {
+              symbol: "/",
+              name: "Division",
+              description: "Divides first operand by second",
+              example: "int quotient = a / b;"
+            },
+            {
+              symbol: "%",
+              name: "Modulus",
+              description: "Returns remainder of division",
+              example: "int remainder = a % b;"
+            },
+            {
+              symbol: "++",
+              name: "Increment",
+              description: "Increases value by 1",
+              example: "a++; or ++a;"
+            },
+            {
+              symbol: "--",
+              name: "Decrement",
+              description: "Decreases value by 1",
+              example: "a--; or --a;"
+            }
+          ]
+        },
+        relational: {
+          title: "Relational Operators",
+          operators: [
+            {
+              symbol: "==",
+              name: "Equal to",
+              description: "Checks if two operands are equal",
+              example: "if (a == b)"
+            },
+            {
+              symbol: "!=",
+              name: "Not equal to",
+              description: "Checks if two operands are not equal",
+              example: "if (a != b)"
+            },
+            {
+              symbol: ">",
+              name: "Greater than",
+              description: "Checks if left operand is greater than right",
+              example: "if (a > b)"
+            },
+            {
+              symbol: "<",
+              name: "Less than",
+              description: "Checks if left operand is less than right",
+              example: "if (a < b)"
+            },
+            {
+              symbol: ">=",
+              name: "Greater than or equal to",
+              description: "Checks if left operand is greater than or equal to right",
+              example: "if (a >= b)"
+            },
+            {
+              symbol: "<=",
+              name: "Less than or equal to",
+              description: "Checks if left operand is less than or equal to right",
+              example: "if (a <= b)"
+            }
+          ]
+        },
+        logical: {
+          title: "Logical Operators",
+          operators: [
+            {
+              symbol: "&&",
+              name: "Logical AND",
+              description: "Returns true if both operands are true",
+              example: "if (a > 0 && b > 0)"
+            },
+            {
+              symbol: "||",
+              name: "Logical OR",
+              description: "Returns true if at least one operand is true",
+              example: "if (a > 0 || b > 0)"
+            },
+            {
+              symbol: "!",
+              name: "Logical NOT",
+              description: "Reverses the logical state of operand",
+              example: "if (!flag)"
+            }
+          ]
+        },
+        assignment: {
+          title: "Assignment Operators",
+          operators: [
+            {
+              symbol: "=",
+              name: "Simple assignment",
+              description: "Assigns right operand to left operand",
+              example: "a = b;"
+            },
+            {
+              symbol: "+=",
+              name: "Add and assign",
+              description: "Adds right operand to left operand and assigns result to left",
+              example: "a += b; // equivalent to a = a + b;"
+            },
+            {
+              symbol: "-=",
+              name: "Subtract and assign",
+              description: "Subtracts right operand from left operand and assigns result to left",
+              example: "a -= b; // equivalent to a = a - b;"
+            },
+            {
+              symbol: "*=",
+              name: "Multiply and assign",
+              description: "Multiplies left operand with right operand and assigns result to left",
+              example: "a *= b; // equivalent to a = a * b;"
+            },
+            {
+              symbol: "/=",
+              name: "Divide and assign",
+              description: "Divides left operand by right operand and assigns result to left",
+              example: "a /= b; // equivalent to a = a / b;"
+            },
+            {
+              symbol: "%=",
+              name: "Modulus and assign",
+              description: "Takes modulus of left operand with right operand and assigns result to left",
+              example: "a %= b; // equivalent to a = a % b;"
+            }
+          ]
+        }
+      },
       advancedTheory: {
-        jvm: `// JVM Internals
-// The Java Virtual Machine (JVM) is responsible for running Java bytecode. Key components include:
-// - Class Loader: Loads .class files into memory
-// - Bytecode Verifier: Ensures code safety and integrity
-// - Runtime Data Areas: Heap (objects), Stack (method calls, local vars), Method Area (class metadata), PC Register, Native Method Stack
-// - Execution Engine: Interprets or JIT-compiles bytecode to native machine code
-// - Garbage Collector: Automatically reclaims unused memory
-`,
+        jvmInternals: {
+          title: "JVM Internal Architecture",
+          description: "Understanding how JVM works internally is crucial for Java developers to write efficient code.",
+          classLoader: {
+            title: "Class Loader Subsystem",
+            phases: [
+              "Loading - Loads .class files from various sources (file system, network, JAR files)",
+              "Linking - Verification (bytecode verification), Preparation (memory allocation), Resolution (symbolic references)",
+              "Initialization - Executes static initializers and static blocks"
+            ],
+            types: [
+              "Bootstrap Class Loader - Loads core Java classes (java.lang, java.util, etc.)",
+              "Extension Class Loader - Loads classes from extension directories",
+              "Application Class Loader - Loads classes from application classpath"
+            ]
+          },
+          executionEngine: {
+            title: "Execution Engine",
+            components: [
+              "Interpreter - Executes bytecode line by line (slower but starts quickly)",
+              "JIT Compiler - Compiles frequently used bytecode to native machine code (faster execution)",
+              "Garbage Collector - Automatically manages memory by removing unused objects"
+            ]
+          },
+          garbageCollection: {
+            title: "Garbage Collection",
+            description: "Automatic memory management process that reclaims memory used by objects that are no longer reachable.",
+            types: [
+              "Serial GC - Single-threaded, suitable for small applications",
+              "Parallel GC - Multi-threaded, default for server applications",
+              "G1 GC - Low-latency collector for large heap sizes",
+              "ZGC - Ultra-low latency collector for very large heaps"
+            ],
+            phases: [
+              "Mark - Identifies which objects are still in use",
+              "Sweep - Removes unreferenced objects",
+              "Compact - Defragments memory to reduce fragmentation"
+            ]
+          }
+        },
         memory: `// Java Memory Management
 // Java uses automatic garbage collection. Key memory areas:
 // - Heap: Stores all objects and arrays
