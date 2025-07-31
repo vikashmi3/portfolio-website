@@ -6543,6 +6543,1109 @@ public class StringMethodsDemo {
     }
 }`
           },
+          stringComparison: {
+            title: "String Comparison",
+            description: "Understanding different ways to compare strings and their implications.",
+            referenceVsContent: {
+              title: "Reference comparison (==) vs Content comparison (equals)",
+              description: "The == operator compares references, while equals() compares actual content."
+            },
+            example: `// String comparison comprehensive demonstration
+public class StringComparisonDemo {
+    public static void main(String[] args) {
+        // Different ways to create strings
+        String a = "Java";
+        String b = "Java";
+        String c = new String("Java");
+        String d = "Ja" + "va";        // Compile-time concatenation
+        String e = "Ja";
+        String f = e + "va";           // Runtime concatenation
+        
+        System.out.println("String Values:");
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+        System.out.println("c = " + c);
+        System.out.println("d = " + d);
+        System.out.println("f = " + f);
+        
+        // Reference comparison using ==
+        System.out.println("\n=== REFERENCE COMPARISON (==) ===");
+        System.out.println("a == b: " + (a == b));       // true (same reference from string pool)
+        System.out.println("a == c: " + (a == c));       // false (different object)
+        System.out.println("a == d: " + (a == d));       // true (compile-time concatenation uses pool)
+        System.out.println("a == f: " + (a == f));       // false (runtime concatenation creates new object)
+        
+        // Content comparison using equals()
+        System.out.println("\n=== CONTENT COMPARISON (equals) ===");
+        System.out.println("a.equals(b): " + a.equals(b));  // true (same content)
+        System.out.println("a.equals(c): " + a.equals(c));  // true (same content)
+        System.out.println("a.equals(d): " + a.equals(d));  // true (same content)
+        System.out.println("a.equals(f): " + a.equals(f));  // true (same content)
+        
+        // Case-sensitive vs case-insensitive comparison
+        System.out.println("\n=== CASE SENSITIVITY ===");
+        String upper = "JAVA";
+        String lower = "java";
+        String mixed = "JaVa";
+        
+        System.out.println("Case-sensitive comparison:");
+        System.out.println("a.equals(upper): " + a.equals(upper));  // false
+        System.out.println("a.equals(lower): " + a.equals(lower));  // false
+        System.out.println("a.equals(mixed): " + a.equals(mixed));  // false
+        
+        System.out.println("\nCase-insensitive comparison:");
+        System.out.println("a.equalsIgnoreCase(upper): " + a.equalsIgnoreCase(upper));  // true
+        System.out.println("a.equalsIgnoreCase(lower): " + a.equalsIgnoreCase(lower));  // true
+        System.out.println("a.equalsIgnoreCase(mixed): " + a.equalsIgnoreCase(mixed));  // true
+        
+        // Null handling in comparisons
+        System.out.println("\n=== NULL HANDLING ===");
+        String nullString = null;
+        String nonNullString = "Java";
+        
+        // Unsafe null comparison (can throw NullPointerException)
+        try {
+            System.out.println("nullString.equals(nonNullString): " + nullString.equals(nonNullString));
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException caught: " + e.getMessage());
+        }
+        
+        // Safe null comparison approaches
+        System.out.println("nonNullString.equals(nullString): " + nonNullString.equals(nullString));  // false
+        System.out.println("Objects.equals(nullString, nonNullString): " + 
+                          java.util.Objects.equals(nullString, nonNullString));  // false
+        System.out.println("Objects.equals(nullString, null): " + 
+                          java.util.Objects.equals(nullString, null));  // true
+        
+        // Lexicographic comparison
+        System.out.println("\n=== LEXICOGRAPHIC COMPARISON ===");
+        String[] words = {"Apple", "Banana", "Cherry", "Date", "apple"};
+        
+        for (int i = 0; i < words.length - 1; i++) {
+            int comparison = words[i].compareTo(words[i + 1]);
+            System.out.println("\"" + words[i] + "\".compareTo(\"" + words[i + 1] + "\"): " + comparison);
+            if (comparison < 0) {
+                System.out.println("  " + words[i] + " comes before " + words[i + 1]);
+            } else if (comparison > 0) {
+                System.out.println("  " + words[i] + " comes after " + words[i + 1]);
+            } else {
+                System.out.println("  " + words[i] + " is equal to " + words[i + 1]);
+            }
+        }
+        
+        // Case-insensitive lexicographic comparison
+        System.out.println("\nCase-insensitive comparison:");
+        System.out.println("\"Apple\".compareToIgnoreCase(\"apple\"): " + "Apple".compareToIgnoreCase("apple"));
+        
+        // Practical comparison examples
+        demonstratePracticalComparisons();
+    }
+    
+    public static void demonstratePracticalComparisons() {
+        System.out.println("\n=== PRACTICAL COMPARISON EXAMPLES ===");
+        
+        // User authentication simulation
+        String storedPassword = "SecurePass123";
+        String userInput1 = "SecurePass123";
+        String userInput2 = "securepass123";
+        String userInput3 = "SecurePass124";
+        
+        System.out.println("Password Authentication:");
+        System.out.println("Correct password: " + authenticateUser(storedPassword, userInput1));
+        System.out.println("Wrong case: " + authenticateUser(storedPassword, userInput2));
+        System.out.println("Wrong password: " + authenticateUser(storedPassword, userInput3));
+        
+        // Sorting strings
+        String[] names = {"John", "Alice", "Bob", "Charlie", "Diana"};
+        System.out.println("\nOriginal names: " + java.util.Arrays.toString(names));
+        
+        java.util.Arrays.sort(names);
+        System.out.println("Sorted names: " + java.util.Arrays.toString(names));
+        
+        // Custom comparison for case-insensitive sorting
+        String[] mixedCaseNames = {"john", "Alice", "bob", "Charlie", "diana"};
+        System.out.println("\nMixed case names: " + java.util.Arrays.toString(mixedCaseNames));
+        
+        java.util.Arrays.sort(mixedCaseNames, String.CASE_INSENSITIVE_ORDER);
+        System.out.println("Case-insensitive sorted: " + java.util.Arrays.toString(mixedCaseNames));
+    }
+    
+    public static boolean authenticateUser(String storedPassword, String inputPassword) {
+        return storedPassword.equals(inputPassword);
+    }
+}`
+          },
+          stringConcatenation: {
+            title: "String Concatenation",
+            description: "Different methods to combine strings and their performance implications.",
+            plusOperator: {
+              title: "Using + operator",
+              description: "Simple concatenation using the plus operator.",
+              syntax: "String result = string1 + string2;"
+            },
+            concatMethod: {
+              title: "Using concat() method",
+              description: "String concatenation using the concat() method.",
+              syntax: "String result = string1.concat(string2);"
+            },
+            example: `// String concatenation methods and performance
+public class StringConcatenationDemo {
+    public static void main(String[] args) {
+        String firstName = "John";
+        String lastName = "Doe";
+        int age = 25;
+        
+        // Method 1: Using + operator
+        System.out.println("=== PLUS OPERATOR CONCATENATION ===");
+        String greeting1 = "Hello " + firstName;
+        String fullName1 = firstName + " " + lastName;
+        String introduction1 = "My name is " + firstName + " " + lastName + " and I am " + age + " years old.";
+        
+        System.out.println("greeting1: " + greeting1);
+        System.out.println("fullName1: " + fullName1);
+        System.out.println("introduction1: " + introduction1);
+        
+        // Method 2: Using concat() method
+        System.out.println("\n=== CONCAT METHOD ===");
+        String greeting2 = "Hello ".concat(firstName);
+        String fullName2 = firstName.concat(" ").concat(lastName);
+        
+        System.out.println("greeting2: " + greeting2);
+        System.out.println("fullName2: " + fullName2);
+        
+        // Method 3: Using String.join()
+        System.out.println("\n=== STRING.JOIN METHOD ===");
+        String fullName3 = String.join(" ", firstName, lastName);
+        String csvData = String.join(",", "Apple", "Banana", "Cherry", "Date");
+        String pathData = String.join("/", "home", "user", "documents", "file.txt");
+        
+        System.out.println("fullName3: " + fullName3);
+        System.out.println("csvData: " + csvData);
+        System.out.println("pathData: " + pathData);
+        
+        // Method 4: Using StringBuilder (for multiple concatenations)
+        System.out.println("\n=== STRINGBUILDER ===");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello ");
+        sb.append(firstName);
+        sb.append(" ");
+        sb.append(lastName);
+        sb.append(". You are ");
+        sb.append(age);
+        sb.append(" years old.");
+        String introduction2 = sb.toString();
+        
+        System.out.println("introduction2: " + introduction2);
+        
+        // Method 5: Using String.format()
+        System.out.println("\n=== STRING.FORMAT ===");
+        String formatted = String.format("Hello %s %s. You are %d years old.", firstName, lastName, age);
+        System.out.println("formatted: " + formatted);
+        
+        // Concatenation with different data types
+        System.out.println("\n=== MIXED DATA TYPES ===");
+        double salary = 50000.50;
+        boolean isEmployed = true;
+        char grade = 'A';
+        
+        String mixedConcat = "Employee: " + firstName + ", Salary: $" + salary + 
+                           ", Employed: " + isEmployed + ", Grade: " + grade;
+        System.out.println("mixedConcat: " + mixedConcat);
+        
+        // Performance comparison
+        performanceComparison();
+        
+        // Best practices demonstration
+        demonstrateBestPractices();
+    }
+    
+    public static void performanceComparison() {
+        System.out.println("\n=== PERFORMANCE COMPARISON ===");
+        
+        int iterations = 10000;
+        String baseString = "Test";
+        
+        // Method 1: String concatenation with + (inefficient for loops)
+        long startTime = System.currentTimeMillis();
+        String result1 = "";
+        for (int i = 0; i < iterations; i++) {
+            result1 += baseString;  // Creates new String object each time
+        }
+        long stringConcatTime = System.currentTimeMillis() - startTime;
+        
+        // Method 2: StringBuilder (efficient for loops)
+        startTime = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < iterations; i++) {
+            sb.append(baseString);  // Modifies existing buffer
+        }
+        String result2 = sb.toString();
+        long stringBuilderTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("String concatenation time: " + stringConcatTime + "ms");
+        System.out.println("StringBuilder time: " + stringBuilderTime + "ms");
+        System.out.println("Performance improvement: " + 
+                          (stringConcatTime > 0 ? (stringConcatTime / (double)stringBuilderTime) : "N/A") + "x faster");
+        
+        System.out.println("Result lengths are equal: " + (result1.length() == result2.length()));
+    }
+    
+    public static void demonstrateBestPractices() {
+        System.out.println("\n=== BEST PRACTICES ===");
+        
+        // Good: Simple concatenations
+        String simple = "Hello" + " " + "World";  // Compile-time optimization
+        System.out.println("Simple concatenation: " + simple);
+        
+        // Good: Few concatenations
+        String name = "John";
+        String greeting = "Hello " + name + "!";  // Acceptable for few operations
+        System.out.println("Few concatenations: " + greeting);
+        
+        // Better: Multiple concatenations with StringBuilder
+        StringBuilder report = new StringBuilder();
+        report.append("Employee Report\n");
+        report.append("Name: ").append(name).append("\n");
+        report.append("Department: IT\n");
+        report.append("Status: Active\n");
+        System.out.println("StringBuilder result:\n" + report.toString());
+        
+        // Best: Formatted strings for complex cases
+        String formattedReport = String.format(
+            "Employee Report\nName: %s\nDepartment: %s\nStatus: %s\n",
+            name, "IT", "Active"
+        );
+        System.out.println("Formatted result:\n" + formattedReport);
+        
+        // Avoid: Concatenation in loops (shown in performance comparison)
+        System.out.println("\nRecommendations:");
+        System.out.println("- Use + for simple, few concatenations");
+        System.out.println("- Use StringBuilder for multiple concatenations or loops");
+        System.out.println("- Use String.format() for complex formatting");
+        System.out.println("- Use String.join() for joining arrays/collections");
+    }
+}`
+          },
+          stringBuilderBuffer: {
+            title: "StringBuilder and StringBuffer",
+            description: "Mutable string classes for efficient string manipulation when multiple modifications are needed.",
+            stringBuilder: {
+              title: "StringBuilder: Faster, not thread-safe",
+              description: "Preferred choice for single-threaded applications requiring string manipulation.",
+              characteristics: [
+                "Mutable - can be modified after creation",
+                "Not synchronized - faster performance",
+                "Not thread-safe - use in single-threaded environments",
+                "Automatic capacity management with resizing"
+              ]
+            },
+            stringBuffer: {
+              title: "StringBuffer: Thread-safe, slightly slower",
+              description: "Used in multi-threaded environments where thread safety is required.",
+              characteristics: [
+                "Mutable - can be modified after creation",
+                "Synchronized - thread-safe operations",
+                "Slightly slower due to synchronization overhead",
+                "Automatic capacity management with resizing"
+              ]
+            },
+            example: `// StringBuilder and StringBuffer comprehensive demonstration
+public class StringBuilderBufferDemo {
+    public static void main(String[] args) {
+        // StringBuilder demonstration
+        System.out.println("=== STRINGBUILDER DEMONSTRATION ===");
+        
+        // Creating StringBuilder
+        StringBuilder sb1 = new StringBuilder();                    // Default capacity: 16
+        StringBuilder sb2 = new StringBuilder(50);                  // Custom capacity: 50
+        StringBuilder sb3 = new StringBuilder("Hello");             // Initialize with string
+        
+        System.out.println("Initial StringBuilder states:");
+        System.out.println("sb1 capacity: " + sb1.capacity() + ", length: " + sb1.length());
+        System.out.println("sb2 capacity: " + sb2.capacity() + ", length: " + sb2.length());
+        System.out.println("sb3 capacity: " + sb3.capacity() + ", length: " + sb3.length() + ", content: " + sb3);
+        
+        // StringBuilder methods
+        System.out.println("\nStringBuilder Methods:");
+        
+        // append() - Add to end
+        sb3.append(" World");
+        sb3.append('!');
+        sb3.append(123);
+        sb3.append(true);
+        System.out.println("After appends: " + sb3);
+        
+        // insert() - Add at specific position
+        sb3.insert(6, "Beautiful ");
+        System.out.println("After insert: " + sb3);
+        
+        // delete() and deleteCharAt()
+        sb3.delete(6, 16);  // Remove "Beautiful "
+        System.out.println("After delete: " + sb3);
+        
+        sb3.deleteCharAt(sb3.length() - 1);  // Remove last character
+        System.out.println("After deleteCharAt: " + sb3);
+        
+        // replace() - Replace substring
+        sb3.replace(0, 5, "Hi");
+        System.out.println("After replace: " + sb3);
+        
+        // reverse() - Reverse the string
+        StringBuilder sb4 = new StringBuilder("Hello World");
+        sb4.reverse();
+        System.out.println("Reversed: " + sb4);
+        
+        // setCharAt() - Change character at index
+        sb4.setCharAt(0, 'X');
+        System.out.println("After setCharAt: " + sb4);
+        
+        // StringBuffer demonstration
+        System.out.println("\n=== STRINGBUFFER DEMONSTRATION ===");
+        
+        StringBuffer sbf = new StringBuffer("Thread-Safe");
+        sbf.append(" String");
+        sbf.append(" Buffer");
+        System.out.println("StringBuffer result: " + sbf);
+        
+        // Capacity management
+        System.out.println("\n=== CAPACITY MANAGEMENT ===");
+        StringBuilder capacityDemo = new StringBuilder(10);
+        System.out.println("Initial capacity: " + capacityDemo.capacity());
+        
+        capacityDemo.append("This is a long string that exceeds initial capacity");
+        System.out.println("After long append - capacity: " + capacityDemo.capacity() + 
+                          ", length: " + capacityDemo.length());
+        
+        // Manual capacity control
+        capacityDemo.ensureCapacity(100);
+        System.out.println("After ensureCapacity(100): " + capacityDemo.capacity());
+        
+        capacityDemo.trimToSize();
+        System.out.println("After trimToSize(): " + capacityDemo.capacity());
+        
+        // Performance comparison
+        performanceComparison();
+        
+        // Thread safety demonstration
+        threadSafetyDemo();
+        
+        // Practical examples
+        practicalExamples();
+    }
+    
+    public static void performanceComparison() {
+        System.out.println("\n=== PERFORMANCE COMPARISON ===");
+        
+        int iterations = 50000;
+        String baseString = "Test ";
+        
+        // String concatenation (inefficient)
+        long startTime = System.currentTimeMillis();
+        String result1 = "";
+        for (int i = 0; i < iterations; i++) {
+            result1 += baseString;
+        }
+        long stringTime = System.currentTimeMillis() - startTime;
+        
+        // StringBuilder (efficient)
+        startTime = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < iterations; i++) {
+            sb.append(baseString);
+        }
+        String result2 = sb.toString();
+        long sbTime = System.currentTimeMillis() - startTime;
+        
+        // StringBuffer (thread-safe)
+        startTime = System.currentTimeMillis();
+        StringBuffer sbf = new StringBuffer();
+        for (int i = 0; i < iterations; i++) {
+            sbf.append(baseString);
+        }
+        String result3 = sbf.toString();
+        long sbfTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("String concatenation: " + stringTime + "ms");
+        System.out.println("StringBuilder: " + sbTime + "ms");
+        System.out.println("StringBuffer: " + sbfTime + "ms");
+        
+        if (sbTime > 0) {
+            System.out.println("StringBuilder is " + (stringTime / sbTime) + "x faster than String");
+            System.out.println("StringBuffer is " + (stringTime / sbfTime) + "x faster than String");
+        }
+    }
+    
+    public static void threadSafetyDemo() {
+        System.out.println("\n=== THREAD SAFETY DEMONSTRATION ===");
+        
+        // Shared StringBuilder (not thread-safe)
+        StringBuilder sharedSB = new StringBuilder();
+        
+        // Shared StringBuffer (thread-safe)
+        StringBuffer sharedSBF = new StringBuffer();
+        
+        // Create threads that modify the shared objects
+        Thread[] threads = new Thread[5];
+        
+        // Using StringBuffer (thread-safe)
+        for (int i = 0; i < threads.length; i++) {
+            final int threadNum = i;
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 100; j++) {
+                    sharedSBF.append("T" + threadNum + "-" + j + " ");
+                }
+            });
+        }
+        
+        // Start all threads
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        try {
+            for (Thread thread : threads) {
+                thread.join();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("StringBuffer result length: " + sharedSBF.length());
+        System.out.println("Expected length: " + (5 * 100 * 6)); // 5 threads * 100 iterations * ~6 chars
+        System.out.println("StringBuffer maintained consistency: " + 
+                          (sharedSBF.length() >= 2900)); // Allow some variance
+    }
+    
+    public static void practicalExamples() {
+        System.out.println("\n=== PRACTICAL EXAMPLES ===");
+        
+        // Example 1: Building HTML
+        StringBuilder html = new StringBuilder();
+        html.append("<html>\n");
+        html.append("  <head><title>My Page</title></head>\n");
+        html.append("  <body>\n");
+        html.append("    <h1>Welcome</h1>\n");
+        html.append("    <p>This is a dynamically generated page.</p>\n");
+        html.append("  </body>\n");
+        html.append("</html>");
+        
+        System.out.println("Generated HTML:");
+        System.out.println(html.toString());
+        
+        // Example 2: Building SQL query
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT name, age, email ");
+        sql.append("FROM users ");
+        sql.append("WHERE age > 18 ");
+        sql.append("AND status = 'active' ");
+        sql.append("ORDER BY name");
+        
+        System.out.println("\nGenerated SQL:");
+        System.out.println(sql.toString());
+        
+        // Example 3: Processing log entries
+        String[] logEntries = {
+            "INFO: Application started",
+            "WARN: Low memory detected",
+            "ERROR: Database connection failed",
+            "INFO: User logged in"
+        };
+        
+        StringBuilder logReport = new StringBuilder();
+        logReport.append("=== LOG REPORT ===\n");
+        
+        int infoCount = 0, warnCount = 0, errorCount = 0;
+        
+        for (String entry : logEntries) {
+            logReport.append(entry).append("\n");
+            
+            if (entry.startsWith("INFO")) infoCount++;
+            else if (entry.startsWith("WARN")) warnCount++;
+            else if (entry.startsWith("ERROR")) errorCount++;
+        }
+        
+        logReport.append("\n=== SUMMARY ===\n");
+        logReport.append("INFO: ").append(infoCount).append("\n");
+        logReport.append("WARN: ").append(warnCount).append("\n");
+        logReport.append("ERROR: ").append(errorCount).append("\n");
+        
+        System.out.println("\nLog Report:");
+        System.out.println(logReport.toString());
+        
+        // Example 4: Method chaining
+        String result = new StringBuilder()
+            .append("Method ")
+            .append("chaining ")
+            .append("example")
+            .insert(0, "StringBuilder ")
+            .reverse()
+            .toString();
+        
+        System.out.println("\nMethod chaining result: " + result);
+    }
+}`
+          },
+          stringComparison: {
+            title: "String Comparison",
+            description: "Understanding different ways to compare strings and their implications.",
+            example: `// String comparison demonstration
+public class StringComparisonDemo {
+    public static void main(String[] args) {
+        String a = "Java";
+        String b = "Java";
+        String c = new String("Java");
+        String d = "JAVA";
+        
+        System.out.println("String Comparison Examples:");
+        System.out.println("a = \"Java\" (literal)");
+        System.out.println("b = \"Java\" (literal)");
+        System.out.println("c = new String(\"Java\")");
+        System.out.println("d = \"JAVA\"");
+        
+        // Reference comparison (==)
+        System.out.println("\nReference Comparison (==):");
+        System.out.println("a == b: " + (a == b));       // true (same reference from string pool)
+        System.out.println("a == c: " + (a == c));       // false (different object)
+        System.out.println("b == c: " + (b == c));       // false (different object)
+        
+        // Content comparison (equals)
+        System.out.println("\nContent Comparison (equals):");
+        System.out.println("a.equals(b): " + a.equals(b));  // true (same content)
+        System.out.println("a.equals(c): " + a.equals(c));  // true (same content)
+        System.out.println("a.equals(d): " + a.equals(d));  // false (different case)
+        
+        // Case-insensitive comparison
+        System.out.println("\nCase-insensitive Comparison:");
+        System.out.println("a.equalsIgnoreCase(d): " + a.equalsIgnoreCase(d));  // true
+        
+        // Null-safe comparison
+        String nullStr = null;
+        System.out.println("\nNull-safe Comparison:");
+        System.out.println("a.equals(nullStr): " + a.equals(nullStr));  // false
+        // System.out.println(nullStr.equals(a)); // Would throw NullPointerException
+        System.out.println("Objects.equals(a, nullStr): " + java.util.Objects.equals(a, nullStr));  // false
+        
+        // Lexicographic comparison
+        System.out.println("\nLexicographic Comparison (compareTo):");
+        System.out.println("\"Apple\".compareTo(\"Banana\"): " + "Apple".compareTo("Banana"));  // -1 (negative)
+        System.out.println("\"Banana\".compareTo(\"Apple\"): " + "Banana".compareTo("Apple"));  // 1 (positive)
+        System.out.println("\"Apple\".compareTo(\"Apple\"): " + "Apple".compareTo("Apple"));    // 0 (equal)
+    }
+}`
+          },
+          stringConcatenation: {
+            title: "String Concatenation",
+            description: "Different methods to combine strings and their performance implications.",
+            example: `// String concatenation methods
+public class StringConcatenationDemo {
+    public static void main(String[] args) {
+        String name = "John";
+        String lastName = "Doe";
+        int age = 25;
+        
+        // Method 1: Using + operator
+        String greeting1 = "Hello " + name;
+        String fullInfo1 = "Name: " + name + " " + lastName + ", Age: " + age;
+        
+        System.out.println("Using + operator:");
+        System.out.println(greeting1);
+        System.out.println(fullInfo1);
+        
+        // Method 2: Using concat() method
+        String greeting2 = "Hello ".concat(name);
+        String fullName = name.concat(" ").concat(lastName);
+        
+        System.out.println("\nUsing concat() method:");
+        System.out.println(greeting2);
+        System.out.println(fullName);
+        
+        // Method 3: Using StringBuilder (recommended for multiple concatenations)
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name).append(" ").append(lastName)
+          .append(", Age: ").append(age);
+        String fullInfo2 = sb.toString();
+        
+        System.out.println("\nUsing StringBuilder:");
+        System.out.println(fullInfo2);
+        
+        // Method 4: Using String.join() (Java 8+)
+        String joined = String.join(" ", "Hello", name, lastName);
+        System.out.println("\nUsing String.join():");
+        System.out.println(joined);
+        
+        // Performance comparison
+        demonstratePerformance();
+    }
+    
+    public static void demonstratePerformance() {
+        System.out.println("\n=== Performance Comparison ===");
+        int iterations = 10000;
+        
+        // String concatenation with + (inefficient for loops)
+        long startTime = System.currentTimeMillis();
+        String result1 = "";
+        for (int i = 0; i < iterations; i++) {
+            result1 += "a";  // Creates new String object each time
+        }
+        long stringTime = System.currentTimeMillis() - startTime;
+        
+        // StringBuilder (efficient)
+        startTime = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < iterations; i++) {
+            sb.append("a");
+        }
+        String result2 = sb.toString();
+        long sbTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("String concatenation time: " + stringTime + "ms");
+        System.out.println("StringBuilder time: " + sbTime + "ms");
+        System.out.println("StringBuilder is " + (stringTime / (sbTime + 1)) + "x faster");
+    }
+}`
+          },
+          stringBuilderBuffer: {
+            title: "StringBuilder and StringBuffer",
+            description: "Mutable string classes for efficient string manipulation.",
+            differences: {
+              stringBuilder: {
+                title: "StringBuilder: Faster, not thread-safe",
+                characteristics: [
+                  "Not synchronized",
+                  "Better performance in single-threaded applications",
+                  "Introduced in Java 5",
+                  "Preferred choice for most applications"
+                ]
+              },
+              stringBuffer: {
+                title: "StringBuffer: Thread-safe, slightly slower",
+                characteristics: [
+                  "Synchronized methods",
+                  "Thread-safe for multi-threaded applications",
+                  "Available since Java 1.0",
+                  "Use when thread safety is required"
+                ]
+              }
+            },
+            example: `// StringBuilder and StringBuffer demonstration
+public class StringBuilderBufferDemo {
+    public static void main(String[] args) {
+        // StringBuilder example
+        StringBuilder sb = new StringBuilder("Hello");
+        System.out.println("StringBuilder Operations:");
+        System.out.println("Initial: " + sb);
+        
+        // Append operations
+        sb.append(" World");
+        sb.append("!");
+        sb.append(" Java is ").append("awesome");
+        System.out.println("After appends: " + sb);
+        
+        // Insert operation
+        sb.insert(6, "Beautiful ");
+        System.out.println("After insert: " + sb);
+        
+        // Replace operation
+        sb.replace(6, 15, "Amazing");
+        System.out.println("After replace: " + sb);
+        
+        // Delete operation
+        sb.delete(sb.length() - 9, sb.length());
+        System.out.println("After delete: " + sb);
+        
+        // Reverse operation
+        StringBuilder reversed = new StringBuilder("Java").reverse();
+        System.out.println("Reversed 'Java': " + reversed);
+        
+        // StringBuffer example (similar API)
+        StringBuffer sbf = new StringBuffer("StringBuffer");
+        System.out.println("\nStringBuffer Operations:");
+        System.out.println("Initial: " + sbf);
+        
+        sbf.append(" is thread-safe");
+        System.out.println("After append: " + sbf);
+        
+        // Capacity and length
+        System.out.println("\nCapacity and Length:");
+        StringBuilder capacity = new StringBuilder();
+        System.out.println("Initial capacity: " + capacity.capacity());  // 16
+        System.out.println("Initial length: " + capacity.length());      // 0
+        
+        capacity.append("This is a longer string that exceeds initial capacity");
+        System.out.println("After long append:");
+        System.out.println("Capacity: " + capacity.capacity());
+        System.out.println("Length: " + capacity.length());
+        
+        // Efficient string building
+        demonstrateEfficientBuilding();
+        
+        // Thread safety demonstration
+        demonstrateThreadSafety();
+    }
+    
+    public static void demonstrateEfficientBuilding() {
+        System.out.println("\n=== Efficient String Building ===");
+        
+        // Building a CSV string
+        String[] data = {"Name", "Age", "City", "Country", "Email"};
+        
+        // Using StringBuilder
+        StringBuilder csv = new StringBuilder();
+        for (int i = 0; i < data.length; i++) {
+            csv.append(data[i]);
+            if (i < data.length - 1) {
+                csv.append(",");
+            }
+        }
+        System.out.println("CSV: " + csv.toString());
+        
+        // Building HTML
+        StringBuilder html = new StringBuilder();
+        html.append("<html>");
+        html.append("<body>");
+        html.append("<h1>Welcome</h1>");
+        html.append("<p>This is a paragraph.</p>");
+        html.append("</body>");
+        html.append("</html>");
+        System.out.println("HTML: " + html.toString());
+        
+        // Method chaining
+        String result = new StringBuilder()
+            .append("Method ")
+            .append("chaining ")
+            .append("is ")
+            .append("elegant")
+            .toString();
+        System.out.println("Method chaining: " + result);
+    }
+    
+    public static void demonstrateThreadSafety() {
+        System.out.println("\n=== Thread Safety Demonstration ===");
+        
+        // StringBuffer (thread-safe)
+        StringBuffer threadSafeBuffer = new StringBuffer();
+        
+        // StringBuilder (not thread-safe)
+        StringBuilder nonThreadSafeBuilder = new StringBuilder();
+        
+        System.out.println("StringBuffer is synchronized (thread-safe)");
+        System.out.println("StringBuilder is not synchronized (faster, but not thread-safe)");
+        System.out.println("Use StringBuffer in multi-threaded environments");
+        System.out.println("Use StringBuilder in single-threaded applications for better performance");
+    }
+}`
+          },
+          stringImmutability: {
+            title: "String Immutability",
+            description: "Understanding why strings cannot be modified and the implications.",
+            example: `// String immutability detailed demonstration
+public class StringImmutabilityDetailedDemo {
+    public static void main(String[] args) {
+        String s = "Java";
+        System.out.println("Original string: " + s);
+        System.out.println("Original hashCode: " + s.hashCode());
+        
+        // Attempting to 'modify' the string
+        String result = s.concat(" Programming"); // Does not change 's'
+        System.out.println("\nAfter concat operation:");
+        System.out.println("Original string 's': " + s);           // Still "Java"
+        System.out.println("Result string: " + result);            // "Java Programming"
+        System.out.println("s hashCode: " + s.hashCode());
+        System.out.println("result hashCode: " + result.hashCode());
+        
+        // To reflect the change, reassignment is needed
+        s = s.concat(" Programming");
+        System.out.println("\nAfter reassignment:");
+        System.out.println("s is now: " + s);                     // "Java Programming"
+        
+        // Multiple operations create multiple objects
+        System.out.println("\n=== Multiple Operations ===");
+        String original = "Hello";
+        System.out.println("Starting with: " + original);
+        
+        // Each operation creates a new String object
+        String step1 = original.toUpperCase();     // New object
+        String step2 = step1.concat(" WORLD");     // New object
+        String step3 = step2.replace('O', '0');    // New object
+        String step4 = step3.substring(0, 10);     // New object
+        
+        System.out.println("Original: " + original);  // Unchanged
+        System.out.println("Final result: " + step4);
+        System.out.println("Total String objects created: 5 (including original)");
+        
+        // Demonstrating why immutability matters
+        demonstrateImmutabilityBenefits();
+        
+        // Performance implications
+        demonstratePerformanceImplications();
+    }
+    
+    public static void demonstrateImmutabilityBenefits() {
+        System.out.println("\n=== Benefits of Immutability ===");
+        
+        // 1. Thread Safety
+        String sharedString = "Shared Data";
+        System.out.println("1. Thread Safety: String can be safely shared between threads");
+        
+        // 2. Caching (String Pool)
+        String s1 = "Cache";
+        String s2 = "Cache";
+        System.out.println("2. Caching: s1 == s2 is " + (s1 == s2) + " (same object from pool)");
+        
+        // 3. Security
+        String password = "secret123";
+        processPassword(password);
+        System.out.println("3. Security: Original password unchanged: " + password);
+        
+        // 4. Hashcode caching
+        String hashExample = "HashCode Example";
+        int hash1 = hashExample.hashCode();
+        int hash2 = hashExample.hashCode();
+        System.out.println("4. HashCode Caching: Consistent hash values: " + (hash1 == hash2));
+    }
+    
+    public static void processPassword(String pwd) {
+        // Even if we try to modify, original is safe
+        pwd = pwd.toUpperCase();
+        pwd = pwd + "_PROCESSED";
+        System.out.println("   Processed in method: " + pwd);
+    }
+    
+    public static void demonstratePerformanceImplications() {
+        System.out.println("\n=== Performance Implications ===");
+        
+        // Inefficient: Multiple string concatenations
+        long startTime = System.currentTimeMillis();
+        String inefficient = "";
+        for (int i = 0; i < 1000; i++) {
+            inefficient += "a";  // Creates new object each time
+        }
+        long inefficientTime = System.currentTimeMillis() - startTime;
+        
+        // Efficient: Using StringBuilder
+        startTime = System.currentTimeMillis();
+        StringBuilder efficient = new StringBuilder();
+        for (int i = 0; i < 1000; i++) {
+            efficient.append("a");
+        }
+        String efficientResult = efficient.toString();
+        long efficientTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("Inefficient concatenation time: " + inefficientTime + "ms");
+        System.out.println("Efficient StringBuilder time: " + efficientTime + "ms");
+        System.out.println("Recommendation: Use StringBuilder for multiple concatenations");
+    }
+}`
+          },
+          stringFormatting: {
+            title: "String Formatting",
+            description: "Various methods to format strings with placeholders and values.",
+            example: `// String formatting demonstration
+public class StringFormattingDemo {
+    public static void main(String[] args) {
+        String name = "Alice";
+        int age = 25;
+        double salary = 75000.50;
+        boolean isActive = true;
+        
+        // Method 1: printf() - C-style formatting
+        System.out.println("=== printf() Formatting ===");
+        System.out.printf("Name: %s, Age: %d%n", name, age);
+        System.out.printf("Salary: $%.2f%n", salary);
+        System.out.printf("Active: %b%n", isActive);
+        
+        // Method 2: String.format() - Returns formatted string
+        System.out.println("\n=== String.format() ===");
+        String formatted = String.format("Employee: %s (Age: %d, Salary: $%.2f)", name, age, salary);
+        System.out.println(formatted);
+        
+        // Method 3: Format specifiers
+        System.out.println("\n=== Format Specifiers ===");
+        System.out.printf("String: %s%n", "Hello");
+        System.out.printf("Integer: %d%n", 42);
+        System.out.printf("Float: %f%n", 3.14159);
+        System.out.printf("Float (2 decimals): %.2f%n", 3.14159);
+        System.out.printf("Scientific: %e%n", 1234.5);
+        System.out.printf("Hexadecimal: %x%n", 255);
+        System.out.printf("Octal: %o%n", 64);
+        System.out.printf("Boolean: %b%n", true);
+        System.out.printf("Character: %c%n", 'A');
+        
+        // Method 4: Width and alignment
+        System.out.println("\n=== Width and Alignment ===");
+        System.out.printf("Right aligned: '%10s'%n", "Hello");
+        System.out.printf("Left aligned: '%-10s'%n", "Hello");
+        System.out.printf("Zero padded: '%08d'%n", 42);
+        System.out.printf("Space padded: '%8d'%n", 42);
+        
+        // Method 5: MessageFormat (Java text formatting)
+        System.out.println("\n=== MessageFormat ===");
+        String pattern = "At {0,time} on {0,date}, {1} logged in with {2} privileges.";
+        Object[] arguments = {new java.util.Date(), "Alice", "admin"};
+        String message = java.text.MessageFormat.format(pattern, arguments);
+        System.out.println(message);
+        
+        // Method 6: Practical examples
+        demonstratePracticalFormatting();
+    }
+    
+    public static void demonstratePracticalFormatting() {
+        System.out.println("\n=== Practical Formatting Examples ===");
+        
+        // Table formatting
+        System.out.println("\nTable Format:");
+        System.out.printf("%-10s %-5s %-10s%n", "Name", "Age", "Salary");
+        System.out.printf("%-10s %-5s %-10s%n", "-".repeat(10), "-".repeat(5), "-".repeat(10));
+        System.out.printf("%-10s %-5d $%-9.2f%n", "Alice", 25, 75000.50);
+        System.out.printf("%-10s %-5d $%-9.2f%n", "Bob", 30, 82000.75);
+        System.out.printf("%-10s %-5d $%-9.2f%n", "Charlie", 28, 68000.00);
+        
+        // Currency formatting
+        System.out.println("\nCurrency Formatting:");
+        double[] prices = {19.99, 1234.56, 0.99, 10000.00};
+        for (double price : prices) {
+            System.out.printf("Price: $%,.2f%n", price);
+        }
+        
+        // Percentage formatting
+        System.out.println("\nPercentage Formatting:");
+        double[] rates = {0.15, 0.075, 0.005, 1.25};
+        for (double rate : rates) {
+            System.out.printf("Rate: %.1f%%%n", rate * 100);
+        }
+        
+        // Date and time formatting
+        System.out.println("\nDate/Time Formatting:");
+        java.util.Date now = new java.util.Date();
+        System.out.printf("Full date/time: %tc%n", now);
+        System.out.printf("Date only: %tD%n", now);
+        System.out.printf("Time only: %tT%n", now);
+        System.out.printf("Custom: %tB %td, %tY%n", now, now, now);
+    }
+}`
+          },
+          regexMethods: {
+            title: "Useful Methods from java.util.regex",
+            description: "Pattern matching and regular expression methods for string validation and manipulation.",
+            example: `import java.util.regex.*;
+
+// Regular expression methods demonstration
+public class StringRegexDemo {
+    public static void main(String[] args) {
+        // matches() - for regex pattern matching
+        System.out.println("=== matches() Method ===");
+        String email = "abc@example.com";
+        System.out.println("Email validation:");
+        System.out.println(email + " matches email pattern: " + 
+                          email.matches(".*@.*\\..*"));
+        
+        // More specific email validation
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        System.out.println(email + " matches strict email: " + 
+                          email.matches(emailPattern));
+        
+        // Phone number validation
+        System.out.println("\nPhone number validation:");
+        String[] phones = {"123-456-7890", "(123) 456-7890", "1234567890", "123-45-6789"};
+        String phonePattern = "\\d{3}-\\d{3}-\\d{4}";
+        
+        for (String phone : phones) {
+            System.out.println(phone + " matches pattern: " + phone.matches(phonePattern));
+        }
+        
+        // replaceAll() and replaceFirst() with regex
+        System.out.println("\n=== replaceAll() and replaceFirst() ===");
+        String text = "The year 2023 was great, and 2024 will be better!";
+        System.out.println("Original: " + text);
+        
+        // Replace all digits
+        String noDigits = text.replaceAll("\\d+", "XXXX");
+        System.out.println("All digits replaced: " + noDigits);
+        
+        // Replace first digit sequence only
+        String firstDigitReplaced = text.replaceFirst("\\d+", "YYYY");
+        System.out.println("First digits replaced: " + firstDigitReplaced);
+        
+        // split() with regex
+        System.out.println("\n=== split() with Regex ===");
+        String data = "apple123banana456cherry789grape";
+        System.out.println("Original data: " + data);
+        
+        // Split by digits
+        String[] fruits = data.split("\\d+");
+        System.out.println("Split by digits: " + java.util.Arrays.toString(fruits));
+        
+        // Split by non-alphabetic characters
+        String mixed = "apple,banana;cherry:grape";
+        String[] fruitsMixed = mixed.split("[,;:]");
+        System.out.println("Split by punctuation: " + java.util.Arrays.toString(fruitsMixed));
+        
+        // Pattern and Matcher classes
+        System.out.println("\n=== Pattern and Matcher Classes ===");
+        demonstratePatternMatcher();
+        
+        // Common regex patterns
+        demonstrateCommonPatterns();
+    }
+    
+    public static void demonstratePatternMatcher() {
+        String text = "Contact us at support@company.com or sales@company.com";
+        String emailRegex = "[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}";
+        
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(text);
+        
+        System.out.println("Finding all emails in: " + text);
+        while (matcher.find()) {
+            System.out.println("Found email: " + matcher.group() + 
+                             " at position " + matcher.start() + "-" + matcher.end());
+        }
+        
+        // Replace using Matcher
+        String masked = matcher.replaceAll("[EMAIL_HIDDEN]");
+        System.out.println("Masked text: " + masked);
+    }
+    
+    public static void demonstrateCommonPatterns() {
+        System.out.println("\n=== Common Regex Patterns ===");
+        
+        // Test data
+        String[] testData = {
+            "john.doe@email.com",
+            "123-45-6789",
+            "(555) 123-4567",
+            "192.168.1.1",
+            "https://www.example.com",
+            "ABC123",
+            "12/25/2023",
+            "$1,234.56"
+        };
+        
+        // Patterns
+        String[][] patterns = {
+            {"Email", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"},
+            {"SSN", "^\\d{3}-\\d{2}-\\d{4}$"},
+            {"Phone", "^\\(\\d{3}\\)\\s\\d{3}-\\d{4}$"},
+            {"IP Address", "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"},
+            {"URL", "^https?://[A-Za-z0-9.-]+\\.[A-Za-z]{2,}.*$"},
+            {"Alphanumeric", "^[A-Za-z0-9]+$"},
+            {"Date (MM/DD/YYYY)", "^\\d{2}/\\d{2}/\\d{4}$"},
+            {"Currency", "^\\$[0-9,]+\\.\\d{2}$"}
+        };
+        
+        System.out.printf("%-20s %-15s %-10s%n", "Pattern Type", "Test Data", "Matches");
+        System.out.println("-".repeat(50));
+        
+        for (int i = 0; i < testData.length && i < patterns.length; i++) {
+            boolean matches = testData[i].matches(patterns[i][1]);
+            System.out.printf("%-20s %-15s %-10s%n", 
+                            patterns[i][0], testData[i], matches);
+        }
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
