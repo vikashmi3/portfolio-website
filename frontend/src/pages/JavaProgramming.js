@@ -9564,6 +9564,632 @@ class BankAccount {
     }
 }`
           },
+          interThreadCommunication: {
+            title: "Inter-Thread Communication",
+            description: "Coordination between threads using wait(), notify(), and notifyAll() methods.",
+            methods: {
+              wait: "wait() - Thread releases lock and waits",
+              notify: "notify() - Wakes up one waiting thread",
+              notifyAll: "notifyAll() - Wakes up all waiting threads"
+            },
+            example: `// Inter-thread communication demonstration
+public class InterThreadCommunicationDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Inter-Thread Communication Demo ===");
+        
+        // Producer-Consumer example
+        SharedBuffer buffer = new SharedBuffer(5);
+        
+        Producer producer = new Producer(buffer);
+        Consumer consumer = new Consumer(buffer);
+        
+        Thread producerThread = new Thread(producer, "Producer");
+        Thread consumerThread = new Thread(consumer, "Consumer");
+        
+        producerThread.start();
+        consumerThread.start();
+        
+        try {
+            Thread.sleep(10000); // Let them run for 10 seconds
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        // Stop threads
+        producer.stop();
+        consumer.stop();
+        
+        try {
+            producerThread.join();
+            consumerThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Demo completed");
+    }
+}
+
+class SharedBuffer {
+    private java.util.Queue<Integer> buffer;
+    private int capacity;
+    
+    public SharedBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new java.util.LinkedList<>();
+    }
+    
+    public synchronized void produce(int item) throws InterruptedException {
+        while (buffer.size() == capacity) {
+            System.out.println("Buffer full. Producer waiting...");
+            wait(); // Wait until space is available
+        }
+        
+        buffer.offer(item);
+        System.out.println("Produced: " + item + " (Buffer size: " + buffer.size() + ")");
+        
+        notifyAll(); // Notify waiting consumers
+    }
+    
+    public synchronized int consume() throws InterruptedException {
+        while (buffer.isEmpty()) {
+            System.out.println("Buffer empty. Consumer waiting...");
+            wait(); // Wait until item is available
+        }
+        
+        int item = buffer.poll();
+        System.out.println("Consumed: " + item + " (Buffer size: " + buffer.size() + ")");
+        
+        notifyAll(); // Notify waiting producers
+        return item;
+    }
+}
+
+class Producer implements Runnable {
+    private SharedBuffer buffer;
+    private volatile boolean running = true;
+    private int itemCount = 1;
+    
+    public Producer(SharedBuffer buffer) {
+        this.buffer = buffer;
+    }
+    
+    @Override
+    public void run() {
+        while (running) {
+            try {
+                buffer.produce(itemCount++);
+                Thread.sleep(1000); // Produce every second
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        System.out.println("Producer stopped");
+    }
+    
+    public void stop() {
+        running = false;
+    }
+}
+
+class Consumer implements Runnable {
+    private SharedBuffer buffer;
+    private volatile boolean running = true;
+    
+    public Consumer(SharedBuffer buffer) {
+        this.buffer = buffer;
+    }
+    
+    @Override
+    public void run() {
+        while (running) {
+            try {
+                buffer.consume();
+                Thread.sleep(1500); // Consume every 1.5 seconds
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        System.out.println("Consumer stopped");
+    }
+    
+    public void stop() {
+        running = false;
+    }
+}`
+          },
+          daemonThreads: {
+            title: "Daemon Threads",
+            description: "Background threads that automatically terminate when all non-daemon threads finish.",
+            characteristics: [
+              "Background service threads (e.g., garbage collection)",
+              "Automatically terminate when all user threads end",
+              "Cannot prevent JVM from exiting",
+              "Set before calling start() method"
+            ],
+            example: `// Daemon threads demonstration
+public class DaemonThreadsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Daemon Threads Demo ===");
+        
+        // Create regular (user) thread
+        Thread userThread = new Thread(new UserTask(), "User-Thread");
+        
+        // Create daemon thread
+        Thread daemonThread = new Thread(new DaemonTask(), "Daemon-Thread");
+        daemonThread.setDaemon(true); // Must be set before start()
+        
+        System.out.println("User thread is daemon: " + userThread.isDaemon());
+        System.out.println("Daemon thread is daemon: " + daemonThread.isDaemon());
+        
+        // Start both threads
+        userThread.start();
+        daemonThread.start();
+        
+        // Main thread will finish, but JVM waits for user thread
+        System.out.println("Main thread finishing...");
+        
+        // Demonstrate daemon thread behavior
+        demonstrateDaemonBehavior();
+    }
+    
+    public static void demonstrateDaemonBehavior() {
+        System.out.println("\n=== Daemon Thread Behavior ===");
+        
+        // Create a daemon thread that runs indefinitely
+        Thread infiniteDaemon = new Thread(() -> {
+            int count = 0;
+            while (true) {
+                System.out.println("Daemon working... " + (++count));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }, "Infinite-Daemon");
+        
+        infiniteDaemon.setDaemon(true);
+        infiniteDaemon.start();
+        
+        // Short-lived user thread
+        Thread shortUserThread = new Thread(() -> {
+            for (int i = 1; i <= 3; i++) {
+                System.out.println("User thread working... " + i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+            System.out.println("User thread completed");
+        }, "Short-User-Thread");
+        
+        shortUserThread.start();
+        
+        try {
+            shortUserThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("All user threads completed. JVM will exit, terminating daemon threads.");
+    }
+}
+
+class UserTask implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("User task iteration " + i);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        System.out.println("User task completed");
+    }
+}
+
+class DaemonTask implements Runnable {
+    @Override
+    public void run() {
+        int count = 0;
+        while (true) {
+            System.out.println("Daemon task running... " + (++count));
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.println("Daemon task interrupted");
+                break;
+            }
+        }
+    }
+}`
+          },
+          threadGroupAndExecutors: {
+            title: "ThreadGroup and Executors (Java 5+)",
+            description: "Advanced thread management using ThreadGroup and modern ExecutorService.",
+            threadGroup: {
+              title: "ThreadGroup: Groups multiple threads (not widely used today)",
+              description: "Legacy approach for grouping related threads together."
+            },
+            executorService: {
+              title: "ExecutorService (Preferred modern approach)",
+              description: "High-level thread management with thread pools and task scheduling."
+            },
+            example: `import java.util.concurrent.*;
+
+// ThreadGroup and Executors demonstration
+public class ThreadGroupExecutorsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== ThreadGroup and Executors Demo ===");
+        
+        // Demonstrate ThreadGroup (legacy approach)
+        demonstrateThreadGroup();
+        
+        // Demonstrate ExecutorService (modern approach)
+        demonstrateExecutorService();
+        
+        // Demonstrate different types of thread pools
+        demonstrateThreadPools();
+    }
+    
+    public static void demonstrateThreadGroup() {
+        System.out.println("\n1. ThreadGroup Demonstration:");
+        
+        ThreadGroup workerGroup = new ThreadGroup("WorkerGroup");
+        
+        Thread worker1 = new Thread(workerGroup, new SimpleTask("Task-1", 3), "Worker-1");
+        Thread worker2 = new Thread(workerGroup, new SimpleTask("Task-2", 3), "Worker-2");
+        Thread worker3 = new Thread(workerGroup, new SimpleTask("Task-3", 3), "Worker-3");
+        
+        System.out.println("ThreadGroup name: " + workerGroup.getName());
+        System.out.println("Active threads before start: " + workerGroup.activeCount());
+        
+        worker1.start();
+        worker2.start();
+        worker3.start();
+        
+        System.out.println("Active threads after start: " + workerGroup.activeCount());
+        
+        // Wait for all threads in group to complete
+        while (workerGroup.activeCount() > 0) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        
+        System.out.println("All threads in group completed");
+    }
+    
+    public static void demonstrateExecutorService() {
+        System.out.println("\n2. ExecutorService Demonstration:");
+        
+        // Create a fixed thread pool with 3 threads
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        
+        System.out.println("Submitting tasks to ExecutorService...");
+        
+        // Submit tasks
+        for (int i = 1; i <= 6; i++) {
+            executor.execute(new SimpleTask("ExecutorTask-" + i, 2));
+        }
+        
+        // Submit callable tasks (with return values)
+        Future<String> future1 = executor.submit(new CallableTask("Callable-1", 1000));
+        Future<String> future2 = executor.submit(new CallableTask("Callable-2", 1500));
+        
+        try {
+            // Get results from callable tasks
+            System.out.println("Result 1: " + future1.get());
+            System.out.println("Result 2: " + future2.get());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        
+        // Shutdown executor
+        executor.shutdown();
+        
+        try {
+            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+        }
+        
+        System.out.println("ExecutorService shutdown completed");
+    }
+    
+    public static void demonstrateThreadPools() {
+        System.out.println("\n3. Different Thread Pool Types:");
+        
+        // Fixed Thread Pool
+        System.out.println("\na) Fixed Thread Pool (3 threads):");
+        ExecutorService fixedPool = Executors.newFixedThreadPool(3);
+        for (int i = 1; i <= 5; i++) {
+            fixedPool.execute(new SimpleTask("Fixed-" + i, 1));
+        }
+        fixedPool.shutdown();
+        
+        // Cached Thread Pool
+        System.out.println("\nb) Cached Thread Pool:");
+        ExecutorService cachedPool = Executors.newCachedThreadPool();
+        for (int i = 1; i <= 5; i++) {
+            cachedPool.execute(new SimpleTask("Cached-" + i, 1));
+        }
+        cachedPool.shutdown();
+        
+        // Single Thread Executor
+        System.out.println("\nc) Single Thread Executor:");
+        ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
+        for (int i = 1; i <= 3; i++) {
+            singleExecutor.execute(new SimpleTask("Single-" + i, 1));
+        }
+        singleExecutor.shutdown();
+        
+        // Scheduled Thread Pool
+        System.out.println("\nd) Scheduled Thread Pool:");
+        ScheduledExecutorService scheduledPool = Executors.newScheduledThreadPool(2);
+        
+        // Schedule task with delay
+        scheduledPool.schedule(new SimpleTask("Delayed-Task", 1), 2, TimeUnit.SECONDS);
+        
+        // Schedule task with fixed rate
+        ScheduledFuture<?> periodicTask = scheduledPool.scheduleAtFixedRate(
+            new SimpleTask("Periodic-Task", 0), 1, 2, TimeUnit.SECONDS);
+        
+        // Cancel periodic task after 8 seconds
+        scheduledPool.schedule(() -> {
+            periodicTask.cancel(false);
+            System.out.println("Periodic task cancelled");
+        }, 8, TimeUnit.SECONDS);
+        
+        // Shutdown scheduled pool after 10 seconds
+        scheduledPool.schedule(() -> {
+            scheduledPool.shutdown();
+            System.out.println("Scheduled pool shutdown");
+        }, 10, TimeUnit.SECONDS);
+        
+        // Wait for all pools to complete
+        try {
+            fixedPool.awaitTermination(5, TimeUnit.SECONDS);
+            cachedPool.awaitTermination(5, TimeUnit.SECONDS);
+            singleExecutor.awaitTermination(5, TimeUnit.SECONDS);
+            scheduledPool.awaitTermination(15, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("All thread pools completed");
+    }
+}
+
+class SimpleTask implements Runnable {
+    private String taskName;
+    private int iterations;
+    
+    public SimpleTask(String taskName, int iterations) {
+        this.taskName = taskName;
+        this.iterations = iterations;
+    }
+    
+    @Override
+    public void run() {
+        String threadName = Thread.currentThread().getName();
+        System.out.println(taskName + " started on " + threadName);
+        
+        for (int i = 1; i <= iterations; i++) {
+            System.out.println(taskName + " iteration " + i + " on " + threadName);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        
+        System.out.println(taskName + " completed on " + threadName);
+    }
+}
+
+class CallableTask implements Callable<String> {
+    private String taskName;
+    private int duration;
+    
+    public CallableTask(String taskName, int duration) {
+        this.taskName = taskName;
+        this.duration = duration;
+    }
+    
+    @Override
+    public String call() throws Exception {
+        String threadName = Thread.currentThread().getName();
+        System.out.println(taskName + " started on " + threadName);
+        
+        Thread.sleep(duration);
+        
+        String result = taskName + " completed on " + threadName + " after " + duration + "ms";
+        System.out.println(result);
+        return result;
+    }
+}`
+          },
+          bestPractices: {
+            title: "Best Practices",
+            description: "Guidelines for effective multithreading in Java applications.",
+            practices: [
+              "Use Runnable over Thread for better OOP",
+              "Always use synchronized when sharing resources",
+              "Prefer Executors for scalable thread management",
+              "Avoid blocking threads for too long (sleep, wait)",
+              "Use thread-safe collections when possible",
+              "Handle InterruptedException properly"
+            ],
+            example: `// Multithreading best practices demonstration
+public class MultithreadingBestPracticesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Multithreading Best Practices ===");
+        
+        // Practice 1: Use Runnable over Thread
+        demonstrateRunnableOverThread();
+        
+        // Practice 2: Use thread-safe collections
+        demonstrateThreadSafeCollections();
+        
+        // Practice 3: Proper exception handling
+        demonstrateProperExceptionHandling();
+        
+        // Practice 4: Use ExecutorService for better management
+        demonstrateExecutorServiceBestPractices();
+    }
+    
+    public static void demonstrateRunnableOverThread() {
+        System.out.println("\n1. Use Runnable over Thread:");
+        
+        // Good: Using Runnable allows extending other classes
+        class DataProcessor extends SomeBaseClass implements Runnable {
+            private String data;
+            
+            public DataProcessor(String data) {
+                this.data = data;
+            }
+            
+            @Override
+            public void run() {
+                processData(data);
+            }
+            
+            private void processData(String data) {
+                System.out.println("Processing: " + data + " on " + Thread.currentThread().getName());
+            }
+        }
+        
+        Thread thread = new Thread(new DataProcessor("Sample Data"), "Processor-Thread");
+        thread.start();
+        
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public static void demonstrateThreadSafeCollections() {
+        System.out.println("\n2. Use Thread-Safe Collections:");
+        
+        // Thread-safe collections
+        java.util.concurrent.ConcurrentHashMap<String, Integer> safeMap = 
+            new java.util.concurrent.ConcurrentHashMap<>();
+        java.util.concurrent.CopyOnWriteArrayList<String> safeList = 
+            new java.util.concurrent.CopyOnWriteArrayList<>();
+        
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        
+        // Multiple threads modifying collections safely
+        for (int i = 1; i <= 5; i++) {
+            final int taskId = i;
+            executor.execute(() -> {
+                safeMap.put("Key" + taskId, taskId);
+                safeList.add("Item" + taskId);
+                System.out.println("Thread " + Thread.currentThread().getName() + 
+                                 " added Key" + taskId);
+            });
+        }
+        
+        executor.shutdown();
+        try {
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("Final map size: " + safeMap.size());
+        System.out.println("Final list size: " + safeList.size());
+    }
+    
+    public static void demonstrateProperExceptionHandling() {
+        System.out.println("\n3. Proper Exception Handling:");
+        
+        Thread interruptibleThread = new Thread(() -> {
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+                    System.out.println("Working...");
+                    Thread.sleep(1000); // This can throw InterruptedException
+                }
+            } catch (InterruptedException e) {
+                // Restore interrupted status
+                Thread.currentThread().interrupt();
+                System.out.println("Thread was interrupted, cleaning up...");
+            }
+            System.out.println("Thread finished gracefully");
+        }, "Interruptible-Thread");
+        
+        interruptibleThread.start();
+        
+        // Interrupt after 3 seconds
+        try {
+            Thread.sleep(3000);
+            interruptibleThread.interrupt();
+            interruptibleThread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public static void demonstrateExecutorServiceBestPractices() {
+        System.out.println("\n4. ExecutorService Best Practices:");
+        
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        
+        try {
+            // Submit tasks
+            for (int i = 1; i <= 4; i++) {
+                final int taskId = i;
+                executor.execute(() -> {
+                    System.out.println("Task " + taskId + " executing on " + 
+                                     Thread.currentThread().getName());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                });
+            }
+        } finally {
+            // Always shutdown executor in finally block
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                    System.out.println("Forcing shutdown...");
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        System.out.println("ExecutorService properly shutdown");
+    }
+}
+
+// Base class to demonstrate inheritance with Runnable
+class SomeBaseClass {
+    protected void logMessage(String message) {
+        System.out.println("Log: " + message);
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
