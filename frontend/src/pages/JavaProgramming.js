@@ -16173,6 +16173,394 @@ public class LibraryManagementSystem {
             )}
           </div>
         </motion.div>
+        {/* Java Collections Framework Section */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold mb-6 text-blue-600">Java Collections Framework (JCF)</h2>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <p className="text-gray-700 mb-6">
+              The Java Collections Framework is a unified architecture for representing and manipulating 
+              collections of objects. It provides interfaces, implementations, and algorithms for common 
+              data structures like lists, sets, maps, and queues.
+            </p>
+
+            {/* Core Interfaces */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Core Interfaces</h3>
+              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full bg-white border border-gray-300">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-4 py-2 border text-left font-semibold">Interface</th>
+                        <th className="px-4 py-2 border text-left font-semibold">Description</th>
+                        <th className="px-4 py-2 border text-left font-semibold">Key Features</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="px-4 py-2 border font-mono text-blue-600">Collection</td>
+                        <td className="px-4 py-2 border">Root interface for List, Set, Queue</td>
+                        <td className="px-4 py-2 border text-sm">add(), remove(), size(), iterator()</td>
+                      </tr>
+                      <tr className="bg-gray-50">
+                        <td className="px-4 py-2 border font-mono text-blue-600">List</td>
+                        <td className="px-4 py-2 border">Ordered collection (duplicates allowed)</td>
+                        <td className="px-4 py-2 border text-sm">get(), set(), indexOf(), subList()</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 border font-mono text-blue-600">Set</td>
+                        <td className="px-4 py-2 border">Unordered, unique elements</td>
+                        <td className="px-4 py-2 border text-sm">No duplicates, mathematical set operations</td>
+                      </tr>
+                      <tr className="bg-gray-50">
+                        <td className="px-4 py-2 border font-mono text-blue-600">Queue</td>
+                        <td className="px-4 py-2 border">FIFO (First-In-First-Out) structures</td>
+                        <td className="px-4 py-2 border text-sm">offer(), poll(), peek()</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 border font-mono text-blue-600">Map</td>
+                        <td className="px-4 py-2 border">Key-value pairs (not part of Collection)</td>
+                        <td className="px-4 py-2 border text-sm">put(), get(), keySet(), values()</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div className="bg-blue-50 p-4 rounded border-l-4 border-blue-400 mt-4">
+                  <h4 className="font-semibold text-blue-800 mb-2">Core Interfaces Example:</h4>
+                  <pre className="bg-gray-800 text-green-400 p-4 rounded text-sm overflow-x-auto">
+{`import java.util.*;
+
+public class CoreInterfacesDemo {
+    public static void main(String[] args) {
+        demonstrateList();
+        demonstrateSet();
+        demonstrateQueue();
+        demonstrateMap();
+    }
+    
+    // List Interface - Ordered, allows duplicates
+    static void demonstrateList() {
+        System.out.println("=== List Interface Demo ===");
+        List<String> fruits = new ArrayList<>();
+        
+        // Adding elements
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Apple"); // Duplicate allowed
+        fruits.add(1, "Orange"); // Insert at index
+        
+        System.out.println("List: " + fruits);
+        System.out.println("Element at index 0: " + fruits.get(0));
+        System.out.println("Index of Apple: " + fruits.indexOf("Apple"));
+        System.out.println("Size: " + fruits.size());
+        
+        // Sublist
+        List<String> subList = fruits.subList(1, 3);
+        System.out.println("SubList (1-3): " + subList);
+    }
+    
+    // Set Interface - Unique elements only
+    static void demonstrateSet() {
+        System.out.println("\n=== Set Interface Demo ===");
+        Set<Integer> numbers = new HashSet<>();
+        
+        // Adding elements
+        numbers.add(10);
+        numbers.add(20);
+        numbers.add(10); // Duplicate ignored
+        numbers.add(30);
+        
+        System.out.println("Set: " + numbers);
+        System.out.println("Contains 20: " + numbers.contains(20));
+        System.out.println("Size: " + numbers.size());
+        
+        // Set operations
+        Set<Integer> otherNumbers = Set.of(20, 30, 40);
+        Set<Integer> union = new HashSet<>(numbers);
+        union.addAll(otherNumbers);
+        System.out.println("Union: " + union);
+    }
+    
+    // Queue Interface - FIFO operations
+    static void demonstrateQueue() {
+        System.out.println("\n=== Queue Interface Demo ===");
+        Queue<String> queue = new LinkedList<>();
+        
+        // Adding elements (enqueue)
+        queue.offer("First");
+        queue.offer("Second");
+        queue.offer("Third");
+        
+        System.out.println("Queue: " + queue);
+        System.out.println("Peek (front): " + queue.peek());
+        
+        // Removing elements (dequeue)
+        while (!queue.isEmpty()) {
+            System.out.println("Removed: " + queue.poll());
+        }
+    }
+    
+    // Map Interface - Key-value pairs
+    static void demonstrateMap() {
+        System.out.println("\n=== Map Interface Demo ===");
+        Map<String, Integer> ages = new HashMap<>();
+        
+        // Adding key-value pairs
+        ages.put("Alice", 25);
+        ages.put("Bob", 30);
+        ages.put("Charlie", 35);
+        
+        System.out.println("Map: " + ages);
+        System.out.println("Alice's age: " + ages.get("Alice"));
+        System.out.println("Contains key 'Bob': " + ages.containsKey("Bob"));
+        
+        // Iterating through map
+        System.out.println("All entries:");
+        for (Map.Entry<String, Integer> entry : ages.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+    }
+}`}
+                  </pre>
+                </div>
+              </div>
+            </div>
+
+            {/* Implementation Classes */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Important Implementation Classes</h3>
+              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div className="bg-green-50 p-4 rounded border-l-4 border-green-400">
+                    <h4 className="font-semibold text-green-800 mb-2">List Implementations</h4>
+                    <ul className="text-sm text-gray-700 space-y-1">
+                      <li>• <strong>ArrayList</strong>: Resizable array, fast random access</li>
+                      <li>• <strong>LinkedList</strong>: Doubly-linked list, fast insertion/deletion</li>
+                      <li>• <strong>Vector</strong>: Synchronized ArrayList (legacy)</li>
+                      <li>• <strong>Stack</strong>: LIFO operations (extends Vector)</li>
+                    </ul>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded border-l-4 border-blue-400">
+                    <h4 className="font-semibold text-blue-800 mb-2">Set Implementations</h4>
+                    <ul className="text-sm text-gray-700 space-y-1">
+                      <li>• <strong>HashSet</strong>: Hash table, O(1) operations</li>
+                      <li>• <strong>LinkedHashSet</strong>: Maintains insertion order</li>
+                      <li>• <strong>TreeSet</strong>: Sorted set, O(log n) operations</li>
+                      <li>• <strong>EnumSet</strong>: Optimized for enum types</li>
+                    </ul>
+                  </div>
+                  <div className="bg-purple-50 p-4 rounded border-l-4 border-purple-400">
+                    <h4 className="font-semibold text-purple-800 mb-2">Queue Implementations</h4>
+                    <ul className="text-sm text-gray-700 space-y-1">
+                      <li>• <strong>PriorityQueue</strong>: Heap-based priority queue</li>
+                      <li>• <strong>ArrayDeque</strong>: Resizable array deque</li>
+                      <li>• <strong>LinkedList</strong>: Also implements Queue</li>
+                    </ul>
+                  </div>
+                  <div className="bg-orange-50 p-4 rounded border-l-4 border-orange-400">
+                    <h4 className="font-semibold text-orange-800 mb-2">Map Implementations</h4>
+                    <ul className="text-sm text-gray-700 space-y-1">
+                      <li>• <strong>HashMap</strong>: Hash table, O(1) operations</li>
+                      <li>• <strong>LinkedHashMap</strong>: Maintains insertion order</li>
+                      <li>• <strong>TreeMap</strong>: Sorted map, O(log n) operations</li>
+                      <li>• <strong>Hashtable</strong>: Synchronized HashMap (legacy)</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                  <h4 className="font-semibold text-yellow-800 mb-2">Implementation Classes Comparison:</h4>
+                  <pre className="bg-gray-800 text-green-400 p-4 rounded text-sm overflow-x-auto">
+{`import java.util.*;
+
+public class ImplementationComparison {
+    public static void main(String[] args) {
+        compareListImplementations();
+        compareSetImplementations();
+        compareMapImplementations();
+        demonstratePerformance();
+    }
+    
+    // Compare List implementations
+    static void compareListImplementations() {
+        System.out.println("=== List Implementations Comparison ===");
+        
+        // ArrayList - Best for random access
+        List<String> arrayList = new ArrayList<>();
+        arrayList.addAll(Arrays.asList("A", "B", "C", "D"));
+        System.out.println("ArrayList: " + arrayList);
+        System.out.println("Random access (index 2): " + arrayList.get(2));
+        
+        // LinkedList - Best for frequent insertions/deletions
+        List<String> linkedList = new LinkedList<>();
+        linkedList.addAll(Arrays.asList("A", "B", "C", "D"));
+        linkedList.add(1, "X"); // Insert in middle
+        System.out.println("LinkedList after insertion: " + linkedList);
+        
+        // Vector - Synchronized (thread-safe)
+        List<String> vector = new Vector<>();
+        vector.addAll(Arrays.asList("A", "B", "C"));
+        System.out.println("Vector (synchronized): " + vector);
+        
+        // Stack - LIFO operations
+        Stack<String> stack = new Stack<>();
+        stack.push("Bottom");
+        stack.push("Middle");
+        stack.push("Top");
+        System.out.println("Stack: " + stack);
+        System.out.println("Pop: " + stack.pop());
+    }
+    
+    // Compare Set implementations
+    static void compareSetImplementations() {
+        System.out.println("\n=== Set Implementations Comparison ===");
+        
+        // HashSet - No ordering, fastest
+        Set<String> hashSet = new HashSet<>();
+        hashSet.addAll(Arrays.asList("C", "A", "B", "D"));
+        System.out.println("HashSet (no order): " + hashSet);
+        
+        // LinkedHashSet - Maintains insertion order
+        Set<String> linkedHashSet = new LinkedHashSet<>();
+        linkedHashSet.addAll(Arrays.asList("C", "A", "B", "D"));
+        System.out.println("LinkedHashSet (insertion order): " + linkedHashSet);
+        
+        // TreeSet - Natural ordering (sorted)
+        Set<String> treeSet = new TreeSet<>();
+        treeSet.addAll(Arrays.asList("C", "A", "B", "D"));
+        System.out.println("TreeSet (sorted): " + treeSet);
+        
+        // EnumSet - Optimized for enums
+        enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY }
+        Set<Day> enumSet = EnumSet.of(Day.MONDAY, Day.WEDNESDAY, Day.FRIDAY);
+        System.out.println("EnumSet: " + enumSet);
+    }
+    
+    // Compare Map implementations
+    static void compareMapImplementations() {
+        System.out.println("\n=== Map Implementations Comparison ===");
+        
+        // HashMap - No ordering, fastest
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("Charlie", 3);
+        hashMap.put("Alice", 1);
+        hashMap.put("Bob", 2);
+        System.out.println("HashMap (no order): " + hashMap);
+        
+        // LinkedHashMap - Maintains insertion order
+        Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
+        linkedHashMap.put("Charlie", 3);
+        linkedHashMap.put("Alice", 1);
+        linkedHashMap.put("Bob", 2);
+        System.out.println("LinkedHashMap (insertion order): " + linkedHashMap);
+        
+        // TreeMap - Natural key ordering (sorted)
+        Map<String, Integer> treeMap = new TreeMap<>();
+        treeMap.put("Charlie", 3);
+        treeMap.put("Alice", 1);
+        treeMap.put("Bob", 2);
+        System.out.println("TreeMap (sorted by key): " + treeMap);
+    }
+    
+    // Performance demonstration
+    static void demonstratePerformance() {
+        System.out.println("\n=== Performance Comparison ===");
+        int size = 100000;
+        
+        // ArrayList vs LinkedList for random access
+        List<Integer> arrayList = new ArrayList<>();
+        List<Integer> linkedList = new LinkedList<>();
+        
+        // Populate lists
+        for (int i = 0; i < size; i++) {
+            arrayList.add(i);
+            linkedList.add(i);
+        }
+        
+        // Random access performance
+        long startTime = System.nanoTime();
+        for (int i = 0; i < 1000; i++) {
+            arrayList.get(size / 2);
+        }
+        long arrayListTime = System.nanoTime() - startTime;
+        
+        startTime = System.nanoTime();
+        for (int i = 0; i < 1000; i++) {
+            linkedList.get(size / 2);
+        }
+        long linkedListTime = System.nanoTime() - startTime;
+        
+        System.out.printf("Random Access Performance:%n");
+        System.out.printf("ArrayList: %.2f ms%n", arrayListTime / 1_000_000.0);
+        System.out.printf("LinkedList: %.2f ms%n", linkedListTime / 1_000_000.0);
+        System.out.printf("ArrayList is %.1fx faster for random access%n", 
+            (double) linkedListTime / arrayListTime);
+    }
+}`}
+                  </pre>
+                </div>
+              </div>
+            </div>
+
+            {/* Iterating Collections */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Iterating Collections</h3>
+              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div className="bg-cyan-50 p-4 rounded border-l-4 border-cyan-400">
+                    <h4 className="font-semibold text-cyan-800 mb-2">For-Each Loop</h4>
+                    <p className="text-sm text-gray-700 mb-2">Simple iteration when index not needed</p>
+                    <code className="text-xs bg-gray-200 p-1 rounded">for (Type item : collection)</code>
+                  </div>
+                  <div className="bg-emerald-50 p-4 rounded border-l-4 border-emerald-400">
+                    <h4 className="font-semibold text-emerald-800 mb-2">Iterator</h4>
+                    <p className="text-sm text-gray-700 mb-2">Safe removal during iteration</p>
+                    <code className="text-xs bg-gray-200 p-1 rounded">Iterator&lt;T&gt; it = collection.iterator()</code>
+                  </div>
+                </div>
+                
+                <div className="bg-red-50 p-4 rounded border-l-4 border-red-400">
+                  <h4 className="font-semibold text-red-800 mb-2">Iteration Methods Example:</h4>
+                  <pre className="bg-gray-800 text-green-400 p-4 rounded text-sm overflow-x-auto">
+{`import java.util.*;
+
+public class IterationDemo {
+    public static void main(String[] args) {
+        List<String> fruits = new ArrayList<>(Arrays.asList("Apple", "Banana", "Cherry", "Date"));
+        
+        // For-each loop
+        System.out.println("Using for-each loop:");
+        for (String fruit : fruits) {
+            System.out.println("- " + fruit);
+        }
+        
+        // Iterator
+        System.out.println("\nUsing Iterator:");
+        Iterator<String> iterator = fruits.iterator();
+        while (iterator.hasNext()) {
+            String fruit = iterator.next();
+            System.out.println("- " + fruit);
+            if (fruit.equals("Banana")) {
+                iterator.remove(); // Safe removal
+            }
+        }
+        System.out.println("After removal: " + fruits);
+        
+        // Stream API (Java 8+)
+        System.out.println("\nUsing Stream API:");
+        fruits.stream()
+              .filter(fruit -> fruit.startsWith("A"))
+              .forEach(fruit -> System.out.println("- " + fruit));
+    }
+}`}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
   );
