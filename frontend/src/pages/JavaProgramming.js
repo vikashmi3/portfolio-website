@@ -21,6 +21,8 @@ const JavaProgramming = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('syllabus');
   const [expandedExample, setExpandedExample] = useState(null);
+  const [showTheory, setShowTheory] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const courseDetails = {
     name: "Java Programming",
@@ -39,8 +41,37 @@ const JavaProgramming = () => {
         "Rich API - Extensive standard library",
         "Multithreading - Built-in support for concurrent programming",
         "Security - Built-in security features and sandboxing",
-        "Enterprise Ready - Robust for large-scale applications"
+        "Enterprise Ready - Robust for large-scale applications",
+        "JVM Internals - Class loading, Just-In-Time (JIT) compilation, and memory areas (Heap, Stack, Method Area, etc.)",
+        "Java 8+ Features - Lambdas, Streams, Optional, new Date/Time API, default methods in interfaces"
       ],
+      advancedTheory: {
+        jvm: `// JVM Internals
+// The Java Virtual Machine (JVM) is responsible for running Java bytecode. Key components include:
+// - Class Loader: Loads .class files into memory
+// - Bytecode Verifier: Ensures code safety and integrity
+// - Runtime Data Areas: Heap (objects), Stack (method calls, local vars), Method Area (class metadata), PC Register, Native Method Stack
+// - Execution Engine: Interprets or JIT-compiles bytecode to native machine code
+// - Garbage Collector: Automatically reclaims unused memory
+`,
+        memory: `// Java Memory Management
+// Java uses automatic garbage collection. Key memory areas:
+// - Heap: Stores all objects and arrays
+// - Stack: Stores method frames, local variables, and partial results
+// - Method Area: Stores class definitions, static variables, method code
+// - Garbage Collector: Runs in the background, frees memory of unreachable objects
+// - Strong, Weak, Soft, Phantom references for advanced memory control
+`,
+        java8: `// Java 8+ Features
+// - Lambda Expressions: Enable functional programming
+// - Stream API: Process collections with map/filter/reduce
+// - Optional: Avoid null pointer exceptions
+// - New Date/Time API: java.time package
+// - Default/Static methods in interfaces
+// - Method references, functional interfaces
+// - Parallel streams for multicore processing
+`
+      },
       syntax: {
         basic: `// Java Basic Syntax Overview
 
@@ -112,6 +143,154 @@ try {
           "Always use meaningful names for variables and methods"
         ]
       },
+      extraExamples: [
+        {
+          title: "File I/O: Reading and Writing Files",
+          code: `import java.io.*;
+
+public class FileIODemo {
+    public static void main(String[] args) {
+        // Writing to a file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+            writer.write("Hello, Java File I/O!\n");
+            writer.write("This is a new line.\n");
+        } catch (IOException e) {
+            System.err.println("Error writing file: " + e.getMessage());
+        }
+
+        // Reading from a file
+        try (BufferedReader reader = new BufferedReader(new FileReader("output.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+}`,
+          explanation: "Demonstrates file writing and reading using BufferedWriter and BufferedReader. Always close resources or use try-with-resources."
+        },
+        {
+          title: "Networking: Simple TCP Client and Server",
+          code: `// Simple TCP Server
+import java.io.*;
+import java.net.*;
+
+public class SimpleServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(12345);
+        System.out.println("Server started on port 12345");
+        Socket clientSocket = serverSocket.accept();
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        out.println("Hello from server!");
+        String clientMsg = in.readLine();
+        System.out.println("Client says: " + clientMsg);
+        in.close(); out.close(); clientSocket.close(); serverSocket.close();
+    }
+}
+
+// Simple TCP Client
+import java.io.*;
+import java.net.*;
+
+public class SimpleClient {
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("localhost", 12345);
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        System.out.println(in.readLine());
+        out.println("Hello from client!");
+        in.close(); out.close(); socket.close();
+    }
+}`,
+          explanation: "Shows a basic TCP server and client using java.net.ServerSocket and Socket."
+        },
+        {
+          title: "GUI: Simple Java Swing Window",
+          code: `import javax.swing.*;
+
+public class SwingDemo {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Swing Demo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        JLabel label = new JLabel("Hello, Java Swing!", SwingConstants.CENTER);
+        frame.add(label);
+        frame.setVisible(true);
+    }
+}`,
+          explanation: "Creates a simple window with a label using Java Swing."
+        },
+        {
+          title: "Lambda Expressions and Stream API",
+          code: `import java.util.*;
+import java.util.stream.*;
+
+public class LambdaStreamDemo {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "Diana");
+        // Print all names in uppercase using lambda
+        names.forEach(name -> System.out.println(name.toUpperCase()));
+
+        // Filter names starting with 'C' and collect
+        List<String> cNames = names.stream()
+            .filter(name -> name.startsWith("C"))
+            .collect(Collectors.toList());
+        System.out.println("Names starting with C: " + cNames);
+
+        // Sum of squares using streams
+        int sum = IntStream.range(1, 6)
+            .map(x -> x * x)
+            .sum();
+        System.out.println("Sum of squares 1-5: " + sum);
+    }
+}`,
+          explanation: "Demonstrates lambda expressions, forEach, filter, map, and collect with the Stream API."
+        },
+        {
+          title: "Multithreading: Runnable and ExecutorService",
+          code: `import java.util.concurrent.*;
+
+public class ThreadDemo {
+    public static void main(String[] args) {
+        Runnable task = () -> {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println(Thread.currentThread().getName() + " - Count: " + i);
+            }
+        };
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        executor.submit(task);
+        executor.submit(task);
+        executor.shutdown();
+    }
+}`,
+          explanation: "Shows how to use Runnable and ExecutorService for multithreading."
+        },
+        {
+          title: "JDBC: Database Access Example",
+          code: `import java.sql.*;
+
+public class JDBCDemo {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydb";
+        String user = "root";
+        String password = "password";
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id, name FROM students");
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + ": " + rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+        }
+    }
+}`,
+          explanation: "Basic JDBC example for connecting to a MySQL database and querying data."
+        }
+      ],
       algorithms: {
         quicksort: {
           title: "Quick Sort Algorithm",
@@ -1272,6 +1451,39 @@ public class LibraryManagementSystem {
             duration: "15-20 hours"
           }
         ]
+      },
+      {
+        week: 10,
+        title: "Java 8+ Features and Best Practices",
+        topics: [
+          "JVM internals and memory management",
+          "Lambda expressions and functional interfaces",
+          "Stream API and parallel streams",
+          "Optional and null safety",
+          "Modern Date/Time API",
+          "Best practices for clean code and performance"
+        ],
+        practicals: [
+          "Analyze JVM memory usage",
+          "Write code using lambdas and streams",
+          "Refactor legacy code to use Java 8+ features"
+        ],
+        projects: [
+          {
+            title: "Project 9: Java Modernization Toolkit",
+            description: "Refactor a legacy Java application to use Java 8+ features and best practices",
+            features: [
+              "Replace loops with streams",
+              "Use Optional for null safety",
+              "Implement new Date/Time API",
+              "Profile and optimize memory usage",
+              "Document and test modernized code"
+            ],
+            technologies: ["Java 8+", "Streams", "Optional", "Date/Time API"],
+            difficulty: "Advanced",
+            duration: "6-8 hours"
+          }
+        ]
       }
     ],
     features: [
@@ -1322,14 +1534,58 @@ public class LibraryManagementSystem {
           <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
             {courseDetails.fullDescription}
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 mb-6">
             {courseDetails.features.map((feature, index) => (
-              <div key={index} className="flex items-center gap-2">
+              <div key={index} className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg text-sm">
                 <FaFileAlt className="text-secondary" />
                 <span className="text-gray-700 dark:text-gray-300">{feature}</span>
               </div>
             ))}
           </div>
+          <button
+            className="mb-4 px-4 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-secondary transition-colors"
+            onClick={() => setShowTheory((v) => !v)}
+          >
+            {showTheory ? 'Hide' : 'Show'} Java Theory & Key Features
+          </button>
+          {showTheory && (
+            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6 mb-4">
+              <h2 className="text-2xl font-bold text-blue-800 dark:text-blue-200 mb-2">Java Theory & Key Features</h2>
+              <ul className="list-disc ml-6 mb-4 text-blue-900 dark:text-blue-100">
+                {courseDetails.introduction.keyFeatures.map((feature, i) => (
+                  <li key={i} className="mb-1">{feature}</li>
+                ))}
+              </ul>
+              <button
+                className="mt-2 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                onClick={() => setShowAdvanced((v) => !v)}
+              >
+                {showAdvanced ? 'Hide' : 'Show'} Advanced Theory (JVM, Memory, Java 8+)
+              </button>
+              {showAdvanced && (
+                <div className="mt-4 space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-blue-700 dark:text-blue-200 mb-1">JVM Internals</h3>
+                    <pre className="bg-gray-900 text-gray-100 rounded p-3 text-xs overflow-x-auto">
+                      {courseDetails.introduction.advancedTheory.jvm}
+                    </pre>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-blue-700 dark:text-blue-200 mb-1">Memory Management</h3>
+                    <pre className="bg-gray-900 text-gray-100 rounded p-3 text-xs overflow-x-auto">
+                      {courseDetails.introduction.advancedTheory.memory}
+                    </pre>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-blue-700 dark:text-blue-200 mb-1">Java 8+ Features</h3>
+                    <pre className="bg-gray-900 text-gray-100 rounded p-3 text-xs overflow-x-auto">
+                      {courseDetails.introduction.advancedTheory.java8}
+                    </pre>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </motion.div>
 
         <motion.div
@@ -1352,15 +1608,15 @@ public class LibraryManagementSystem {
                 Syllabus
               </button>
               <button 
-                onClick={() => setActiveTab('examples')}
+                onClick={() => setActiveTab('allcode')}
                 className={`flex items-center gap-2 py-4 px-2 border-b-2 font-medium text-sm whitespace-nowrap ${
-                  activeTab === 'examples' 
+                  activeTab === 'allcode' 
                     ? 'border-primary text-primary' 
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <FaCode />
-                Code Examples
+                All Code Examples
               </button>
               <button 
                 onClick={() => setActiveTab('algorithms')}
@@ -1456,69 +1712,85 @@ public class LibraryManagementSystem {
               </div>
             )}
             
-            {activeTab === 'examples' && (
-              <div className="space-y-6">
+            {activeTab === 'allcode' && (
+              <div className="space-y-8">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">All Java Code Examples</h2>
+                  <p className="text-gray-600 dark:text-gray-300">Browse and copy every code example from this course, organized for easy access.</p>
+                </div>
+                {/* Syllabus Examples */}
                 {courseDetails.syllabus.map((week, weekIndex) => (
-                  week.examples && (
-                    <div key={weekIndex} className="mb-8">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                        Week {week.week}: {week.title}
-                      </h3>
-                      <div className="space-y-4">
-                        {week.examples.map((example, exampleIndex) => (
-                          <motion.div
-                            key={exampleIndex}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
-                          >
-                            <div 
-                              className="bg-gray-50 dark:bg-gray-700 p-4 cursor-pointer flex items-center justify-between"
-                              onClick={() => setExpandedExample(
-                                expandedExample === `${weekIndex}-${exampleIndex}` 
-                                  ? null 
-                                  : `${weekIndex}-${exampleIndex}`
-                              )}
+                  week.examples && week.examples.map((example, exampleIndex) => (
+                    <motion.div
+                      key={`syllabus-${weekIndex}-${exampleIndex}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
+                    >
+                      <div className="bg-gray-50 dark:bg-gray-700 p-4 flex items-center gap-3">
+                        <FaCode className="text-primary" />
+                        <h4 className="font-semibold text-gray-900 dark:text-white">
+                          {example.title} <span className="text-xs text-gray-400 ml-2">(Week {week.week})</span>
+                        </h4>
+                      </div>
+                      <div className="p-4">
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                          {example.explanation}
+                        </p>
+                        <div className="bg-gray-900 rounded-lg overflow-hidden">
+                          <div className="flex items-center justify-between bg-gray-800 px-4 py-2">
+                            <span className="text-gray-300 text-sm font-mono">Java Code</span>
+                            <button 
+                              onClick={() => navigator.clipboard.writeText(example.code)}
+                              className="text-gray-400 hover:text-white transition-colors"
+                              title="Copy code"
                             >
-                              <div className="flex items-center gap-3">
-                                <FaCode className="text-primary" />
-                                <h4 className="font-semibold text-gray-900 dark:text-white">
-                                  {example.title}
-                                </h4>
-                              </div>
-                              {expandedExample === `${weekIndex}-${exampleIndex}` ? 
-                                <FaChevronUp className="text-gray-500" /> : 
-                                <FaChevronDown className="text-gray-500" />
-                              }
-                            </div>
-                            
-                            {expandedExample === `${weekIndex}-${exampleIndex}` && (
-                              <div className="p-4">
-                                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                  {example.explanation}
-                                </p>
-                                <div className="bg-gray-900 rounded-lg overflow-hidden">
-                                  <div className="flex items-center justify-between bg-gray-800 px-4 py-2">
-                                    <span className="text-gray-300 text-sm font-mono">Java Code</span>
-                                    <button 
-                                      onClick={() => navigator.clipboard.writeText(example.code)}
-                                      className="text-gray-400 hover:text-white transition-colors"
-                                      title="Copy code"
-                                    >
-                                      <FaCopy />
-                                    </button>
-                                  </div>
-                                  <pre className="p-4 text-sm text-gray-100 overflow-x-auto">
-                                    <code>{example.code}</code>
-                                  </pre>
-                                </div>
-                              </div>
-                            )}
-                          </motion.div>
-                        ))}
+                              <FaCopy />
+                            </button>
+                          </div>
+                          <pre className="p-4 text-sm text-gray-100 overflow-x-auto">
+                            <code>{example.code}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))
+                ))}
+                {/* Extra Examples */}
+                {courseDetails.introduction.extraExamples && courseDetails.introduction.extraExamples.map((example, idx) => (
+                  <motion.div
+                    key={`extra-${idx}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
+                  >
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 flex items-center gap-3">
+                      <FaCode className="text-primary" />
+                      <h4 className="font-semibold text-gray-900 dark:text-white">
+                        {example.title} <span className="text-xs text-gray-400 ml-2">(Advanced)</span>
+                      </h4>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                        {example.explanation}
+                      </p>
+                      <div className="bg-gray-900 rounded-lg overflow-hidden">
+                        <div className="flex items-center justify-between bg-gray-800 px-4 py-2">
+                          <span className="text-gray-300 text-sm font-mono">Java Code</span>
+                          <button 
+                            onClick={() => navigator.clipboard.writeText(example.code)}
+                            className="text-gray-400 hover:text-white transition-colors"
+                            title="Copy code"
+                          >
+                            <FaCopy />
+                          </button>
+                        </div>
+                        <pre className="p-4 text-sm text-gray-100 overflow-x-auto">
+                          <code>{example.code}</code>
+                        </pre>
                       </div>
                     </div>
-                  )
+                  </motion.div>
                 ))}
               </div>
             )}

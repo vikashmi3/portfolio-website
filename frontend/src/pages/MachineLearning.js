@@ -1025,27 +1025,42 @@ if __name__ == "__main__":
           Back to Courses
         </motion.button>
 
+        {/* Gradient Header with Icon and Badges */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8"
+          className="rounded-lg shadow-lg p-8 mb-8 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white relative overflow-hidden"
         >
-          <div className="mb-6">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              {courseDetails.name}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              by {courseDetails.instructor}
-            </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+            <div className="flex items-center gap-4">
+              <div className="bg-white bg-opacity-20 rounded-full p-4 text-4xl">
+                <FaChartLine />
+              </div>
+              <div>
+                <h1 className="text-4xl font-bold mb-1">{courseDetails.name}</h1>
+                <p className="text-indigo-100">by {courseDetails.instructor}</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mt-4 md:mt-0">
+              <span className="px-4 py-1 rounded-full bg-white bg-opacity-20 text-white font-semibold text-sm border border-white/30">
+                <FaBook className="inline mr-1" /> {courseDetails.level}
+              </span>
+              <span className="px-4 py-1 rounded-full bg-white bg-opacity-20 text-white font-semibold text-sm border border-white/30">
+                <FaUsers className="inline mr-1" /> Duration: {courseDetails.duration}
+              </span>
+              <span className="px-4 py-1 rounded-full bg-white bg-opacity-20 text-white font-semibold text-sm border border-white/30">
+                <FaFileAlt className="inline mr-1" /> Machine Learning
+              </span>
+            </div>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
+          <p className="text-indigo-100 text-lg leading-relaxed mb-4">
             {courseDetails.fullDescription}
           </p>
           <div className="flex flex-wrap gap-4">
             {courseDetails.features.map((feature, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <FaFileAlt className="text-secondary" />
-                <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+              <div key={index} className="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-1 rounded-lg text-sm">
+                <FaFileAlt className="text-white" />
+                <span>{feature}</span>
               </div>
             ))}
           </div>

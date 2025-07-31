@@ -1,4 +1,44 @@
 // Course data with all the requested courses
+const categoryIcons = {
+    programming: 'fa-code',
+    web: 'fa-globe',
+    database: 'fa-database',
+    'data-science': 'fa-brain',
+    framework: 'fa-cubes'
+};
+
+const categoryColors = {
+    programming: '#667eea',
+    web: '#20bfa9',
+    database: '#f39c12',
+    'data-science': '#764ba2',
+    framework: '#e67e22'
+};
+
+const courseThumbnails = {
+    1: 'logo.jpg', // C Programming
+    2: 'logo.jpg', // C++ Programming
+    3: 'logo.jpg', // Java Programming
+    4: 'logo.jpg', // Advanced Java
+    5: 'logo.jpg', // Python Programming
+    6: 'logo.jpg', // C# Programming
+    7: 'logo.jpg', // JavaScript Fundamentals
+    8: 'logo.jpg', // HTML & CSS Mastery
+    9: 'logo.jpg', // Full Stack Web Development
+    10: 'logo.jpg', // MySQL Database
+    11: 'logo.jpg', // MongoDB
+    12: 'logo.jpg', // Data Science
+    13: 'logo.jpg', // Data Analytics
+    14: 'logo.jpg', // Machine Learning
+    15: 'logo.jpg', // Artificial Intelligence
+    16: 'logo.jpg', // React JS
+    17: 'logo.jpg', // Node.js
+    18: 'logo.jpg', // Django
+    19: 'logo.jpg', // Git & GitHub
+    20: 'logo.jpg', // Software Testing
+    21: 'logo.jpg'  // Android Development
+};
+
 const coursesData = [
     // Programming Languages
     {
@@ -275,11 +315,17 @@ function displayAllCourses(courses) {
 function createCourseCard(course, isPopular = false) {
     const levelClass = `level-${course.level.toLowerCase()}`;
     const stars = '★'.repeat(Math.floor(course.rating)) + (course.rating % 1 ? '☆' : '');
-    
+    const categoryIcon = categoryIcons[course.category] || 'fa-book';
+    const categoryColor = categoryColors[course.category] || '#667eea';
+    const thumbnail = courseThumbnails[course.id] || 'logo.jpg';
+
     return `
         <div class="course-card" data-category="${course.category}" data-level="${course.level}" data-name="${course.name.toLowerCase()}">
             ${isPopular ? '<div class="popular-badge">Popular</div>' : ''}
-            
+            <div class="course-thumbnail">
+                <img src="${thumbnail}" alt="${course.name} thumbnail" />
+                <span class="category-tag" style="background:${categoryColor}"><i class="fas ${categoryIcon}"></i> ${course.category.replace('-', ' ')}</span>
+            </div>
             <div class="course-header">
                 <h3 class="course-title">${course.name}</h3>
                 <div class="course-rating">
@@ -288,9 +334,7 @@ function createCourseCard(course, isPopular = false) {
                     <span>(${course.reviews})</span>
                 </div>
             </div>
-            
             <p class="course-description">${course.description}</p>
-            
             <div class="course-meta">
                 <div class="meta-item">
                     <i class="fas fa-clock"></i>
@@ -305,7 +349,6 @@ function createCourseCard(course, isPopular = false) {
                     <span>${course.reviews} students</span>
                 </div>
             </div>
-            
             <div class="course-actions">
                 <button class="btn btn-primary" onclick="enrollCourse(${course.id})">
                     <i class="fas fa-play"></i>

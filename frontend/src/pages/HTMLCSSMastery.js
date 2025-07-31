@@ -30,16 +30,19 @@ const HTMLCSSMastery = () => {
         week: 1,
         title: "HTML5 Fundamentals",
         topics: [
-          "HTML document structure",
-          "Semantic HTML elements",
-          "Forms and input types",
-          "Media elements",
-          "Accessibility basics"
+          "HTML document structure and doctype",
+          "Semantic HTML elements (header, nav, main, section, article, aside, footer)",
+          "Forms, input types, and validation",
+          "Media elements (img, video, audio, picture, source)",
+          "Accessibility basics (alt text, ARIA roles, landmarks)",
+          "SEO best practices (meta tags, headings, structure)"
         ],
         practicals: [
-          "Create semantic web pages",
-          "Build contact forms",
-          "Add multimedia content"
+          "Create semantic web pages with header, nav, main, and footer",
+          "Build accessible contact forms with validation and ARIA attributes",
+          "Embed responsive images and videos using <picture> and <video>",
+          "Add meta tags for SEO and social sharing",
+          "Project: Build a personal portfolio homepage"
         ],
         examples: [
           {
@@ -50,12 +53,15 @@ const HTMLCSSMastery = () => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Modern portfolio website showcasing web development skills">
+    <meta property="og:title" content="John Doe - Web Developer Portfolio">
+    <meta property="og:description" content="Portfolio and projects of John Doe, web developer.">
+    <meta property="og:image" content="profile.jpg">
     <title>John Doe - Web Developer Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Header with navigation -->
-    <header class="main-header">
+    <header class="main-header" role="banner">
         <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="nav-brand">
                 <h1>John Doe</h1>
@@ -139,18 +145,18 @@ const HTMLCSSMastery = () => {
         <section class="contact" id="contact">
             <div class="container">
                 <h2>Get In Touch</h2>
-                <form class="contact-form" action="/submit" method="POST">
+                <form class="contact-form" action="/submit" method="POST" aria-label="Contact form">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
                         <input type="text" id="name" name="name" required 
-                               aria-describedby="name-error">
+                               aria-describedby="name-error" aria-required="true">
                         <span id="name-error" class="error-message" role="alert"></span>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email Address *</label>
                         <input type="email" id="email" name="email" required 
-                               aria-describedby="email-error">
+                               aria-describedby="email-error" aria-required="true">
                         <span id="email-error" class="error-message" role="alert"></span>
                     </div>
                     
@@ -163,7 +169,7 @@ const HTMLCSSMastery = () => {
                     
                     <div class="form-group">
                         <label for="subject">Subject *</label>
-                        <select id="subject" name="subject" required>
+                        <select id="subject" name="subject" required aria-required="true">
                             <option value="">Choose a subject</option>
                             <option value="project">Project Inquiry</option>
                             <option value="collaboration">Collaboration</option>
@@ -174,7 +180,7 @@ const HTMLCSSMastery = () => {
                     <div class="form-group">
                         <label for="message">Message *</label>
                         <textarea id="message" name="message" rows="5" required 
-                                  aria-describedby="message-error"></textarea>
+                                  aria-describedby="message-error" aria-required="true"></textarea>
                         <span id="message-error" class="error-message" role="alert"></span>
                     </div>
                     
@@ -218,6 +224,35 @@ const HTMLCSSMastery = () => {
 </body>
 </html>`,
             explanation: "Complete HTML5 structure with semantic elements, accessibility features, forms, and proper document structure."
+          },
+          {
+            title: "Accessible Form with ARIA and Validation",
+            code: `<!-- Accessible Contact Form Example -->
+<form action="/submit" method="POST" aria-label="Contact form">
+  <label for="name">Name *</label>
+  <input type="text" id="name" name="name" required aria-required="true" aria-describedby="name-error">
+  <span id="name-error" class="error-message" role="alert"></span>
+
+  <label for="email">Email *</label>
+  <input type="email" id="email" name="email" required aria-required="true" aria-describedby="email-error">
+  <span id="email-error" class="error-message" role="alert"></span>
+
+  <label for="message">Message *</label>
+  <textarea id="message" name="message" required aria-required="true" aria-describedby="message-error"></textarea>
+  <span id="message-error" class="error-message" role="alert"></span>
+
+  <button type="submit">Send</button>
+</form>`,
+            explanation: "Shows a contact form with required fields, ARIA attributes for accessibility, and error message placeholders for validation feedback."
+          },
+          {
+            title: "Responsive Image with <picture> Element",
+            code: `<picture>
+  <source srcset="image-large.jpg" media="(min-width: 800px)">
+  <source srcset="image-medium.jpg" media="(min-width: 400px)">
+  <img src="image-small.jpg" alt="A beautiful landscape" width="400" height="300">
+</picture>`,
+            explanation: "Demonstrates responsive images using the <picture> element and multiple <source> tags for different screen sizes."
           }
         ]
       },

@@ -45,6 +45,17 @@
                 </div>
             </div>
 
+            <!-- Programming Languages Section -->
+            <section class="programming-courses">
+                <h2 class="section-title">
+                    <i class="fas fa-code"></i>
+                    Programming Languages
+                </h2>
+                <div class="courses-grid" id="programmingCourses">
+                    <!-- Programming language courses will be dynamically inserted here -->
+                </div>
+            </section>
+
             <!-- Popular Courses Section -->
             <section class="popular-courses">
                 <h2 class="section-title">
@@ -84,5 +95,17 @@
     </footer>
 
     <script src="courses.js"></script>
+    <script>
+    // Render programming language courses on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof coursesData !== 'undefined' && typeof createCourseCard !== 'undefined') {
+            const programmingCourses = coursesData.filter(c => c.category === 'programming');
+            const programmingCoursesGrid = document.getElementById('programmingCourses');
+            if (programmingCoursesGrid) {
+                programmingCoursesGrid.innerHTML = programmingCourses.map(c => createCourseCard(c)).join('');
+            }
+        }
+    });
+    </script>
 </body>
 </html>
