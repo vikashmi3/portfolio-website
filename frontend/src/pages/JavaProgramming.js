@@ -10190,6 +10190,341 @@ class SomeBaseClass {
 }`
           }
         },
+        synchronization: {
+          title: "Java Synchronization",
+          description: "Synchronization controls access to shared resources by multiple threads, preventing data corruption and race conditions in concurrent applications.",
+          whatIsSynchronization: {
+            title: "What is Synchronization?",
+            definition: {
+              title: "Synchronization is the process of controlling access to shared resources by multiple threads.",
+              description: "It ensures that only one thread can access a shared resource at a time, maintaining data integrity.",
+              keyPoints: [
+                "Controls concurrent access to shared data",
+                "Prevents multiple threads from interfering with each other",
+                "Maintains data consistency and integrity",
+                "Coordinates thread execution for safe resource sharing"
+              ]
+            },
+            prevention: {
+              title: "It helps prevent data inconsistency and race conditions in multithreaded environments.",
+              description: "Without synchronization, concurrent access can lead to unpredictable results and corrupted data.",
+              problems: [
+                "Race conditions - unpredictable timing-dependent behavior",
+                "Data corruption - partial updates visible to other threads",
+                "Lost updates - one thread's changes overwritten by another",
+                "Inconsistent state - objects in invalid intermediate states"
+              ]
+            },
+            example: `// Synchronization necessity demonstration
+public class SynchronizationNeedDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Why Synchronization is Needed ===");
+        
+        // Demonstrate problem without synchronization
+        System.out.println("\n1. Without Synchronization (Race Condition):");
+        demonstrateRaceCondition();
+        
+        // Demonstrate solution with synchronization
+        System.out.println("\n2. With Synchronization (Thread-Safe):");
+        demonstrateSynchronizedSolution();
+    }
+    
+    public static void demonstrateRaceCondition() {
+        UnsafeCounter counter = new UnsafeCounter();
+        
+        // Create multiple threads that increment the counter
+        Thread[] threads = new Thread[10];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 1000; j++) {
+                    counter.increment();
+                }
+            }, "Thread-" + (i + 1));
+        }
+        
+        // Start all threads
+        long startTime = System.currentTimeMillis();
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        long executionTime = System.currentTimeMillis() - startTime;
+        System.out.println("Expected count: 10000");
+        System.out.println("Actual count: " + counter.getCount());
+        System.out.println("Data corruption: " + (counter.getCount() != 10000));
+        System.out.println("Execution time: " + executionTime + "ms");
+    }
+    
+    public static void demonstrateSynchronizedSolution() {
+        SafeCounter counter = new SafeCounter();
+        
+        // Create multiple threads that increment the counter
+        Thread[] threads = new Thread[10];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 1000; j++) {
+                    counter.increment();
+                }
+            }, "Safe-Thread-" + (i + 1));
+        }
+        
+        // Start all threads
+        long startTime = System.currentTimeMillis();
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        long executionTime = System.currentTimeMillis() - startTime;
+        System.out.println("Expected count: 10000");
+        System.out.println("Actual count: " + counter.getCount());
+        System.out.println("Data integrity: " + (counter.getCount() == 10000));
+        System.out.println("Execution time: " + executionTime + "ms");
+    }
+}
+
+// Unsafe counter class (demonstrates race condition)
+class UnsafeCounter {
+    private int count = 0;
+    
+    public void increment() {
+        // This is not atomic - can be interrupted between read and write
+        count = count + 1;
+    }
+    
+    public int getCount() {
+        return count;
+    }
+}
+
+// Safe counter class (synchronized)
+class SafeCounter {
+    private int count = 0;
+    
+    public synchronized void increment() {
+        // This is atomic due to synchronization
+        count = count + 1;
+    }
+    
+    public synchronized int getCount() {
+        return count;
+    }
+}`
+          },
+          whySynchronizationNeeded: {
+            title: "Why Synchronization Is Needed",
+            description: "Understanding the problems that occur when multiple threads access shared data without proper coordination.",
+            risks: {
+              dataCorruption: {
+                title: "Data corruption",
+                description: "Partial updates become visible to other threads, leading to invalid data states."
+              },
+              inconsistentOutput: {
+                title: "Inconsistent output",
+                description: "Same input produces different results due to timing variations."
+              },
+              unexpectedBehavior: {
+                title: "Unexpected behavior",
+                description: "Program behavior becomes unpredictable and difficult to debug."
+              }
+            },
+            example: `// Problems without synchronization
+public class SynchronizationProblemsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Problems Without Synchronization ===");
+        
+        // Problem 1: Data Corruption
+        demonstrateDataCorruption();
+        
+        // Problem 2: Inconsistent Output
+        demonstrateInconsistentOutput();
+        
+        // Problem 3: Lost Updates
+        demonstrateLostUpdates();
+    }
+    
+    public static void demonstrateDataCorruption() {
+        System.out.println("\n1. Data Corruption Example:");
+        
+        BankAccount account = new BankAccount(1000);
+        
+        // Multiple threads trying to withdraw simultaneously
+        Thread[] withdrawThreads = new Thread[5];
+        for (int i = 0; i < withdrawThreads.length; i++) {
+            final int threadId = i + 1;
+            withdrawThreads[i] = new Thread(() -> {
+                for (int j = 0; j < 3; j++) {
+                    account.unsafeWithdraw(50, "Thread-" + threadId);
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            });
+        }
+        
+        // Start all threads
+        for (Thread thread : withdrawThreads) {
+            thread.start();
+        }
+        
+        // Wait for completion
+        for (Thread thread : withdrawThreads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        System.out.println("Final balance: $" + account.getBalance());
+        System.out.println("Expected balance: $" + (1000 - 5 * 3 * 50) + " (if all withdrawals succeeded)");
+    }
+    
+    public static void demonstrateInconsistentOutput() {
+        System.out.println("\n2. Inconsistent Output Example:");
+        
+        PrinterResource printer = new PrinterResource();
+        
+        Thread thread1 = new Thread(() -> printer.unsafePrint("AAAAA"), "Printer-A");
+        Thread thread2 = new Thread(() -> printer.unsafePrint("BBBBB"), "Printer-B");
+        Thread thread3 = new Thread(() -> printer.unsafePrint("CCCCC"), "Printer-C");
+        
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public static void demonstrateLostUpdates() {
+        System.out.println("\n3. Lost Updates Example:");
+        
+        SharedResource resource = new SharedResource();
+        
+        Thread updater1 = new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                resource.unsafeUpdate("Updater-1", i + 1);
+            }
+        }, "Updater-1");
+        
+        Thread updater2 = new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                resource.unsafeUpdate("Updater-2", (i + 1) * 10);
+            }
+        }, "Updater-2");
+        
+        updater1.start();
+        updater2.start();
+        
+        try {
+            updater1.join();
+            updater2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("Final resource value: " + resource.getValue());
+    }
+}
+
+class BankAccount {
+    private double balance;
+    
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+    
+    // Unsafe withdrawal (can cause data corruption)
+    public void unsafeWithdraw(double amount, String threadName) {
+        if (balance >= amount) {
+            System.out.println(threadName + " checking balance: $" + balance);
+            // Simulate processing time
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            balance -= amount;
+            System.out.println(threadName + " withdrew $" + amount + ", new balance: $" + balance);
+        } else {
+            System.out.println(threadName + " insufficient funds. Balance: $" + balance);
+        }
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+}
+
+class PrinterResource {
+    public void unsafePrint(String message) {
+        for (int i = 0; i < message.length(); i++) {
+            System.out.print(message.charAt(i));
+            try {
+                Thread.sleep(10); // Simulate printing delay
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        System.out.println(); // New line after message
+    }
+}
+
+class SharedResource {
+    private int value = 0;
+    private String lastUpdater = "None";
+    
+    public void unsafeUpdate(String updaterName, int newValue) {
+        System.out.println(updaterName + " reading current value: " + value);
+        
+        // Simulate processing time
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+        
+        value = newValue;
+        lastUpdater = updaterName;
+        System.out.println(updaterName + " updated value to: " + value);
+    }
+    
+    public int getValue() {
+        return value;
+    }
+    
+    public String getLastUpdater() {
+        return lastUpdater;
+    }
+}`
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
