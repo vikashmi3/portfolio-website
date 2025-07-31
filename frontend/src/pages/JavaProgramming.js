@@ -4663,6 +4663,626 @@ public class EncapsulationVsAbstractionDemo {
             }
           }
         },
+        arrays: {
+          title: "Java Arrays",
+          description: "Arrays are fundamental data structures in Java that store multiple elements of the same type in contiguous memory locations.",
+          whatIsArray: {
+            title: "What is an Array in Java?",
+            definition: {
+              title: "An array is a collection of elements of the same data type stored in contiguous memory locations.",
+              description: "Arrays provide a way to store multiple values of the same type under a single variable name.",
+              characteristics: [
+                "Homogeneous - All elements must be of the same data type",
+                "Indexed - Elements accessed using zero-based indexing",
+                "Contiguous - Elements stored in adjacent memory locations",
+                "Reference type - Arrays are objects in Java"
+              ]
+            },
+            fixedSize: {
+              title: "Arrays are fixed in size once created.",
+              description: "The size of an array cannot be changed after creation. This is both a limitation and an advantage for memory management.",
+              implications: [
+                "Memory allocation is done once at creation time",
+                "No dynamic resizing - size must be known beforehand",
+                "Efficient memory usage with no overhead for resizing",
+                "Use ArrayList for dynamic sizing needs"
+              ]
+            }
+          },
+          typesOfArrays: {
+            title: "Types of Arrays",
+            description: "Java supports different types of arrays based on dimensions and structure.",
+            singleDimensional: {
+              title: "Single-dimensional array",
+              description: "A linear array with elements arranged in a single row.",
+              example: `// Single-dimensional array examples
+public class SingleDimensionalArrayDemo {
+    public static void main(String[] args) {
+        // Integer array
+        int[] numbers = {10, 20, 30, 40, 50};
+        
+        // String array
+        String[] fruits = {"Apple", "Banana", "Orange", "Mango"};
+        
+        // Double array
+        double[] prices = {19.99, 25.50, 12.75, 8.99};
+        
+        // Boolean array
+        boolean[] flags = {true, false, true, false, true};
+        
+        // Display arrays
+        System.out.println("Numbers: ");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        
+        System.out.println("\n\nFruits: ");
+        for (String fruit : fruits) {
+            System.out.print(fruit + " ");
+        }
+        
+        System.out.println("\n\nPrices: ");
+        for (double price : prices) {
+            System.out.print("$" + price + " ");
+        }
+        
+        // Array operations
+        System.out.println("\n\nArray Operations:");
+        System.out.println("First number: " + numbers[0]);
+        System.out.println("Last fruit: " + fruits[fruits.length - 1]);
+        System.out.println("Array length: " + numbers.length);
+        
+        // Modify elements
+        numbers[2] = 35;
+        fruits[1] = "Grape";
+        System.out.println("Modified number at index 2: " + numbers[2]);
+        System.out.println("Modified fruit at index 1: " + fruits[1]);
+    }
+}`
+            },
+            multiDimensional: {
+              title: "Multi-dimensional array (e.g., 2D arrays)",
+              description: "Arrays with more than one dimension, commonly used for matrices and tables.",
+              example: `// Multi-dimensional array examples
+public class MultiDimensionalArrayDemo {
+    public static void main(String[] args) {
+        // 2D array - matrix representation
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        // Student grades - 2D array
+        double[][] studentGrades = {
+            {85.5, 92.0, 78.5},  // Student 1 grades
+            {90.0, 88.5, 95.0},  // Student 2 grades
+            {76.5, 82.0, 89.5}   // Student 3 grades
+        };
+        
+        // 3D array example
+        int[][][] cube = {
+            {{1, 2}, {3, 4}},
+            {{5, 6}, {7, 8}}
+        };
+        
+        // Display 2D matrix
+        System.out.println("Matrix:");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        
+        // Calculate and display student averages
+        System.out.println("\nStudent Grade Averages:");
+        for (int i = 0; i < studentGrades.length; i++) {
+            double sum = 0;
+            for (int j = 0; j < studentGrades[i].length; j++) {
+                sum += studentGrades[i][j];
+            }
+            double average = sum / studentGrades[i].length;
+            System.out.println("Student " + (i + 1) + ": " + String.format("%.2f", average));
+        }
+        
+        // Access specific elements
+        System.out.println("\nSpecific Elements:");
+        System.out.println("Matrix[1][2]: " + matrix[1][2]);
+        System.out.println("Student 2, Grade 3: " + studentGrades[1][2]);
+        System.out.println("Cube[1][0][1]: " + cube[1][0][1]);
+        
+        // Matrix operations
+        System.out.println("\nMatrix Operations:");
+        int[][] result = addMatrices(matrix, matrix);
+        System.out.println("Matrix + Matrix:");
+        printMatrix(result);
+    }
+    
+    // Method to add two matrices
+    public static int[][] addMatrices(int[][] a, int[][] b) {
+        int rows = a.length;
+        int cols = a[0].length;
+        int[][] result = new int[rows][cols];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = a[i][j] + b[i][j];
+            }
+        }
+        return result;
+    }
+    
+    // Method to print matrix
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+    }
+}`
+            },
+            jaggedArray: {
+              title: "Jagged array (array of arrays with varying length)",
+              description: "Arrays where each row can have different number of columns.",
+              example: `// Jagged array examples
+public class JaggedArrayDemo {
+    public static void main(String[] args) {
+        // Jagged array - different row lengths
+        int[][] jaggedArray = {
+            {1, 2, 3, 4, 5},        // 5 elements
+            {10, 20},               // 2 elements
+            {100, 200, 300},        // 3 elements
+            {1000}                  // 1 element
+        };
+        
+        // Dynamic jagged array creation
+        int[][] dynamicJagged = new int[4][];
+        dynamicJagged[0] = new int[3];  // First row has 3 elements
+        dynamicJagged[1] = new int[5];  // Second row has 5 elements
+        dynamicJagged[2] = new int[2];  // Third row has 2 elements
+        dynamicJagged[3] = new int[4];  // Fourth row has 4 elements
+        
+        // Fill dynamic jagged array
+        int value = 1;
+        for (int i = 0; i < dynamicJagged.length; i++) {
+            for (int j = 0; j < dynamicJagged[i].length; j++) {
+                dynamicJagged[i][j] = value++;
+            }
+        }
+        
+        // Display jagged arrays
+        System.out.println("Jagged Array:");
+        for (int i = 0; i < jaggedArray.length; i++) {
+            System.out.print("Row " + i + ": ");
+            for (int j = 0; j < jaggedArray[i].length; j++) {
+                System.out.print(jaggedArray[i][j] + " ");
+            }
+            System.out.println("(Length: " + jaggedArray[i].length + ")");
+        }
+        
+        System.out.println("\nDynamic Jagged Array:");
+        for (int i = 0; i < dynamicJagged.length; i++) {
+            System.out.print("Row " + i + ": ");
+            for (int j = 0; j < dynamicJagged[i].length; j++) {
+                System.out.print(dynamicJagged[i][j] + " ");
+            }
+            System.out.println("(Length: " + dynamicJagged[i].length + ")");
+        }
+        
+        // Real-world example: Student courses
+        String[][] studentCourses = {
+            {"Math", "Physics", "Chemistry", "Biology"},     // Student 1: 4 courses
+            {"English", "History"},                          // Student 2: 2 courses
+            {"Art", "Music", "Drama", "Dance", "Photography"}, // Student 3: 5 courses
+            {"Computer Science"}                             // Student 4: 1 course
+        };
+        
+        System.out.println("\nStudent Course Enrollment:");
+        for (int i = 0; i < studentCourses.length; i++) {
+            System.out.println("Student " + (i + 1) + " courses:");
+            for (String course : studentCourses[i]) {
+                System.out.println("  - " + course);
+            }
+            System.out.println("  Total courses: " + studentCourses[i].length);
+            System.out.println();
+        }
+    }
+}`
+            }
+          },
+          declarationInitialization: {
+            title: "Array Declaration and Initialization",
+            description: "Different ways to declare and initialize arrays in Java.",
+            declaration: {
+              title: "Declaration:",
+              syntax: "dataType[] arrayName; or dataType arrayName[];",
+              example: `// Array declaration examples
+public class ArrayDeclarationDemo {
+    public static void main(String[] args) {
+        // Different declaration syntaxes
+        int[] numbers1;        // Preferred style
+        int numbers2[];        // Alternative style (C-style)
+        
+        // Multiple array declarations
+        int[] arr1, arr2, arr3;
+        
+        // Mixed declarations (not recommended)
+        int[] arr4, arr5[];    // arr4 is 1D, arr5 is 2D
+        
+        // Different data types
+        String[] names;
+        double[] prices;
+        boolean[] flags;
+        char[] characters;
+        
+        // Object arrays
+        Student[] students;
+        Date[] dates;
+        
+        System.out.println("Arrays declared successfully!");
+    }
+}`
+            },
+            initialization: {
+              title: "Initialization:",
+              syntax: "arrayName = new dataType[size];",
+              example: `// Array initialization examples
+public class ArrayInitializationDemo {
+    public static void main(String[] args) {
+        // Method 1: Declaration then initialization
+        int[] numbers;
+        numbers = new int[5];  // Creates array of 5 integers (default value 0)
+        
+        // Method 2: Declaration and initialization together
+        String[] fruits = new String[3];  // Creates array of 3 strings (default value null)
+        
+        // Method 3: Initialize with values
+        double[] prices = {19.99, 25.50, 12.75, 8.99};
+        
+        // Method 4: Using new keyword with values
+        boolean[] flags = new boolean[]{true, false, true, false};
+        
+        // Method 5: Anonymous array
+        printArray(new int[]{1, 2, 3, 4, 5});
+        
+        // Fill arrays with values
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = (i + 1) * 10;
+        }
+        
+        fruits[0] = "Apple";
+        fruits[1] = "Banana";
+        fruits[2] = "Orange";
+        
+        // Display arrays
+        System.out.println("Numbers array:");
+        for (int num : numbers) {
+            System.out.print(num + " ");
+        }
+        
+        System.out.println("\n\nFruits array:");
+        for (String fruit : fruits) {
+            System.out.print(fruit + " ");
+        }
+        
+        System.out.println("\n\nPrices array:");
+        for (double price : prices) {
+            System.out.print("$" + price + " ");
+        }
+        
+        // Array properties
+        System.out.println("\n\nArray Properties:");
+        System.out.println("Numbers length: " + numbers.length);
+        System.out.println("Fruits length: " + fruits.length);
+        System.out.println("Prices length: " + prices.length);
+    }
+    
+    public static void printArray(int[] arr) {
+        System.out.print("Anonymous array: ");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+}`
+            },
+            declarationPlusInitialization: {
+              title: "Declaration + Initialization:",
+              syntax: "dataType[] arrayName = {value1, value2, ...};",
+              example: `// Combined declaration and initialization
+public class CombinedDeclarationDemo {
+    public static void main(String[] args) {
+        // Primitive arrays with initial values
+        int[] numbers = {10, 20, 30, 40, 50};
+        double[] temperatures = {98.6, 100.4, 97.8, 99.2};
+        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+        boolean[] answers = {true, false, true, true, false};
+        
+        // String array
+        String[] colors = {"Red", "Green", "Blue", "Yellow", "Purple"};
+        
+        // Multi-dimensional arrays
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        String[][] schedule = {
+            {"Math", "English", "Science"},
+            {"History", "Art", "PE"},
+            {"Music", "Computer", "Study Hall"}
+        };
+        
+        // Display arrays
+        System.out.println("Numbers: " + java.util.Arrays.toString(numbers));
+        System.out.println("Temperatures: " + java.util.Arrays.toString(temperatures));
+        System.out.println("Vowels: " + java.util.Arrays.toString(vowels));
+        System.out.println("Answers: " + java.util.Arrays.toString(answers));
+        System.out.println("Colors: " + java.util.Arrays.toString(colors));
+        
+        System.out.println("\nMatrix:");
+        for (int[] row : matrix) {
+            System.out.println(java.util.Arrays.toString(row));
+        }
+        
+        System.out.println("\nClass Schedule:");
+        String[] days = {"Monday", "Tuesday", "Wednesday"};
+        for (int i = 0; i < schedule.length; i++) {
+            System.out.println(days[i] + ": " + java.util.Arrays.toString(schedule[i]));
+        }
+    }
+}`
+            }
+          },
+          accessingElements: {
+            title: "Accessing Array Elements",
+            description: "How to read and modify array elements using index notation.",
+            syntax: "arrayName[index]",
+            example: `// Accessing and modifying array elements
+public class ArrayAccessDemo {
+    public static void main(String[] args) {
+        // Create and initialize array
+        int[] numbers = {10, 20, 30, 40, 50};
+        String[] fruits = {"Apple", "Banana", "Orange", "Mango", "Grape"};
+        
+        // Accessing elements (zero-based indexing)
+        System.out.println("Array Access Examples:");
+        System.out.println("First number: " + numbers[0]);     // Output: 10
+        System.out.println("Third number: " + numbers[2]);     // Output: 30
+        System.out.println("Last number: " + numbers[4]);      // Output: 50
+        
+        System.out.println("Second fruit: " + fruits[1]);      // Output: Banana
+        System.out.println("Last fruit: " + fruits[fruits.length - 1]); // Output: Grape
+        
+        // Modifying elements
+        System.out.println("\nBefore modification:");
+        System.out.println("numbers[2] = " + numbers[2]);      // Output: 30
+        System.out.println("fruits[1] = " + fruits[1]);        // Output: Banana
+        
+        numbers[2] = 100;                                      // Modify value
+        fruits[1] = "Strawberry";                              // Modify value
+        
+        System.out.println("\nAfter modification:");
+        System.out.println("numbers[2] = " + numbers[2]);      // Output: 100
+        System.out.println("fruits[1] = " + fruits[1]);        // Output: Strawberry
+        
+        // Array bounds checking
+        System.out.println("\nArray Bounds:");
+        System.out.println("Array length: " + numbers.length);
+        System.out.println("Valid indices: 0 to " + (numbers.length - 1));
+        
+        // Safe array access with bounds checking
+        int index = 3;
+        if (index >= 0 && index < numbers.length) {
+            System.out.println("Safe access - numbers[" + index + "] = " + numbers[index]);
+        } else {
+            System.out.println("Index " + index + " is out of bounds");
+        }
+        
+        // Demonstrate ArrayIndexOutOfBoundsException
+        try {
+            System.out.println("Attempting to access invalid index...");
+            System.out.println(numbers[10]); // This will throw exception
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+        // Working with 2D arrays
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        System.out.println("\n2D Array Access:");
+        System.out.println("matrix[0][1] = " + matrix[0][1]);  // Output: 2
+        System.out.println("matrix[1][2] = " + matrix[1][2]);  // Output: 6
+        System.out.println("matrix[2][0] = " + matrix[2][0]);  // Output: 7
+        
+        // Modify 2D array element
+        matrix[1][1] = 99;
+        System.out.println("After modification - matrix[1][1] = " + matrix[1][1]); // Output: 99
+    }
+}`
+          },
+          iteratingArrays: {
+            title: "Iterating Through an Array",
+            description: "Different methods to traverse and process array elements.",
+            forLoop: {
+              title: "Using for loop:",
+              description: "Traditional index-based iteration with full control over the loop.",
+              example: `// For loop iteration examples
+public class ForLoopIterationDemo {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        String[] fruits = {"Apple", "Banana", "Orange", "Mango"};
+        double[] prices = {19.99, 25.50, 12.75, 8.99, 15.25};
+        
+        // Basic for loop iteration
+        System.out.println("Numbers using for loop:");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println("Index " + i + ": " + numbers[i]);
+        }
+        
+        // For loop with modifications
+        System.out.println("\nDoubling numbers:");
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] *= 2;
+            System.out.println("numbers[" + i + "] = " + numbers[i]);
+        }
+        
+        // Reverse iteration
+        System.out.println("\nFruits in reverse order:");
+        for (int i = fruits.length - 1; i >= 0; i--) {
+            System.out.println((fruits.length - i) + ". " + fruits[i]);
+        }
+        
+        // Skip elements (every other element)
+        System.out.println("\nEvery other price:");
+        for (int i = 0; i < prices.length; i += 2) {
+            System.out.println("Price at index " + i + ": $" + prices[i]);
+        }
+        
+        // Find maximum value
+        int max = numbers[0];
+        int maxIndex = 0;
+        for (int i = 1; i < numbers.length; i++) {
+            if (numbers[i] > max) {
+                max = numbers[i];
+                maxIndex = i;
+            }
+        }
+        System.out.println("\nMaximum value: " + max + " at index " + maxIndex);
+        
+        // Calculate sum and average
+        double sum = 0;
+        for (int i = 0; i < prices.length; i++) {
+            sum += prices[i];
+        }
+        double average = sum / prices.length;
+        System.out.println("\nPrice Statistics:");
+        System.out.println("Sum: $" + String.format("%.2f", sum));
+        System.out.println("Average: $" + String.format("%.2f", average));
+        
+        // 2D array iteration
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        System.out.println("\n2D Array (Matrix):");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}`
+            },
+            forEachLoop: {
+              title: "Using for-each loop:",
+              description: "Enhanced for loop for simpler iteration when index is not needed.",
+              example: `// For-each loop iteration examples
+public class ForEachLoopDemo {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        String[] fruits = {"Apple", "Banana", "Orange", "Mango"};
+        double[] temperatures = {98.6, 100.4, 97.8, 99.2, 101.1};
+        
+        // Basic for-each loop
+        System.out.println("Numbers using for-each loop:");
+        for (int num : numbers) {
+            System.out.println(num);
+        }
+        
+        // For-each with string processing
+        System.out.println("\nFruits with processing:");
+        for (String fruit : fruits) {
+            System.out.println(fruit.toUpperCase() + " (" + fruit.length() + " letters)");
+        }
+        
+        // Calculate statistics using for-each
+        double sum = 0;
+        double max = temperatures[0];
+        double min = temperatures[0];
+        int count = 0;
+        
+        System.out.println("\nTemperature Analysis:");
+        for (double temp : temperatures) {
+            System.out.println("Temperature: " + temp + "°F");
+            sum += temp;
+            if (temp > max) max = temp;
+            if (temp < min) min = temp;
+            count++;
+        }
+        
+        double average = sum / count;
+        System.out.println("\nStatistics:");
+        System.out.println("Count: " + count);
+        System.out.println("Sum: " + String.format("%.1f", sum) + "°F");
+        System.out.println("Average: " + String.format("%.1f", average) + "°F");
+        System.out.println("Maximum: " + max + "°F");
+        System.out.println("Minimum: " + min + "°F");
+        
+        // For-each with 2D arrays
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        System.out.println("\n2D Array using for-each:");
+        for (int[] row : matrix) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+        
+        // For-each with object arrays
+        Student[] students = {
+            new Student("Alice", 85),
+            new Student("Bob", 92),
+            new Student("Charlie", 78),
+            new Student("Diana", 96)
+        };
+        
+        System.out.println("\nStudent Information:");
+        for (Student student : students) {
+            System.out.println(student.getName() + ": " + student.getGrade() + "%");
+        }
+        
+        // Find students with high grades
+        System.out.println("\nHigh-performing students (90% or above):");
+        for (Student student : students) {
+            if (student.getGrade() >= 90) {
+                System.out.println("- " + student.getName() + ": " + student.getGrade() + "%");
+            }
+        }
+    }
+}
+
+// Helper class for demonstration
+class Student {
+    private String name;
+    private int grade;
+    
+    public Student(String name, int grade) {
+        this.name = name;
+        this.grade = grade;
+    }
+    
+    public String getName() { return name; }
+    public int getGrade() { return grade; }
+}`
+            }
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
