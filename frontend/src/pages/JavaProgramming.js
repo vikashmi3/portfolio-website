@@ -2441,6 +2441,388 @@ public class MultipleInheritanceDemo {
 }`
             }
           },
+        polymorphism: {
+          title: "Java Polymorphism",
+          description: "Polymorphism allows objects of different types to be treated as objects of a common base type, enabling one interface to represent different underlying forms (data types).",
+          introduction: {
+            title: "Introduction to Polymorphism",
+            definition: {
+              title: "Definition: One interface, many implementations",
+              description: "Polymorphism comes from Greek words 'poly' (many) and 'morph' (forms). It allows a single interface to represent different underlying forms.",
+              benefits: [
+                "Code Reusability - Write code once, use with multiple types",
+                "Flexibility - Easy to extend and maintain code",
+                "Abstraction - Hide implementation details behind common interface",
+                "Loose Coupling - Reduce dependencies between components"
+              ],
+              realWorldExample: "A remote control (interface) can operate different devices (TV, AC, Music System) with same buttons but different behaviors."
+            },
+            compileTimeVsRuntime: {
+              title: "Compile-time vs Runtime polymorphism",
+              compileTime: {
+                title: "Compile-Time Polymorphism (Static Binding)",
+                description: "Method calls are resolved at compile time. Also known as early binding.",
+                characteristics: [
+                  "Resolved during compilation",
+                  "Faster execution (no runtime overhead)",
+                  "Achieved through method overloading",
+                  "Based on method signature"
+                ]
+              },
+              runtime: {
+                title: "Runtime Polymorphism (Dynamic Binding)",
+                description: "Method calls are resolved at runtime based on actual object type. Also known as late binding.",
+                characteristics: [
+                  "Resolved during program execution",
+                  "Slight runtime overhead for method resolution",
+                  "Achieved through method overriding and inheritance",
+                  "Based on actual object type"
+                ]
+              }
+            }
+          },
+          types: {
+            title: "Types of Polymorphism in Java",
+            compileTime: {
+              title: "Compile-Time Polymorphism (Static Binding)",
+              description: "Polymorphism resolved at compile time through method and constructor overloading.",
+              methodOverloading: {
+                title: "Method Overloading",
+                description: "Multiple methods with same name but different parameters in the same class.",
+                rules: [
+                  "Same method name, different parameters",
+                  "Different number of parameters",
+                  "Different types of parameters",
+                  "Different order of parameters",
+                  "Cannot overload based only on return type"
+                ],
+                example: `public class Calculator {
+    // Method overloading based on number of parameters
+    public int add(int a, int b) {
+        System.out.println("Adding two integers: " + a + " + " + b);
+        return a + b;
+    }
+    
+    public int add(int a, int b, int c) {
+        System.out.println("Adding three integers: " + a + " + " + b + " + " + c);
+        return a + b + c;
+    }
+    
+    // Method overloading based on parameter types
+    public double add(double a, double b) {
+        System.out.println("Adding two doubles: " + a + " + " + b);
+        return a + b;
+    }
+    
+    public String add(String a, String b) {
+        System.out.println("Concatenating strings: " + a + " + " + b);
+        return a + b;
+    }
+    
+    // Method overloading based on parameter order
+    public void display(String name, int age) {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+    
+    public void display(int age, String name) {
+        System.out.println("Age: " + age + ", Name: " + name);
+    }
+    
+    // Variable arguments (varargs) overloading
+    public int add(int... numbers) {
+        System.out.println("Adding variable number of integers");
+        int sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
+        return sum;
+    }
+    
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        
+        // Compiler determines which method to call based on arguments
+        System.out.println("Result: " + calc.add(5, 3));           // Calls add(int, int)
+        System.out.println("Result: " + calc.add(5, 3, 2));        // Calls add(int, int, int)
+        System.out.println("Result: " + calc.add(5.5, 3.2));       // Calls add(double, double)
+        System.out.println("Result: " + calc.add("Hello", "World")); // Calls add(String, String)
+        
+        calc.display("Alice", 25);    // Calls display(String, int)
+        calc.display(30, "Bob");       // Calls display(int, String)
+        
+        System.out.println("Result: " + calc.add(1, 2, 3, 4, 5)); // Calls add(int...)
+    }
+}`
+              },
+              constructorOverloading: {
+                title: "Constructor Overloading",
+                description: "Multiple constructors with different parameters in the same class.",
+                example: `public class Student {
+    private String name;
+    private int age;
+    private String studentId;
+    private String course;
+    private double gpa;
+    
+    // Default constructor
+    public Student() {
+        this.name = "Unknown";
+        this.age = 0;
+        this.studentId = "N/A";
+        this.course = "Undeclared";
+        this.gpa = 0.0;
+        System.out.println("Default constructor called");
+    }
+    
+    // Constructor with name only
+    public Student(String name) {
+        this(); // Call default constructor
+        this.name = name;
+        System.out.println("Constructor with name called");
+    }
+    
+    // Constructor with name and age
+    public Student(String name, int age) {
+        this(name); // Call constructor with name
+        this.age = age;
+        System.out.println("Constructor with name and age called");
+    }
+    
+    // Constructor with name, age, and studentId
+    public Student(String name, int age, String studentId) {
+        this(name, age); // Call constructor with name and age
+        this.studentId = studentId;
+        System.out.println("Constructor with name, age, and ID called");
+    }
+    
+    // Constructor with all parameters
+    public Student(String name, int age, String studentId, String course, double gpa) {
+        this(name, age, studentId); // Call constructor with name, age, and ID
+        this.course = course;
+        this.gpa = gpa;
+        System.out.println("Full constructor called");
+    }
+    
+    public void displayInfo() {
+        System.out.println("Student Info:");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Student ID: " + studentId);
+        System.out.println("Course: " + course);
+        System.out.println("GPA: " + gpa);
+        System.out.println();
+    }
+    
+    public static void main(String[] args) {
+        // Different constructors called based on arguments
+        Student student1 = new Student();
+        student1.displayInfo();
+        
+        Student student2 = new Student("Alice");
+        student2.displayInfo();
+        
+        Student student3 = new Student("Bob", 20);
+        student3.displayInfo();
+        
+        Student student4 = new Student("Charlie", 22, "STU001");
+        student4.displayInfo();
+        
+        Student student5 = new Student("Diana", 21, "STU002", "Computer Science", 3.8);
+        student5.displayInfo();
+    }
+}`
+              }
+            },
+            runtime: {
+              title: "Runtime Polymorphism (Dynamic Binding)",
+              description: "Polymorphism achieved through method overriding and resolved at runtime based on actual object type.",
+              methodOverriding: {
+                title: "Method Overriding",
+                description: "Redefining a parent class method in the subclass with same signature but different implementation.",
+                rules: [
+                  "Method signature must be exactly the same",
+                  "Return type must be same or covariant",
+                  "Access modifier cannot be more restrictive",
+                  "Cannot override static, final, or private methods",
+                  "Use @Override annotation for compile-time checking"
+                ],
+                example: `// Base class
+abstract class Shape {
+    protected String color;
+    protected boolean filled;
+    
+    public Shape(String color, boolean filled) {
+        this.color = color;
+        this.filled = filled;
+    }
+    
+    // Method to be overridden
+    public abstract double getArea();
+    
+    // Method to be overridden
+    public abstract double getPerimeter();
+    
+    // Method that can be overridden
+    public void displayInfo() {
+        System.out.println("Shape - Color: " + color + ", Filled: " + filled);
+    }
+    
+    // Final method - cannot be overridden
+    public final void printType() {
+        System.out.println("This is a geometric shape");
+    }
+}
+
+// Derived class 1
+class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, boolean filled, double radius) {
+        super(color, filled);
+        this.radius = radius;
+    }
+    
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public double getPerimeter() {
+        return 2 * Math.PI * radius;
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo(); // Call parent method
+        System.out.println("Circle - Radius: " + radius);
+        System.out.println("Area: " + getArea());
+        System.out.println("Perimeter: " + getPerimeter());
+    }
+}
+
+// Derived class 2
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+    
+    public Rectangle(String color, boolean filled, double length, double width) {
+        super(color, filled);
+        this.length = length;
+        this.width = width;
+    }
+    
+    @Override
+    public double getArea() {
+        return length * width;
+    }
+    
+    @Override
+    public double getPerimeter() {
+        return 2 * (length + width);
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Rectangle - Length: " + length + ", Width: " + width);
+        System.out.println("Area: " + getArea());
+        System.out.println("Perimeter: " + getPerimeter());
+    }
+}
+
+// Derived class 3
+class Triangle extends Shape {
+    private double side1, side2, side3;
+    
+    public Triangle(String color, boolean filled, double side1, double side2, double side3) {
+        super(color, filled);
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
+    }
+    
+    @Override
+    public double getArea() {
+        // Using Heron's formula
+        double s = getPerimeter() / 2;
+        return Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+    
+    @Override
+    public double getPerimeter() {
+        return side1 + side2 + side3;
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Triangle - Sides: " + side1 + ", " + side2 + ", " + side3);
+        System.out.println("Area: " + getArea());
+        System.out.println("Perimeter: " + getPerimeter());
+    }
+}`
+              },
+              dynamicMethodDispatch: {
+                title: "Invoking overridden methods using parent reference",
+                description: "Runtime polymorphism allows calling overridden methods through parent class references.",
+                example: `public class PolymorphismDemo {
+    public static void main(String[] args) {
+        // Runtime polymorphism - parent reference, child objects
+        Shape[] shapes = {
+            new Circle("Red", true, 5.0),
+            new Rectangle("Blue", false, 4.0, 6.0),
+            new Triangle("Green", true, 3.0, 4.0, 5.0)
+        };
+        
+        System.out.println("=== Polymorphic Method Calls ===");
+        
+        // Same method call, different implementations
+        for (Shape shape : shapes) {
+            shape.displayInfo();    // Calls overridden method based on actual object type
+            shape.printType();      // Calls final method from parent class
+            
+            // Calculate and display area and perimeter
+            System.out.println("Calculated Area: " + shape.getArea());
+            System.out.println("Calculated Perimeter: " + shape.getPerimeter());
+            System.out.println("-".repeat(40));
+        }
+        
+        // Demonstrating method resolution at runtime
+        System.out.println("\n=== Runtime Method Resolution ===");
+        
+        Shape shape1 = new Circle("Yellow", true, 3.0);
+        Shape shape2 = new Rectangle("Purple", false, 5.0, 8.0);
+        
+        // Method calls resolved at runtime based on actual object type
+        processShape(shape1);  // Calls Circle's methods
+        processShape(shape2);  // Calls Rectangle's methods
+        
+        // Changing reference at runtime
+        System.out.println("\n=== Dynamic Reference Change ===");
+        Shape dynamicShape = new Circle("Orange", true, 2.5);
+        processShape(dynamicShape);
+        
+        dynamicShape = new Rectangle("Pink", true, 3.0, 7.0);
+        processShape(dynamicShape);
+    }
+    
+    // Method that works with any Shape subclass
+    public static void processShape(Shape shape) {
+        System.out.println("Processing shape...");
+        shape.displayInfo();  // Polymorphic method call
+        
+        // Calculate total measurements
+        double area = shape.getArea();
+        double perimeter = shape.getPerimeter();
+        
+        System.out.println("Total measurements - Area: " + area + ", Perimeter: " + perimeter);
+        System.out.println();
+    }
+}`
+              }
+            }
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
