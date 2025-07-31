@@ -13558,6 +13558,433 @@ public class FileHandlingBestPracticesDemo {
 }`
           }
         },
+        javaIO: {
+          title: "Java I/O (Input/Output)",
+          description: "Java I/O provides comprehensive functionality for reading and writing data from various sources including files, keyboard, memory, and network through java.io and java.nio packages.",
+          whatIsJavaIO: {
+            title: "What is Java I/O?",
+            definition: {
+              title: "Java I/O is a system that enables data input (reading) and output (writing).",
+              description: "It provides a unified approach to handle data transfer between programs and external sources.",
+              capabilities: [
+                "File operations - read/write files",
+                "Console I/O - keyboard input, screen output",
+                "Network communication - data transfer over networks",
+                "Memory operations - in-memory data processing",
+                "Object serialization - save/restore object states"
+              ]
+            },
+            streamBased: {
+              title: "Based on streams: sequences of data.",
+              description: "Streams provide a consistent way to handle data flow regardless of the source or destination.",
+              streamConcept: [
+                "Sequential data flow",
+                "Source-to-destination data transfer",
+                "Buffering for efficiency",
+                "Automatic resource management"
+              ]
+            },
+            packages: {
+              title: "Handled through java.io and java.nio packages",
+              javaIo: "java.io - Traditional I/O with streams and readers/writers",
+              javaNio: "java.nio - New I/O with channels, buffers, and non-blocking operations"
+            },
+            example: `// Java I/O overview demonstration
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class JavaIOOverviewDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Java I/O Overview Demo ===");
+        
+        // Demonstrate different I/O operations
+        demonstrateFileIO();
+        demonstrateConsoleIO();
+        demonstrateMemoryIO();
+        demonstrateStreamTypes();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void demonstrateFileIO() {
+        System.out.println("\n1. File I/O Operations:");
+        
+        String fileName = "io-demo.txt";
+        String content = "Java I/O demonstration\nMultiple lines of text\nStream-based processing";
+        
+        try {
+            // Write to file
+            try (FileWriter writer = new FileWriter(fileName)) {
+                writer.write(content);
+                System.out.println("Data written to file: " + fileName);
+            }
+            
+            // Read from file
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                System.out.println("Reading from file:");
+                String line;
+                int lineNumber = 1;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println("  Line " + lineNumber + ": " + line);
+                    lineNumber++;
+                }
+            }
+            
+            // File information
+            File file = new File(fileName);
+            System.out.println("File size: " + file.length() + " bytes");
+            
+        } catch (IOException e) {
+            System.err.println("File I/O error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateConsoleIO() {
+        System.out.println("\n2. Console I/O Operations:");
+        
+        // Output to console
+        System.out.println("Standard output (System.out)");
+        System.err.println("Error output (System.err)");
+        
+        // Formatted output
+        System.out.printf("Formatted output: %s = %d%n", "Answer", 42);
+        
+        // Note: Interactive input commented out for demo
+        /*
+        try (BufferedReader consoleReader = new BufferedReader(
+                new InputStreamReader(System.in))) {
+            System.out.print("Enter your name: ");
+            String name = consoleReader.readLine();
+            System.out.println("Hello, " + name + "!");
+        } catch (IOException e) {
+            System.err.println("Console input error: " + e.getMessage());
+        }
+        */
+        
+        System.out.println("Console I/O operations completed");
+    }
+    
+    public static void demonstrateMemoryIO() {
+        System.out.println("\n3. Memory I/O Operations:");
+        
+        try {
+            // String to stream
+            String data = "Memory-based I/O operations\nUsing StringReader and StringWriter";
+            
+            // Read from memory (String)
+            try (StringReader stringReader = new StringReader(data)) {
+                System.out.println("Reading from memory:");
+                int character;
+                StringBuilder result = new StringBuilder();
+                while ((character = stringReader.read()) != -1) {
+                    result.append((char) character);
+                }
+                System.out.println("  Content: " + result.toString().replace("\n", "\\n"));
+            }
+            
+            // Write to memory (String)
+            try (StringWriter stringWriter = new StringWriter()) {
+                stringWriter.write("Generated in memory: ");
+                stringWriter.write(new Date().toString());
+                System.out.println("Memory write result: " + stringWriter.toString());
+            }
+            
+            // Byte array streams
+            ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+            byteOutput.write("Binary data in memory".getBytes());
+            
+            ByteArrayInputStream byteInput = new ByteArrayInputStream(byteOutput.toByteArray());
+            byte[] buffer = new byte[1024];
+            int bytesRead = byteInput.read(buffer);
+            System.out.println("Byte array content: " + new String(buffer, 0, bytesRead));
+            
+        } catch (IOException e) {
+            System.err.println("Memory I/O error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateStreamTypes() {
+        System.out.println("\n4. Stream Types Demonstration:");
+        
+        try {
+            // Byte streams
+            System.out.println("Byte Streams:");
+            byte[] binaryData = {65, 66, 67, 68, 69}; // ABCDE
+            
+            try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream()) {
+                byteOut.write(binaryData);
+                System.out.println("  Byte stream output: " + Arrays.toString(byteOut.toByteArray()));
+            }
+            
+            // Character streams
+            System.out.println("Character Streams:");
+            try (StringWriter charOut = new StringWriter()) {
+                charOut.write("Character stream data");
+                System.out.println("  Character stream output: " + charOut.toString());
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Stream demonstration error: " + e.getMessage());
+        }
+    }
+    
+    public static void cleanup() {
+        new File("io-demo.txt").delete();
+        System.out.println("\nCleanup completed");
+    }
+}`
+          },
+          typesOfStreams: {
+            title: "Types of Streams",
+            description: "Java I/O streams are categorized into byte streams and character streams based on the type of data they handle.",
+            byteStreams: {
+              title: "Byte Streams",
+              description: "Handle binary data - suitable for all types of data including images, audio, video, and text.",
+              classes: "Classes: InputStream, OutputStream",
+              characteristics: [
+                "Handle 8-bit bytes",
+                "Universal - can handle any type of data",
+                "Lower-level operations",
+                "No character encoding issues"
+              ]
+            },
+            characterStreams: {
+              title: "Character Streams",
+              description: "Handle character/text data - optimized for text processing with automatic character encoding.",
+              classes: "Classes: Reader, Writer",
+              characteristics: [
+                "Handle 16-bit Unicode characters",
+                "Automatic character encoding/decoding",
+                "Text-specific operations",
+                "Platform-independent text handling"
+              ]
+            },
+            example: `// Stream types comprehensive demonstration
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
+public class StreamTypesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Stream Types Demonstration ===");
+        
+        // Byte streams demonstration
+        demonstrateByteStreams();
+        
+        // Character streams demonstration
+        demonstrateCharacterStreams();
+        
+        // Stream conversion demonstration
+        demonstrateStreamConversion();
+        
+        // Performance comparison
+        performanceComparison();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void demonstrateByteStreams() {
+        System.out.println("\n1. Byte Streams Demonstration:");
+        
+        try {
+            // Create binary data
+            byte[] binaryData = {
+                0x48, 0x65, 0x6C, 0x6C, 0x6F, // "Hello"
+                0x20, // Space
+                0x57, 0x6F, 0x72, 0x6C, 0x64, // "World"
+                0x21, // !
+                (byte) 0xFF, (byte) 0xFE, (byte) 0xFD // Binary data
+            };
+            
+            // Write using byte stream
+            try (FileOutputStream fos = new FileOutputStream("byte-data.bin")) {
+                fos.write(binaryData);
+                System.out.println("Binary data written: " + binaryData.length + " bytes");
+            }
+            
+            // Read using byte stream
+            try (FileInputStream fis = new FileInputStream("byte-data.bin")) {
+                System.out.println("Reading binary data:");
+                int byteValue;
+                int position = 0;
+                while ((byteValue = fis.read()) != -1) {
+                    char character = (char) byteValue;
+                    System.out.printf("  Byte %2d: 0x%02X (%3d) '%c'%n", 
+                                    position++, byteValue, byteValue,
+                                    (Character.isISOControl(character) ? '.' : character));
+                }
+            }
+            
+            // Buffered byte streams for efficiency
+            try (BufferedInputStream bis = new BufferedInputStream(
+                    new FileInputStream("byte-data.bin"));
+                 BufferedOutputStream bos = new BufferedOutputStream(
+                    new FileOutputStream("byte-copy.bin"))) {
+                
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = bis.read(buffer)) != -1) {
+                    bos.write(buffer, 0, bytesRead);
+                }
+                System.out.println("Binary file copied using buffered streams");
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Byte stream error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateCharacterStreams() {
+        System.out.println("\n2. Character Streams Demonstration:");
+        
+        try {
+            String textData = "Hello World!\nÄÖÜ\nαβγ\n中文"; // Mixed characters
+            
+            // Write using character stream
+            try (FileWriter fw = new FileWriter("char-data.txt", StandardCharsets.UTF_8)) {
+                fw.write(textData);
+                System.out.println("Character data written");
+            }
+            
+            // Read using character stream
+            try (FileReader fr = new FileReader("char-data.txt", StandardCharsets.UTF_8)) {
+                System.out.println("Reading character data:");
+                int charValue;
+                int position = 0;
+                while ((charValue = fr.read()) != -1) {
+                    char character = (char) charValue;
+                    System.out.printf("  Char %2d: U+%04X '%c'%n", 
+                                    position++, charValue, character);
+                }
+            }
+            
+            // Buffered character streams
+            try (BufferedReader br = new BufferedReader(
+                    new FileReader("char-data.txt", StandardCharsets.UTF_8));
+                 BufferedWriter bw = new BufferedWriter(
+                    new FileWriter("char-processed.txt", StandardCharsets.UTF_8))) {
+                
+                String line;
+                int lineNumber = 1;
+                while ((line = br.readLine()) != null) {
+                    bw.write("Line " + lineNumber + ": " + line);
+                    bw.newLine();
+                    lineNumber++;
+                }
+                System.out.println("Character file processed using buffered streams");
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Character stream error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateStreamConversion() {
+        System.out.println("\n3. Stream Conversion Demonstration:");
+        
+        try {
+            // Convert byte stream to character stream
+            String data = "Stream conversion example\nByte to Character";
+            
+            // Write as bytes
+            try (FileOutputStream fos = new FileOutputStream("conversion-test.txt")) {
+                fos.write(data.getBytes(StandardCharsets.UTF_8));
+                System.out.println("Data written as bytes");
+            }
+            
+            // Read bytes and convert to characters
+            try (FileInputStream fis = new FileInputStream("conversion-test.txt");
+                 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                 BufferedReader br = new BufferedReader(isr)) {
+                
+                System.out.println("Reading bytes as characters:");
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println("  " + line);
+                }
+            }
+            
+            // Convert character stream to byte stream
+            try (FileReader fr = new FileReader("conversion-test.txt", StandardCharsets.UTF_8);
+                 FileOutputStream fos = new FileOutputStream("converted-output.bin");
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                
+                int character;
+                while ((character = fr.read()) != -1) {
+                    osw.write(character);
+                }
+                System.out.println("Characters converted to bytes");
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Stream conversion error: " + e.getMessage());
+        }
+    }
+    
+    public static void performanceComparison() {
+        System.out.println("\n4. Performance Comparison:");
+        
+        String testData = "Performance test data\n".repeat(10000);
+        
+        try {
+            // Byte stream performance
+            long startTime = System.currentTimeMillis();
+            try (FileOutputStream fos = new FileOutputStream("perf-byte.txt")) {
+                fos.write(testData.getBytes(StandardCharsets.UTF_8));
+            }
+            long byteTime = System.currentTimeMillis() - startTime;
+            
+            // Character stream performance
+            startTime = System.currentTimeMillis();
+            try (FileWriter fw = new FileWriter("perf-char.txt", StandardCharsets.UTF_8)) {
+                fw.write(testData);
+            }
+            long charTime = System.currentTimeMillis() - startTime;
+            
+            // Buffered byte stream performance
+            startTime = System.currentTimeMillis();
+            try (BufferedOutputStream bos = new BufferedOutputStream(
+                    new FileOutputStream("perf-buffered-byte.txt"))) {
+                bos.write(testData.getBytes(StandardCharsets.UTF_8));
+            }
+            long bufferedByteTime = System.currentTimeMillis() - startTime;
+            
+            // Buffered character stream performance
+            startTime = System.currentTimeMillis();
+            try (BufferedWriter bw = new BufferedWriter(
+                    new FileWriter("perf-buffered-char.txt", StandardCharsets.UTF_8))) {
+                bw.write(testData);
+            }
+            long bufferedCharTime = System.currentTimeMillis() - startTime;
+            
+            System.out.println("Performance Results:");
+            System.out.println("  Byte stream: " + byteTime + "ms");
+            System.out.println("  Character stream: " + charTime + "ms");
+            System.out.println("  Buffered byte stream: " + bufferedByteTime + "ms");
+            System.out.println("  Buffered character stream: " + bufferedCharTime + "ms");
+            
+        } catch (IOException e) {
+            System.err.println("Performance test error: " + e.getMessage());
+        }
+    }
+    
+    public static void cleanup() {
+        String[] files = {
+            "byte-data.bin", "byte-copy.bin", "char-data.txt", "char-processed.txt",
+            "conversion-test.txt", "converted-output.bin", "perf-byte.txt", "perf-char.txt",
+            "perf-buffered-byte.txt", "perf-buffered-char.txt"
+        };
+        
+        for (String fileName : files) {
+            new File(fileName).delete();
+        }
+        System.out.println("\nCleanup completed");
+    }
+}`
+            }
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
