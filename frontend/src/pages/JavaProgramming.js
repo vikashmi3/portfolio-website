@@ -2823,6 +2823,988 @@ class Triangle extends Shape {
               }
             }
           },
+        abstraction: {
+          title: "Java Abstraction",
+          description: "Abstraction is the process of hiding implementation details while showing only essential features to the user. It focuses on what an object does rather than how it does it.",
+          whatIsAbstraction: {
+            title: "What is Abstraction?",
+            definition: {
+              title: "Hiding internal implementation details",
+              description: "Abstraction allows you to focus on what an object does instead of how it does it.",
+              characteristics: [
+                "Hides complex implementation details",
+                "Provides a simplified interface",
+                "Reduces code complexity",
+                "Enables code maintainability",
+                "Supports modularity"
+              ]
+            },
+            essentialFeatures: {
+              title: "Showing only essential features",
+              description: "Users interact with objects through well-defined interfaces without knowing internal workings.",
+              realWorldExample: "A car driver uses steering wheel, pedals, and gear shift without knowing engine mechanics."
+            },
+            achievedUsing: {
+              title: "Achieved using abstract classes and interfaces",
+              description: "Java provides two main mechanisms for abstraction.",
+              mechanisms: [
+                "Abstract Classes - Partial abstraction with some concrete methods",
+                "Interfaces - Complete abstraction (traditionally) with contracts"
+              ]
+            }
+          },
+          abstractClass: {
+            title: "Abstract Class",
+            description: "A class declared with abstract keyword that cannot be instantiated and may contain abstract methods.",
+            declaration: {
+              title: "Declared using abstract keyword",
+              syntax: "abstract class ClassName { ... }",
+              example: `// Basic abstract class example
+abstract class Animal {
+    // Abstract method - no implementation
+    abstract void makeSound();
+    
+    // Concrete method - has implementation
+    void eat() {
+        System.out.println("This animal eats food.");
+    }
+}`
+            },
+            canContain: {
+              title: "Can contain:",
+              abstractMethods: {
+                title: "Abstract methods (no body)",
+                description: "Methods declared without implementation, must be overridden in subclasses."
+              },
+              nonAbstractMethods: {
+                title: "Non-abstract methods (with body)",
+                description: "Regular methods with complete implementation."
+              },
+              fieldsAndConstructors: {
+                title: "Fields and constructors",
+                description: "Instance variables and constructors for initialization."
+              }
+            },
+            cannotBeInstantiated: {
+              title: "Cannot be instantiated",
+              description: "Abstract classes cannot be directly instantiated using new keyword."
+            },
+            partialAbstraction: {
+              title: "Used when partial abstraction is needed",
+              description: "When you want to provide some common functionality while forcing subclasses to implement specific methods."
+            },
+            comprehensiveExample: {
+              title: "Comprehensive Abstract Class Example",
+              example: `// Abstract class representing a geometric shape
+abstract class Shape {
+    // Instance variables
+    protected String color;
+    protected boolean filled;
+    
+    // Constructor
+    public Shape(String color, boolean filled) {
+        this.color = color;
+        this.filled = filled;
+        System.out.println("Shape constructor called");
+    }
+    
+    // Abstract methods - must be implemented by subclasses
+    public abstract double getArea();
+    public abstract double getPerimeter();
+    public abstract void draw();
+    
+    // Concrete methods - inherited by subclasses
+    public void displayInfo() {
+        System.out.println("Color: " + color);
+        System.out.println("Filled: " + filled);
+        System.out.println("Area: " + getArea());
+        System.out.println("Perimeter: " + getPerimeter());
+    }
+    
+    public void setColor(String color) {
+        this.color = color;
+    }
+    
+    public String getColor() {
+        return color;
+    }
+    
+    // Final method - cannot be overridden
+    public final void printShapeType() {
+        System.out.println("This is a geometric shape");
+    }
+}
+
+// Concrete subclass - Circle
+class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, boolean filled, double radius) {
+        super(color, filled);
+        this.radius = radius;
+    }
+    
+    // Implement abstract methods
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public double getPerimeter() {
+        return 2 * Math.PI * radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle with radius " + radius);
+    }
+    
+    // Additional method specific to Circle
+    public double getDiameter() {
+        return 2 * radius;
+    }
+}
+
+// Concrete subclass - Rectangle
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+    
+    public Rectangle(String color, boolean filled, double length, double width) {
+        super(color, filled);
+        this.length = length;
+        this.width = width;
+    }
+    
+    // Implement abstract methods
+    @Override
+    public double getArea() {
+        return length * width;
+    }
+    
+    @Override
+    public double getPerimeter() {
+        return 2 * (length + width);
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle " + length + "x" + width);
+    }
+    
+    // Additional method specific to Rectangle
+    public boolean isSquare() {
+        return length == width;
+    }
+}
+
+// Usage demonstration
+public class AbstractClassDemo {
+    public static void main(String[] args) {
+        // Cannot instantiate abstract class
+        // Shape shape = new Shape("Red", true); // Compilation error
+        
+        // Create concrete objects
+        Circle circle = new Circle("Blue", true, 5.0);
+        Rectangle rectangle = new Rectangle("Green", false, 4.0, 6.0);
+        
+        // Use abstract class reference for polymorphism
+        Shape[] shapes = {circle, rectangle};
+        
+        System.out.println("=== Shape Information ===");
+        for (Shape shape : shapes) {
+            shape.draw();           // Calls overridden method
+            shape.displayInfo();    // Calls inherited method
+            shape.printShapeType(); // Calls final method
+            System.out.println("-".repeat(30));
+        }
+        
+        // Access subclass-specific methods
+        System.out.println("Circle diameter: " + circle.getDiameter());
+        System.out.println("Is rectangle a square? " + rectangle.isSquare());
+    }
+}`
+            }
+          },
+          interface: {
+            title: "Interface",
+            description: "A contract that defines what methods a class must implement, providing complete abstraction.",
+            fullyAbstract: {
+              title: "Fully abstract (until Java 7)",
+              description: "Traditional interfaces contained only abstract methods and constants.",
+              example: `// Traditional interface (Java 7 and earlier)
+interface Vehicle {
+    // All methods are implicitly public and abstract
+    void start();
+    void stop();
+    void accelerate();
+    
+    // All variables are implicitly public, static, and final
+    int MAX_SPEED = 200;
+    String DEFAULT_COLOR = "White";
+}`
+            },
+            java8Features: {
+              title: "Java 8+: Can contain default and static methods",
+              description: "Java 8 introduced default and static methods in interfaces.",
+              defaultMethods: {
+                title: "Default Methods",
+                description: "Methods with implementation that can be inherited by implementing classes.",
+                syntax: "default returnType methodName() { ... }"
+              },
+              staticMethods: {
+                title: "Static Methods",
+                description: "Utility methods that belong to the interface itself.",
+                syntax: "static returnType methodName() { ... }"
+              },
+              example: `// Modern interface with Java 8+ features
+interface Drawable {
+    // Abstract method - must be implemented
+    void draw();
+    
+    // Default method - can be inherited or overridden
+    default void setColor(String color) {
+        System.out.println("Setting color to " + color);
+    }
+    
+    // Static method - belongs to interface
+    static void printDrawingInfo() {
+        System.out.println("This interface provides drawing capabilities");
+    }
+    
+    // Constants
+    String DEFAULT_COLOR = "Black";
+    int DEFAULT_SIZE = 10;
+}`
+            },
+            java9Features: {
+              title: "Java 9+: Can also contain private methods",
+              description: "Java 9 added private methods to interfaces for code reuse within the interface.",
+              example: `// Java 9+ interface with private methods
+interface Calculator {
+    // Abstract methods
+    double add(double a, double b);
+    double subtract(double a, double b);
+    
+    // Default methods using private helper
+    default double addAndPrint(double a, double b) {
+        double result = add(a, b);
+        printResult("Addition", a, b, result);
+        return result;
+    }
+    
+    default double subtractAndPrint(double a, double b) {
+        double result = subtract(a, b);
+        printResult("Subtraction", a, b, result);
+        return result;
+    }
+    
+    // Private method - code reuse within interface
+    private void printResult(String operation, double a, double b, double result) {
+        System.out.println(operation + ": " + a + " and " + b + " = " + result);
+    }
+    
+    // Static method
+    static void printCalculatorInfo() {
+        System.out.println("This is a calculator interface");
+    }
+}`
+            },
+            multipleInheritance: {
+              title: "Used for 100% abstraction (multiple inheritance support)",
+              description: "Interfaces enable multiple inheritance of type, allowing a class to implement multiple interfaces.",
+              example: `// Multiple interfaces for different capabilities
+interface Flyable {
+    void fly();
+    
+    default void takeOff() {
+        System.out.println("Taking off for flight");
+    }
+}
+
+interface Swimmable {
+    void swim();
+    
+    default void dive() {
+        System.out.println("Diving into water");
+    }
+}
+
+interface Walkable {
+    void walk();
+    
+    default void run() {
+        System.out.println("Running fast");
+    }
+}
+
+// Class implementing multiple interfaces
+class Duck implements Flyable, Swimmable, Walkable {
+    private String name;
+    
+    public Duck(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void fly() {
+        System.out.println(name + " is flying gracefully");
+    }
+    
+    @Override
+    public void swim() {
+        System.out.println(name + " is swimming in the pond");
+    }
+    
+    @Override
+    public void walk() {
+        System.out.println(name + " is waddling on land");
+    }
+    
+    // Can override default methods if needed
+    @Override
+    public void takeOff() {
+        System.out.println(name + " flaps wings and takes off");
+    }
+}
+
+// Usage demonstration
+public class MultipleInterfaceDemo {
+    public static void main(String[] args) {
+        Duck duck = new Duck("Donald");
+        
+        // Use as different interface types
+        Flyable flyingDuck = duck;
+        Swimmable swimmingDuck = duck;
+        Walkable walkingDuck = duck;
+        
+        // Polymorphic behavior
+        flyingDuck.fly();
+        flyingDuck.takeOff();
+        
+        swimmingDuck.swim();
+        swimmingDuck.dive();
+        
+        walkingDuck.walk();
+        walkingDuck.run();
+    }
+}`
+            }
+          },
+          keyDifferences: {
+            title: "Key Differences: Abstract Class vs Interface",
+            description: "Understanding when to use abstract classes versus interfaces.",
+            comparisonTable: {
+              inheritance: {
+                feature: "Inheritance",
+                abstractClass: "Single",
+                interface: "Multiple (via interfaces)"
+              },
+              methods: {
+                feature: "Methods",
+                abstractClass: "Abstract + Non-abstract",
+                interface: "Abstract (Java 7), also default, static in Java 8+"
+              },
+              fields: {
+                feature: "Fields",
+                abstractClass: "Instance variables",
+                interface: "Public static final only"
+              },
+              constructor: {
+                feature: "Constructor allowed",
+                abstractClass: "Yes",
+                interface: "No"
+              },
+              accessModifiers: {
+                feature: "Access Modifiers",
+                abstractClass: "All access modifiers",
+                interface: "Public (implicitly)"
+              },
+              instantiation: {
+                feature: "Instantiation",
+                abstractClass: "Cannot be instantiated",
+                interface: "Cannot be instantiated"
+              }
+            },
+            practicalExample: {
+              title: "Practical Comparison Example",
+              example: `// Abstract class example - partial abstraction
+abstract class Employee {
+    // Instance variables
+    protected String name;
+    protected int id;
+    protected double baseSalary;
+    
+    // Constructor
+    public Employee(String name, int id, double baseSalary) {
+        this.name = name;
+        this.id = id;
+        this.baseSalary = baseSalary;
+    }
+    
+    // Abstract method - must be implemented
+    public abstract double calculateSalary();
+    
+    // Concrete method - inherited by all subclasses
+    public void displayInfo() {
+        System.out.println("Employee: " + name + ", ID: " + id);
+        System.out.println("Base Salary: $" + baseSalary);
+        System.out.println("Total Salary: $" + calculateSalary());
+    }
+    
+    // Getters and setters
+    public String getName() { return name; }
+    public int getId() { return id; }
+}
+
+// Interface example - complete abstraction
+interface Payable {
+    double calculatePay();
+    
+    default void processPayment() {
+        System.out.println("Processing payment of $" + calculatePay());
+    }
+    
+    static void printPaymentInfo() {
+        System.out.println("Payment processing system v1.0");
+    }
+}
+
+interface Taxable {
+    double calculateTax();
+    
+    default double getNetPay() {
+        return calculatePay() - calculateTax();
+    }
+    
+    // This creates a conflict - implementing class must resolve
+    double calculatePay();
+}
+
+// Concrete class extending abstract class and implementing interfaces
+class FullTimeEmployee extends Employee implements Payable, Taxable {
+    private double bonus;
+    
+    public FullTimeEmployee(String name, int id, double baseSalary, double bonus) {
+        super(name, id, baseSalary);
+        this.bonus = bonus;
+    }
+    
+    @Override
+    public double calculateSalary() {
+        return baseSalary + bonus;
+    }
+    
+    @Override
+    public double calculatePay() {
+        return calculateSalary();
+    }
+    
+    @Override
+    public double calculateTax() {
+        return calculatePay() * 0.2; // 20% tax
+    }
+    
+    @Override
+    public void processPayment() {
+        System.out.println("Processing full-time employee payment for " + name);
+        Payable.super.processPayment(); // Call interface default method
+    }
+}
+
+class ContractEmployee implements Payable, Taxable {
+    private String name;
+    private double hourlyRate;
+    private int hoursWorked;
+    
+    public ContractEmployee(String name, double hourlyRate, int hoursWorked) {
+        this.name = name;
+        this.hourlyRate = hourlyRate;
+        this.hoursWorked = hoursWorked;
+    }
+    
+    @Override
+    public double calculatePay() {
+        return hourlyRate * hoursWorked;
+    }
+    
+    @Override
+    public double calculateTax() {
+        return calculatePay() * 0.15; // 15% tax for contractors
+    }
+    
+    public void displayInfo() {
+        System.out.println("Contractor: " + name);
+        System.out.println("Hourly Rate: $" + hourlyRate + ", Hours: " + hoursWorked);
+        System.out.println("Gross Pay: $" + calculatePay());
+        System.out.println("Tax: $" + calculateTax());
+        System.out.println("Net Pay: $" + getNetPay());
+    }
+}
+
+// Usage demonstration
+public class AbstractVsInterfaceDemo {
+    public static void main(String[] args) {
+        // Create different types of employees
+        FullTimeEmployee fullTime = new FullTimeEmployee("Alice", 101, 5000, 1000);
+        ContractEmployee contractor = new ContractEmployee("Bob", 50, 160);
+        
+        System.out.println("=== Full-Time Employee ===");
+        fullTime.displayInfo();  // From abstract class
+        fullTime.processPayment(); // From interface
+        
+        System.out.println("\n=== Contract Employee ===");
+        contractor.displayInfo(); // Own method
+        contractor.processPayment(); // From interface
+        
+        // Polymorphism with interfaces
+        System.out.println("\n=== Polymorphic Payment Processing ===");
+        Payable[] payables = {fullTime, contractor};
+        
+        for (Payable payable : payables) {
+            payable.processPayment();
+        }
+        
+        // Static method call
+        Payable.printPaymentInfo();
+    }
+}`
+            }
+          },
+          implementsAndExtends: {
+            title: "Use of implements and extends",
+            description: "Understanding the keywords used for inheritance and interface implementation.",
+            extends: {
+              title: "extends → for class-to-class or class-to-abstract-class",
+              description: "Used when a class inherits from another class or abstract class.",
+              syntax: "class ChildClass extends ParentClass { ... }",
+              rules: [
+                "Single inheritance only",
+                "Inherits all non-private members",
+                "Can override parent methods",
+                "Must call parent constructor"
+              ]
+            },
+            implements: {
+              title: "implements → class-to-interface",
+              description: "Used when a class implements one or more interfaces.",
+              syntax: "class ClassName implements Interface1, Interface2 { ... }",
+              rules: [
+                "Multiple interfaces can be implemented",
+                "Must implement all abstract methods",
+                "Can override default methods",
+                "Inherits default and static methods"
+              ]
+            },
+            combinedUsage: {
+              title: "Combined Usage Example",
+              example: `// Base abstract class
+abstract class Vehicle {
+    protected String brand;
+    protected String model;
+    
+    public Vehicle(String brand, String model) {
+        this.brand = brand;
+        this.model = model;
+    }
+    
+    public abstract void start();
+    
+    public void displayInfo() {
+        System.out.println(brand + " " + model);
+    }
+}
+
+// Interfaces
+interface Electric {
+    void chargeBattery();
+    
+    default void displayBatteryStatus() {
+        System.out.println("Battery status: Checking...");
+    }
+}
+
+interface GPS {
+    void navigate(String destination);
+    
+    static void showGPSVersion() {
+        System.out.println("GPS Version 2.0");
+    }
+}
+
+interface Autonomous {
+    void enableAutoPilot();
+    void disableAutoPilot();
+}
+
+// Class using both extends and implements
+class TeslaModel3 extends Vehicle implements Electric, GPS, Autonomous {
+    private int batteryLevel;
+    private boolean autoPilotEnabled;
+    
+    public TeslaModel3() {
+        super("Tesla", "Model 3");
+        this.batteryLevel = 100;
+        this.autoPilotEnabled = false;
+    }
+    
+    // Implement abstract method from Vehicle
+    @Override
+    public void start() {
+        System.out.println("Tesla Model 3 starting silently...");
+    }
+    
+    // Implement Electric interface
+    @Override
+    public void chargeBattery() {
+        batteryLevel = 100;
+        System.out.println("Battery charged to 100%");
+    }
+    
+    @Override
+    public void displayBatteryStatus() {
+        System.out.println("Battery level: " + batteryLevel + "%");
+    }
+    
+    // Implement GPS interface
+    @Override
+    public void navigate(String destination) {
+        System.out.println("Navigating to " + destination + " using Tesla GPS");
+    }
+    
+    // Implement Autonomous interface
+    @Override
+    public void enableAutoPilot() {
+        autoPilotEnabled = true;
+        System.out.println("AutoPilot enabled - hands-free driving activated");
+    }
+    
+    @Override
+    public void disableAutoPilot() {
+        autoPilotEnabled = false;
+        System.out.println("AutoPilot disabled - manual driving required");
+    }
+    
+    // Additional Tesla-specific method
+    public void summonCar() {
+        System.out.println("Tesla is coming to your location");
+    }
+}
+
+// Regular car class - only extends
+class ToyotaCamry extends Vehicle {
+    public ToyotaCamry() {
+        super("Toyota", "Camry");
+    }
+    
+    @Override
+    public void start() {
+        System.out.println("Toyota Camry engine starting...");
+    }
+}
+
+// Usage demonstration
+public class ExtendsImplementsDemo {
+    public static void main(String[] args) {
+        TeslaModel3 tesla = new TeslaModel3();
+        ToyotaCamry toyota = new ToyotaCamry();
+        
+        System.out.println("=== Tesla Model 3 Features ===");
+        tesla.displayInfo();        // From Vehicle (abstract class)
+        tesla.start();              // Overridden method
+        tesla.chargeBattery();      // From Electric interface
+        tesla.displayBatteryStatus(); // Overridden default method
+        tesla.navigate("San Francisco"); // From GPS interface
+        tesla.enableAutoPilot();    // From Autonomous interface
+        tesla.summonCar();          // Tesla-specific method
+        
+        System.out.println("\n=== Toyota Camry Features ===");
+        toyota.displayInfo();       // From Vehicle (abstract class)
+        toyota.start();             // Overridden method
+        
+        // Polymorphism with abstract class
+        System.out.println("\n=== Polymorphic Vehicle Usage ===");
+        Vehicle[] vehicles = {tesla, toyota};
+        for (Vehicle vehicle : vehicles) {
+            vehicle.displayInfo();
+            vehicle.start();
+        }
+        
+        // Interface polymorphism
+        System.out.println("\n=== Interface Polymorphism ===");
+        Electric electricVehicle = tesla;
+        electricVehicle.chargeBattery();
+        electricVehicle.displayBatteryStatus();
+        
+        GPS gpsEnabled = tesla;
+        gpsEnabled.navigate("Los Angeles");
+        GPS.showGPSVersion(); // Static method call
+    }
+}`
+            }
+          },
+          realWorldExample: {
+            title: "Real-world Example",
+            description: "Comprehensive example demonstrating abstraction in a payroll system.",
+            example: `// Abstract class for Employee hierarchy
+abstract class Employee {
+    protected String name;
+    protected int employeeId;
+    protected String department;
+    protected double baseSalary;
+    
+    public Employee(String name, int employeeId, String department, double baseSalary) {
+        this.name = name;
+        this.employeeId = employeeId;
+        this.department = department;
+        this.baseSalary = baseSalary;
+    }
+    
+    // Abstract method - each employee type calculates salary differently
+    public abstract double calculateSalary();
+    
+    // Concrete methods - common to all employees
+    public void displayBasicInfo() {
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Name: " + name);
+        System.out.println("Department: " + department);
+        System.out.println("Base Salary: $" + baseSalary);
+    }
+    
+    public String getName() { return name; }
+    public int getEmployeeId() { return employeeId; }
+    public String getDepartment() { return department; }
+}
+
+// Interface for payable entities
+interface Payable {
+    double calculatePay();
+    
+    default void processPayment() {
+        double amount = calculatePay();
+        System.out.println("Processing payment of $" + String.format("%.2f", amount));
+    }
+    
+    static void printPayrollSystem() {
+        System.out.println("Payroll Management System v2.0");
+    }
+}
+
+// Interface for tax calculation
+interface Taxable {
+    double calculateTax();
+    
+    default double getNetPay() {
+        return calculatePay() - calculateTax();
+    }
+    
+    // Method that creates diamond problem - resolved by implementing class
+    double calculatePay();
+}
+
+// Interface for benefits
+interface BenefitEligible {
+    double calculateBenefits();
+    
+    default void enrollInBenefits() {
+        System.out.println("Enrolling in company benefits package");
+    }
+}
+
+// Concrete class - Full-time employee
+class FullTimeEmployee extends Employee implements Payable, Taxable, BenefitEligible {
+    private double bonus;
+    private double healthInsurance;
+    private double retirement401k;
+    
+    public FullTimeEmployee(String name, int employeeId, String department, 
+                           double baseSalary, double bonus) {
+        super(name, employeeId, department, baseSalary);
+        this.bonus = bonus;
+        this.healthInsurance = 500.0; // Monthly health insurance
+        this.retirement401k = baseSalary * 0.06; // 6% 401k contribution
+    }
+    
+    @Override
+    public double calculateSalary() {
+        return baseSalary + bonus;
+    }
+    
+    @Override
+    public double calculatePay() {
+        return calculateSalary();
+    }
+    
+    @Override
+    public double calculateTax() {
+        double grossPay = calculatePay();
+        if (grossPay <= 50000) {
+            return grossPay * 0.15; // 15% tax bracket
+        } else if (grossPay <= 100000) {
+            return grossPay * 0.22; // 22% tax bracket
+        } else {
+            return grossPay * 0.28; // 28% tax bracket
+        }
+    }
+    
+    @Override
+    public double calculateBenefits() {
+        return healthInsurance + retirement401k;
+    }
+    
+    public void displayFullDetails() {
+        displayBasicInfo();
+        System.out.println("Employee Type: Full-Time");
+        System.out.println("Bonus: $" + bonus);
+        System.out.println("Gross Pay: $" + String.format("%.2f", calculatePay()));
+        System.out.println("Tax: $" + String.format("%.2f", calculateTax()));
+        System.out.println("Benefits: $" + String.format("%.2f", calculateBenefits()));
+        System.out.println("Net Pay: $" + String.format("%.2f", getNetPay()));
+    }
+}
+
+// Concrete class - Part-time employee
+class PartTimeEmployee extends Employee implements Payable, Taxable {
+    private int hoursWorked;
+    private double hourlyRate;
+    
+    public PartTimeEmployee(String name, int employeeId, String department, 
+                           double hourlyRate, int hoursWorked) {
+        super(name, employeeId, department, 0); // No base salary for part-time
+        this.hourlyRate = hourlyRate;
+        this.hoursWorked = hoursWorked;
+    }
+    
+    @Override
+    public double calculateSalary() {
+        return hourlyRate * hoursWorked;
+    }
+    
+    @Override
+    public double calculatePay() {
+        return calculateSalary();
+    }
+    
+    @Override
+    public double calculateTax() {
+        return calculatePay() * 0.12; // 12% tax for part-time
+    }
+    
+    public void displayFullDetails() {
+        displayBasicInfo();
+        System.out.println("Employee Type: Part-Time");
+        System.out.println("Hourly Rate: $" + hourlyRate);
+        System.out.println("Hours Worked: " + hoursWorked);
+        System.out.println("Gross Pay: $" + String.format("%.2f", calculatePay()));
+        System.out.println("Tax: $" + String.format("%.2f", calculateTax()));
+        System.out.println("Net Pay: $" + String.format("%.2f", getNetPay()));
+    }
+}
+
+// Concrete class - Contractor (not an employee, but payable)
+class Contractor implements Payable, Taxable {
+    private String name;
+    private String company;
+    private double contractAmount;
+    private int projectDuration; // in months
+    
+    public Contractor(String name, String company, double contractAmount, int projectDuration) {
+        this.name = name;
+        this.company = company;
+        this.contractAmount = contractAmount;
+        this.projectDuration = projectDuration;
+    }
+    
+    @Override
+    public double calculatePay() {
+        return contractAmount / projectDuration; // Monthly payment
+    }
+    
+    @Override
+    public double calculateTax() {
+        return calculatePay() * 0.25; // 25% tax for contractors
+    }
+    
+    public void displayContractorInfo() {
+        System.out.println("Contractor: " + name);
+        System.out.println("Company: " + company);
+        System.out.println("Contract Amount: $" + contractAmount);
+        System.out.println("Project Duration: " + projectDuration + " months");
+        System.out.println("Monthly Pay: $" + String.format("%.2f", calculatePay()));
+        System.out.println("Tax: $" + String.format("%.2f", calculateTax()));
+        System.out.println("Net Pay: $" + String.format("%.2f", getNetPay()));
+    }
+}
+
+// Payroll management system
+class PayrollSystem {
+    public static void processPayroll(Payable[] payables) {
+        System.out.println("\n=== Processing Payroll ===");
+        Payable.printPayrollSystem();
+        
+        double totalPayroll = 0;
+        for (Payable payable : payables) {
+            payable.processPayment();
+            totalPayroll += payable.calculatePay();
+        }
+        
+        System.out.println("Total Payroll: $" + String.format("%.2f", totalPayroll));
+    }
+    
+    public static void generateTaxReport(Taxable[] taxables) {
+        System.out.println("\n=== Tax Report ===");
+        
+        double totalTax = 0;
+        for (Taxable taxable : taxables) {
+            double tax = taxable.calculateTax();
+            totalTax += tax;
+            System.out.println("Tax owed: $" + String.format("%.2f", tax));
+        }
+        
+        System.out.println("Total Tax Collected: $" + String.format("%.2f", totalTax));
+    }
+}
+
+// Main demonstration
+public class PayrollSystemDemo {
+    public static void main(String[] args) {
+        // Create different types of workers
+        FullTimeEmployee fullTime1 = new FullTimeEmployee("Alice Johnson", 101, "Engineering", 80000, 10000);
+        FullTimeEmployee fullTime2 = new FullTimeEmployee("Bob Smith", 102, "Marketing", 60000, 5000);
+        PartTimeEmployee partTime = new PartTimeEmployee("Carol Davis", 201, "Support", 25, 80);
+        Contractor contractor = new Contractor("David Wilson", "TechCorp", 120000, 12);
+        
+        // Display individual details
+        System.out.println("=== Employee Details ===");
+        fullTime1.displayFullDetails();
+        System.out.println();
+        
+        partTime.displayFullDetails();
+        System.out.println();
+        
+        contractor.displayContractorInfo();
+        System.out.println();
+        
+        // Polymorphic payroll processing
+        Payable[] payables = {fullTime1, fullTime2, partTime, contractor};
+        PayrollSystem.processPayroll(payables);
+        
+        // Tax reporting
+        Taxable[] taxables = {fullTime1, fullTime2, partTime, contractor};
+        PayrollSystem.generateTaxReport(taxables);
+        
+        // Benefits enrollment for eligible employees
+        System.out.println("\n=== Benefits Enrollment ===");
+        if (fullTime1 instanceof BenefitEligible) {
+            BenefitEligible eligible = (BenefitEligible) fullTime1;
+            eligible.enrollInBenefits();
+            System.out.println("Benefits value: $" + eligible.calculateBenefits());
+        }
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
