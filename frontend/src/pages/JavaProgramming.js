@@ -10990,6 +10990,845 @@ class SharedResource {
     }
 }`
           },
+          interThreadCommunication: {
+            title: "Inter-Thread Communication",
+            description: "Thread cooperation using wait(), notify(), and notifyAll() methods with synchronization.",
+            methods: {
+              wait: "wait() - Thread releases lock and waits for notification",
+              notify: "notify() - Wakes up one waiting thread",
+              notifyAll: "notifyAll() - Wakes up all waiting threads"
+            },
+            example: `// Inter-thread communication with synchronization
+public class InterThreadCommSyncDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Inter-Thread Communication Demo ===");
+        
+        // Producer-Consumer with synchronization
+        SynchronizedBuffer buffer = new SynchronizedBuffer(3);
+        
+        Producer producer1 = new Producer(buffer, "Producer-1");
+        Producer producer2 = new Producer(buffer, "Producer-2");
+        Consumer consumer1 = new Consumer(buffer, "Consumer-1");
+        Consumer consumer2 = new Consumer(buffer, "Consumer-2");
+        
+        Thread p1 = new Thread(producer1);
+        Thread p2 = new Thread(producer2);
+        Thread c1 = new Thread(consumer1);
+        Thread c2 = new Thread(consumer2);
+        
+        p1.start();
+        p2.start();
+        c1.start();
+        c2.start();
+        
+        // Let them run for 8 seconds
+        try {
+            Thread.sleep(8000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        // Stop all threads
+        producer1.stop();
+        producer2.stop();
+        consumer1.stop();
+        consumer2.stop();
+        
+        try {
+            p1.join();
+            p2.join();
+            c1.join();
+            c2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("Demo completed");
+    }
+}
+
+class SynchronizedBuffer {
+    private java.util.Queue<String> buffer;
+    private int capacity;
+    
+    public SynchronizedBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new java.util.LinkedList<>();
+    }
+    
+    public synchronized void produce(String item, String producerName) throws InterruptedException {
+        while (buffer.size() == capacity) {
+            System.out.println(producerName + " waiting - buffer full (" + buffer.size() + "/" + capacity + ")");
+            wait(); // Release lock and wait
+        }
+        
+        buffer.offer(item);
+        System.out.println(producerName + " produced: " + item + " (Buffer: " + buffer.size() + "/" + capacity + ")");
+        
+        notifyAll(); // Wake up all waiting threads
+    }
+    
+    public synchronized String consume(String consumerName) throws InterruptedException {
+        while (buffer.isEmpty()) {
+            System.out.println(consumerName + " waiting - buffer empty");
+            wait(); // Release lock and wait
+        }
+        
+        String item = buffer.poll();
+        System.out.println(consumerName + " consumed: " + item + " (Buffer: " + buffer.size() + "/" + capacity + ")");
+        
+        notifyAll(); // Wake up all waiting threads
+        return item;
+    }
+    
+    public synchronized int size() {
+        return buffer.size();
+    }
+}
+
+class Producer implements Runnable {
+    private SynchronizedBuffer buffer;
+    private String name;
+    private volatile boolean running = true;
+    private int itemCount = 1;
+    
+    public Producer(SynchronizedBuffer buffer, String name) {
+        this.buffer = buffer;
+        this.name = name;
+    }
+    
+    @Override
+    public void run() {
+        while (running) {
+            try {
+                String item = name + "-Item-" + itemCount++;
+                buffer.produce(item, name);
+                Thread.sleep(1000 + (int)(Math.random() * 1000)); // Random delay
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        System.out.println(name + " stopped");
+    }
+    
+    public void stop() {
+        running = false;
+    }
+}
+
+class Consumer implements Runnable {
+    private SynchronizedBuffer buffer;
+    private String name;
+    private volatile boolean running = true;
+    
+    public Consumer(SynchronizedBuffer buffer, String name) {
+        this.buffer = buffer;
+        this.name = name;
+    }
+    
+    @Override
+    public void run() {
+        while (running) {
+            try {
+                buffer.consume(name);
+                Thread.sleep(1500 + (int)(Math.random() * 1000)); // Random delay
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        System.out.println(name + " stopped");
+    }
+    
+    public void stop() {
+        running = false;
+    }
+}`
+          },
+          deadlock: {
+            title: "Deadlock (Important Concept)",
+            description: "A situation where two or more threads are blocked forever, waiting for each other's locks.",
+            causes: [
+              "Circular dependency of locks",
+              "Multiple threads acquiring locks in different orders",
+              "Holding locks while waiting for other locks"
+            ],
+            prevention: [
+              "Always acquire locks in the same order",
+              "Use timeout with tryLock()",
+              "Avoid nested synchronization when possible",
+              "Use higher-level concurrency utilities"
+            ],
+            example: `// Deadlock demonstration and prevention
+public class DeadlockDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Deadlock Demonstration ===");
+        
+        // Demonstrate deadlock scenario
+        demonstrateDeadlock();
+        
+        // Wait a bit then demonstrate prevention
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("\n=== Deadlock Prevention ===");
+        demonstrateDeadlockPrevention();
+    }
+    
+    public static void demonstrateDeadlock() {
+        Object lock1 = new Object();
+        Object lock2 = new Object();
+        
+        Thread thread1 = new Thread(() -> {
+            synchronized (lock1) {
+                System.out.println("Thread-1: Acquired lock1");
+                
+                try {
+                    Thread.sleep(100); // Give thread2 time to acquire lock2
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                
+                System.out.println("Thread-1: Waiting for lock2...");
+                synchronized (lock2) {
+                    System.out.println("Thread-1: Acquired lock2");
+                }
+            }
+        }, "DeadlockThread-1");
+        
+        Thread thread2 = new Thread(() -> {
+            synchronized (lock2) {
+                System.out.println("Thread-2: Acquired lock2");
+                
+                try {
+                    Thread.sleep(100); // Give thread1 time to acquire lock1
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                
+                System.out.println("Thread-2: Waiting for lock1...");
+                synchronized (lock1) {
+                    System.out.println("Thread-2: Acquired lock1");
+                }
+            }
+        }, "DeadlockThread-2");
+        
+        thread1.start();
+        thread2.start();
+        
+        // Monitor for deadlock
+        Thread monitor = new Thread(() -> {
+            for (int i = 0; i < 30; i++) {
+                System.out.println("Monitor: Thread-1 state: " + thread1.getState() + 
+                                 ", Thread-2 state: " + thread2.getState());
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+            
+            if (thread1.isAlive() || thread2.isAlive()) {
+                System.out.println("DEADLOCK DETECTED! Interrupting threads...");
+                thread1.interrupt();
+                thread2.interrupt();
+            }
+        }, "DeadlockMonitor");
+        
+        monitor.start();
+        
+        try {
+            thread1.join(2000); // Wait max 2 seconds
+            thread2.join(2000);
+            monitor.interrupt();
+            monitor.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public static void demonstrateDeadlockPrevention() {
+        Object lock1 = new Object();
+        Object lock2 = new Object();
+        
+        // Both threads acquire locks in the same order
+        Thread thread1 = new Thread(() -> {
+            synchronized (lock1) {
+                System.out.println("Thread-1: Acquired lock1");
+                
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+                
+                synchronized (lock2) {
+                    System.out.println("Thread-1: Acquired lock2");
+                    System.out.println("Thread-1: Completed successfully");
+                }
+            }
+        }, "SafeThread-1");
+        
+        Thread thread2 = new Thread(() -> {
+            synchronized (lock1) { // Same order as thread1
+                System.out.println("Thread-2: Acquired lock1");
+                
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+                
+                synchronized (lock2) {
+                    System.out.println("Thread-2: Acquired lock2");
+                    System.out.println("Thread-2: Completed successfully");
+                }
+            }
+        }, "SafeThread-2");
+        
+        thread1.start();
+        thread2.start();
+        
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("No deadlock - both threads completed successfully");
+    }
+}`
+          },
+          synchronizationAlternatives: {
+            title: "Java Synchronization Alternatives",
+            description: "Modern alternatives to traditional synchronized keyword for better performance and flexibility.",
+            reentrantLock: {
+              title: "ReentrantLock from java.util.concurrent.locks",
+              description: "More flexible locking mechanism with additional features.",
+              features: [
+                "Explicit lock and unlock",
+                "Trylock with timeout",
+                "Interruptible locking",
+                "Fair/unfair locking"
+              ]
+            },
+            atomicVariables: {
+              title: "Atomic variables (e.g., AtomicInteger)",
+              description: "Lock-free thread-safe operations for simple data types.",
+              benefits: [
+                "Better performance",
+                "No blocking",
+                "Compare-and-swap operations",
+                "Suitable for counters and flags"
+              ]
+            },
+            example: `import java.util.concurrent.locks.*;
+import java.util.concurrent.atomic.*;
+
+// Synchronization alternatives demonstration
+public class SynchronizationAlternativesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Synchronization Alternatives Demo ===");
+        
+        // Compare different approaches
+        compareApproaches();
+        
+        // Demonstrate ReentrantLock features
+        demonstrateReentrantLockFeatures();
+        
+        // Demonstrate atomic variables
+        demonstrateAtomicVariables();
+    }
+    
+    public static void compareApproaches() {
+        System.out.println("\n1. Performance Comparison:");
+        
+        int iterations = 100000;
+        int threadCount = 4;
+        
+        // Test synchronized approach
+        SynchronizedCounter syncCounter = new SynchronizedCounter();
+        long syncTime = testCounter(syncCounter, iterations, threadCount, "Synchronized");
+        
+        // Test ReentrantLock approach
+        ReentrantLockCounter lockCounter = new ReentrantLockCounter();
+        long lockTime = testCounter(lockCounter, iterations, threadCount, "ReentrantLock");
+        
+        // Test atomic approach
+        AtomicCounter atomicCounter = new AtomicCounter();
+        long atomicTime = testCounter(atomicCounter, iterations, threadCount, "Atomic");
+        
+        System.out.println("\nPerformance Results:");
+        System.out.println("Synchronized: " + syncTime + "ms");
+        System.out.println("ReentrantLock: " + lockTime + "ms");
+        System.out.println("Atomic: " + atomicTime + "ms");
+    }
+    
+    public static long testCounter(Counter counter, int iterations, int threadCount, String type) {
+        Thread[] threads = new Thread[threadCount];
+        
+        long startTime = System.currentTimeMillis();
+        
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < iterations; j++) {
+                    counter.increment();
+                }
+            });
+        }
+        
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        long endTime = System.currentTimeMillis();
+        System.out.println(type + " final count: " + counter.getValue() + 
+                         " (expected: " + (iterations * threadCount) + ")");
+        
+        return endTime - startTime;
+    }
+    
+    public static void demonstrateReentrantLockFeatures() {
+        System.out.println("\n2. ReentrantLock Features:");
+        
+        ReentrantLock lock = new ReentrantLock(true); // Fair lock
+        
+        // Demonstrate tryLock
+        Thread tryLockDemo = new Thread(() -> {
+            if (lock.tryLock()) {
+                try {
+                    System.out.println("TryLock: Acquired lock successfully");
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    lock.unlock();
+                    System.out.println("TryLock: Released lock");
+                }
+            } else {
+                System.out.println("TryLock: Failed to acquire lock");
+            }
+        }, "TryLockThread");
+        
+        // Demonstrate tryLock with timeout
+        Thread timeoutDemo = new Thread(() -> {
+            try {
+                if (lock.tryLock(2, java.util.concurrent.TimeUnit.SECONDS)) {
+                    try {
+                        System.out.println("Timeout: Acquired lock within timeout");
+                    } finally {
+                        lock.unlock();
+                        System.out.println("Timeout: Released lock");
+                    }
+                } else {
+                    System.out.println("Timeout: Failed to acquire lock within timeout");
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Timeout: Interrupted while waiting");
+                Thread.currentThread().interrupt();
+            }
+        }, "TimeoutThread");
+        
+        tryLockDemo.start();
+        
+        try {
+            Thread.sleep(100); // Let first thread acquire lock
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        timeoutDemo.start();
+        
+        try {
+            tryLockDemo.join();
+            timeoutDemo.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public static void demonstrateAtomicVariables() {
+        System.out.println("\n3. Atomic Variables Demo:");
+        
+        AtomicInteger atomicInt = new AtomicInteger(0);
+        AtomicBoolean atomicBool = new AtomicBoolean(false);
+        AtomicReference<String> atomicRef = new AtomicReference<>("Initial");
+        
+        Thread[] threads = new Thread[3];
+        
+        for (int i = 0; i < threads.length; i++) {
+            final int threadId = i + 1;
+            threads[i] = new Thread(() -> {
+                // Atomic integer operations
+                int oldValue = atomicInt.getAndIncrement();
+                System.out.println("Thread-" + threadId + ": incremented from " + oldValue + 
+                                 " to " + atomicInt.get());
+                
+                // Atomic boolean operations
+                if (atomicBool.compareAndSet(false, true)) {
+                    System.out.println("Thread-" + threadId + ": set boolean to true");
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                    atomicBool.set(false);
+                    System.out.println("Thread-" + threadId + ": reset boolean to false");
+                }
+                
+                // Atomic reference operations
+                String expected = "Initial";
+                if (atomicRef.compareAndSet(expected, "Updated by Thread-" + threadId)) {
+                    System.out.println("Thread-" + threadId + ": updated reference");
+                }
+            }, "AtomicThread-" + threadId);
+        }
+        
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        System.out.println("Final atomic integer value: " + atomicInt.get());
+        System.out.println("Final atomic reference value: " + atomicRef.get());
+    }
+}
+
+// Counter interface for comparison
+interface Counter {
+    void increment();
+    int getValue();
+}
+
+// Synchronized implementation
+class SynchronizedCounter implements Counter {
+    private int count = 0;
+    
+    @Override
+    public synchronized void increment() {
+        count++;
+    }
+    
+    @Override
+    public synchronized int getValue() {
+        return count;
+    }
+}
+
+// ReentrantLock implementation
+class ReentrantLockCounter implements Counter {
+    private int count = 0;
+    private final ReentrantLock lock = new ReentrantLock();
+    
+    @Override
+    public void increment() {
+        lock.lock();
+        try {
+            count++;
+        } finally {
+            lock.unlock();
+        }
+    }
+    
+    @Override
+    public int getValue() {
+        lock.lock();
+        try {
+            return count;
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+// Atomic implementation
+class AtomicCounter implements Counter {
+    private final AtomicInteger count = new AtomicInteger(0);
+    
+    @Override
+    public void increment() {
+        count.incrementAndGet();
+    }
+    
+    @Override
+    public int getValue() {
+        return count.get();
+    }
+}`
+          },
+          bestPractices: {
+            title: "Best Practices",
+            description: "Guidelines for effective synchronization in Java applications.",
+            practices: [
+              "Keep synchronized code blocks as short as possible",
+              "Avoid nested synchronization unless necessary",
+              "Use high-level concurrency utilities (ExecutorService, Locks) for complex needs",
+              "Always release locks in finally blocks",
+              "Use atomic variables for simple operations",
+              "Consider lock-free algorithms when possible"
+            ],
+            example: `// Synchronization best practices
+public class SynchronizationBestPracticesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Synchronization Best Practices ===");
+        
+        BestPracticesExample example = new BestPracticesExample();
+        
+        // Test with multiple threads
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < threads.length; i++) {
+            final int threadId = i + 1;
+            threads[i] = new Thread(() -> {
+                example.performOperations("Thread-" + threadId);
+            });
+        }
+        
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        System.out.println("All operations completed successfully");
+    }
+}
+
+class BestPracticesExample {
+    private final Object lock1 = new Object();
+    private final Object lock2 = new Object();
+    private final AtomicInteger counter = new AtomicInteger(0);
+    private int sharedData = 0;
+    
+    public void performOperations(String threadName) {
+        // Practice 1: Keep synchronized blocks short
+        System.out.println(threadName + " starting operations");
+        
+        // Non-synchronized preparation
+        String data = prepareData(threadName);
+        
+        // Short synchronized block
+        synchronized (lock1) {
+            sharedData++;
+            System.out.println(threadName + " updated shared data to " + sharedData);
+        }
+        
+        // Practice 2: Use atomic variables for simple operations
+        int currentCount = counter.incrementAndGet();
+        System.out.println(threadName + " atomic counter: " + currentCount);
+        
+        // Practice 3: Avoid nested synchronization
+        processDataSafely(data, threadName);
+        
+        // Practice 4: Use high-level utilities
+        useHighLevelUtilities(threadName);
+    }
+    
+    private String prepareData(String threadName) {
+        // Non-synchronized preparation work
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return "Data-" + threadName;
+    }
+    
+    private void processDataSafely(String data, String threadName) {
+        // Good: Separate locks for different resources
+        synchronized (lock2) {
+            System.out.println(threadName + " processing " + data);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+    
+    private void useHighLevelUtilities(String threadName) {
+        // Using concurrent collections instead of synchronized collections
+        java.util.concurrent.ConcurrentHashMap<String, Integer> map = 
+            new java.util.concurrent.ConcurrentHashMap<>();
+        
+        map.put(threadName, counter.get());
+        System.out.println(threadName + " added to concurrent map: " + map.get(threadName));
+    }
+}
+
+// Example of proper lock management
+class ProperLockManagement {
+    private final ReentrantLock lock = new ReentrantLock();
+    private int data = 0;
+    
+    public void safeOperation() {
+        lock.lock();
+        try {
+            // Critical section
+            data++;
+            if (data > 100) {
+                throw new RuntimeException("Data overflow");
+            }
+        } finally {
+            // Always release lock in finally block
+            lock.unlock();
+        }
+    }
+    
+    public boolean tryOperation() {
+        if (lock.tryLock()) {
+            try {
+                data--;
+                return true;
+            } finally {
+                lock.unlock();
+            }
+        }
+        return false;
+    }
+}`
+          },
+          realWorldExample: {
+            title: "Real-world Example",
+            description: "Comprehensive example showing synchronization in a practical scenario.",
+            example: `// Real-world printer synchronization example
+class Printer {
+    private boolean isAvailable = true;
+    private String currentJob = null;
+    
+    // Synchronized method for printing
+    public synchronized void print(String document, String user) {
+        while (!isAvailable) {
+            try {
+                System.out.println(user + " waiting for printer...");
+                wait(); // Wait until printer is available
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        
+        // Acquire printer
+        isAvailable = false;
+        currentJob = document;
+        System.out.println(user + " started printing: " + document);
+        
+        // Simulate printing time
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(user + " printing " + document + " - page " + i + "/5");
+            try {
+                Thread.sleep(500); // Simulate page printing time
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        
+        // Release printer
+        System.out.println(user + " finished printing: " + document);
+        isAvailable = true;
+        currentJob = null;
+        
+        notifyAll(); // Notify waiting threads
+    }
+    
+    public synchronized String getStatus() {
+        if (isAvailable) {
+            return "Printer is available";
+        } else {
+            return "Printer is busy with: " + currentJob;
+        }
+    }
+}
+
+public class PrinterSynchronizationDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Printer Synchronization Demo ===");
+        
+        Printer printer = new Printer();
+        
+        // Create multiple users trying to print
+        String[] users = {"Alice", "Bob", "Charlie", "Diana"};
+        String[] documents = {"Report.pdf", "Presentation.ppt", "Invoice.doc", "Manual.pdf"};
+        
+        Thread[] printThreads = new Thread[users.length];
+        
+        for (int i = 0; i < users.length; i++) {
+            final String user = users[i];
+            final String document = documents[i];
+            
+            printThreads[i] = new Thread(() -> {
+                printer.print(document, user);
+            }, user + "-PrintThread");
+        }
+        
+        // Status monitoring thread
+        Thread statusThread = new Thread(() -> {
+            for (int i = 0; i < 20; i++) {
+                System.out.println("[STATUS] " + printer.getStatus());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }, "StatusMonitor");
+        
+        // Start all threads
+        statusThread.start();
+        for (Thread thread : printThreads) {
+            thread.start();
+        }
+        
+        // Wait for all print jobs to complete
+        for (Thread thread : printThreads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        statusThread.interrupt();
+        try {
+            statusThread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("\nAll print jobs completed!");
+        System.out.println("Final status: " + printer.getStatus());
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
