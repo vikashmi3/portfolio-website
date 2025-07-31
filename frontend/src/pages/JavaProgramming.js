@@ -10525,6 +10525,471 @@ class SharedResource {
     }
 }`
           },
+          typesSynchronization: {
+            title: "Types of Synchronization",
+            description: "Different approaches to implement synchronization in Java applications.",
+            synchronizedMethod: {
+              title: "Synchronized Method",
+              description: "Locks the entire method for a single thread.",
+              syntax: "public synchronized void methodName() { ... }",
+              characteristics: [
+                "Entire method is locked",
+                "Uses object's intrinsic lock",
+                "Simple to implement",
+                "May reduce concurrency"
+              ],
+              example: `// Synchronized method demonstration
+public class SynchronizedMethodDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Synchronized Method Demo ===");
+        
+        MultiplicationTable table = new MultiplicationTable();
+        
+        // Create multiple threads to print different tables
+        Thread thread1 = new Thread(() -> table.printTable(5), "Thread-5");
+        Thread thread2 = new Thread(() -> table.printTable(7), "Thread-7");
+        Thread thread3 = new Thread(() -> table.printTable(3), "Thread-3");
+        
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("All tables printed");
+    }
+}
+
+class MultiplicationTable {
+    // Synchronized method - only one thread can execute at a time
+    public synchronized void printTable(int n) {
+        String threadName = Thread.currentThread().getName();
+        System.out.println("\n" + threadName + " printing table of " + n + ":");
+        
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(threadName + ": " + n + " x " + i + " = " + (n * i));
+            try {
+                Thread.sleep(100); // Simulate processing time
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        
+        System.out.println(threadName + " finished printing table of " + n);
+    }
+    
+    // Another synchronized method
+    public synchronized void printMessage(String message) {
+        String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + ": " + message);
+    }
+}`
+            },
+            synchronizedBlock: {
+              title: "Synchronized Block",
+              description: "Locks only a specific section of code.",
+              syntax: "synchronized(lockObject) { ... }",
+              characteristics: [
+                "More granular control",
+                "Better performance",
+                "Can use different lock objects",
+                "Reduces lock contention"
+              ],
+              example: `// Synchronized block demonstration
+public class SynchronizedBlockDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Synchronized Block Demo ===");
+        
+        ResourceManager manager = new ResourceManager();
+        
+        // Create multiple threads for different operations
+        Thread[] threads = new Thread[6];
+        
+        for (int i = 0; i < 3; i++) {
+            final int taskId = i + 1;
+            threads[i] = new Thread(() -> manager.processData("Data-" + taskId), "DataProcessor-" + taskId);
+        }
+        
+        for (int i = 3; i < 6; i++) {
+            final int taskId = i - 2;
+            threads[i] = new Thread(() -> manager.generateReport("Report-" + taskId), "ReportGenerator-" + taskId);
+        }
+        
+        // Start all threads
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        System.out.println("All operations completed");
+    }
+}
+
+class ResourceManager {
+    private final Object dataLock = new Object();
+    private final Object reportLock = new Object();
+    private int dataCounter = 0;
+    private int reportCounter = 0;
+    
+    public void processData(String data) {
+        String threadName = Thread.currentThread().getName();
+        
+        // Non-synchronized preparation
+        System.out.println(threadName + " preparing to process " + data);
+        try {
+            Thread.sleep(50); // Simulate preparation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+        
+        // Synchronized block for critical section
+        synchronized (dataLock) {
+            System.out.println(threadName + " processing " + data);
+            dataCounter++;
+            
+            try {
+                Thread.sleep(200); // Simulate processing
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+            
+            System.out.println(threadName + " completed processing " + data + 
+                             " (Total processed: " + dataCounter + ")");
+        }
+        
+        // Non-synchronized cleanup
+        System.out.println(threadName + " cleaning up after " + data);
+    }
+    
+    public void generateReport(String reportName) {
+        String threadName = Thread.currentThread().getName();
+        
+        // Non-synchronized preparation
+        System.out.println(threadName + " preparing " + reportName);
+        try {
+            Thread.sleep(30);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+        
+        // Synchronized block for report generation
+        synchronized (reportLock) {
+            System.out.println(threadName + " generating " + reportName);
+            reportCounter++;
+            
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+            
+            System.out.println(threadName + " completed " + reportName + 
+                             " (Total reports: " + reportCounter + ")");
+        }
+    }
+    
+    // Method showing synchronized block with 'this'
+    public void updateBothCounters() {
+        synchronized (this) {
+            dataCounter++;
+            reportCounter++;
+            System.out.println("Both counters updated: Data=" + dataCounter + 
+                             ", Report=" + reportCounter);
+        }
+    }
+}`
+            },
+            staticSynchronization: {
+              title: "Static Synchronization",
+              description: "Used to lock static methods (locks the class, not object).",
+              syntax: "public static synchronized void methodName() { ... }",
+              characteristics: [
+                "Locks the Class object",
+                "Affects all instances",
+                "Used for static resources",
+                "Class-level synchronization"
+              ],
+              example: `// Static synchronization demonstration
+public class StaticSynchronizationDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Static Synchronization Demo ===");
+        
+        // Create multiple instances
+        DatabaseConnection db1 = new DatabaseConnection("DB1");
+        DatabaseConnection db2 = new DatabaseConnection("DB2");
+        DatabaseConnection db3 = new DatabaseConnection("DB3");
+        
+        // Create threads using different instances
+        Thread thread1 = new Thread(() -> db1.connect(), "Connection-1");
+        Thread thread2 = new Thread(() -> db2.connect(), "Connection-2");
+        Thread thread3 = new Thread(() -> db3.connect(), "Connection-3");
+        
+        // Also test static method calls
+        Thread thread4 = new Thread(() -> DatabaseConnection.getConnectionCount(), "Counter-1");
+        Thread thread5 = new Thread(() -> DatabaseConnection.resetConnections(), "Reset-1");
+        
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+        thread5.start();
+        
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+            thread4.join();
+            thread5.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        System.out.println("Final connection count: " + DatabaseConnection.getConnectionCount());
+    }
+}
+
+class DatabaseConnection {
+    private static int totalConnections = 0;
+    private static final int MAX_CONNECTIONS = 5;
+    private String connectionName;
+    
+    public DatabaseConnection(String name) {
+        this.connectionName = name;
+    }
+    
+    // Static synchronized method - locks the class
+    public static synchronized boolean canConnect() {
+        return totalConnections < MAX_CONNECTIONS;
+    }
+    
+    // Static synchronized method
+    public static synchronized void incrementConnections() {
+        if (totalConnections < MAX_CONNECTIONS) {
+            totalConnections++;
+            System.out.println("Connection established. Total: " + totalConnections);
+        } else {
+            System.out.println("Maximum connections reached!");
+        }
+    }
+    
+    // Static synchronized method
+    public static synchronized void decrementConnections() {
+        if (totalConnections > 0) {
+            totalConnections--;
+            System.out.println("Connection closed. Total: " + totalConnections);
+        }
+    }
+    
+    // Static synchronized method
+    public static synchronized int getConnectionCount() {
+        System.out.println("Current connections: " + totalConnections);
+        return totalConnections;
+    }
+    
+    // Static synchronized method
+    public static synchronized void resetConnections() {
+        totalConnections = 0;
+        System.out.println("All connections reset");
+    }
+    
+    // Instance method that uses static synchronization
+    public void connect() {
+        String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + " attempting to connect " + connectionName);
+        
+        if (canConnect()) {
+            try {
+                Thread.sleep(100); // Simulate connection time
+                incrementConnections();
+                System.out.println(threadName + " successfully connected " + connectionName);
+                
+                Thread.sleep(200); // Simulate work
+                
+                decrementConnections();
+                System.out.println(threadName + " disconnected " + connectionName);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        } else {
+            System.out.println(threadName + " failed to connect " + connectionName + " - max connections reached");
+        }
+    }
+    
+    // Synchronized block with class lock
+    public void alternativeStaticSync() {
+        synchronized (DatabaseConnection.class) {
+            // This is equivalent to static synchronized method
+            totalConnections++;
+        }
+    }
+}`
+            }
+          },
+          lockConcept: {
+            title: "Lock Concept",
+            description: "Understanding how Java implements synchronization using intrinsic locks and monitors.",
+            intrinsicLocks: {
+              title: "Java uses intrinsic locks (or monitors) for every object.",
+              description: "Every object in Java has an associated monitor that can be used for synchronization."
+            },
+            lockAcquisition: {
+              title: "When a thread enters a synchronized method/block, it acquires the lock on the object.",
+              description: "The thread must obtain the lock before executing synchronized code."
+            },
+            lockWaiting: {
+              title: "Other threads must wait until the lock is released.",
+              description: "Only one thread can hold a particular lock at any given time."
+            },
+            example: `// Lock concept demonstration
+public class LockConceptDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Lock Concept Demonstration ===");
+        
+        SharedResource resource = new SharedResource();
+        
+        // Multiple threads trying to access the same resource
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < threads.length; i++) {
+            final int threadId = i + 1;
+            threads[i] = new Thread(() -> {
+                resource.accessResource("Thread-" + threadId);
+            }, "Worker-" + threadId);
+        }
+        
+        // Start all threads simultaneously
+        System.out.println("Starting all threads...");
+        long startTime = System.currentTimeMillis();
+        
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        long totalTime = System.currentTimeMillis() - startTime;
+        System.out.println("\nAll threads completed in " + totalTime + "ms");
+        
+        // Demonstrate lock monitoring
+        demonstrateLockMonitoring();
+    }
+    
+    public static void demonstrateLockMonitoring() {
+        System.out.println("\n=== Lock Monitoring Demo ===");
+        
+        Object lockObject = new Object();
+        
+        Thread lockHolder = new Thread(() -> {
+            synchronized (lockObject) {
+                System.out.println("Thread-1 acquired lock");
+                try {
+                    Thread.sleep(3000); // Hold lock for 3 seconds
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println("Thread-1 releasing lock");
+            }
+        }, "LockHolder");
+        
+        Thread lockWaiter = new Thread(() -> {
+            System.out.println("Thread-2 waiting for lock...");
+            synchronized (lockObject) {
+                System.out.println("Thread-2 acquired lock");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println("Thread-2 releasing lock");
+            }
+        }, "LockWaiter");
+        
+        lockHolder.start();
+        
+        // Give lockHolder time to acquire lock
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        lockWaiter.start();
+        
+        // Monitor thread states
+        Thread monitor = new Thread(() -> {
+            for (int i = 0; i < 50; i++) {
+                System.out.println("LockHolder state: " + lockHolder.getState() + 
+                                 ", LockWaiter state: " + lockWaiter.getState());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }, "Monitor");
+        
+        monitor.start();
+        
+        try {
+            lockHolder.join();
+            lockWaiter.join();
+            monitor.interrupt();
+            monitor.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+
+class SharedResource {
+    private int accessCount = 0;
+    
+    public synchronized void accessResource(String threadName) {
+        System.out.println(threadName + " acquired lock and accessing resource");
+        accessCount++;
+        
+        // Simulate resource access time
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+        
+        System.out.println(threadName + " finished accessing resource (Access #" + accessCount + ")");
+        System.out.println(threadName + " releasing lock");
+    }
+    
+    public synchronized int getAccessCount() {
+        return accessCount;
+    }
+}`
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
