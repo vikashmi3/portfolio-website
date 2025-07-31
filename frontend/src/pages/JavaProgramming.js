@@ -15471,7 +15471,7 @@ public class LibraryManagementSystem {
       "Community support",
       "PDF downloads and resources"
     ]
-  }
+  };
 
   const handleBack = () => {
     navigate('/courses');
