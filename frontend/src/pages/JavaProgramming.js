@@ -369,6 +369,499 @@ const JavaProgramming = () => {
           ]
         }
       },
+      controlFlow: {
+        decisionMaking: {
+          title: "Decision-Making Statements",
+          description: "Decision-making statements allow you to control the flow of program execution based on certain conditions.",
+          statements: {
+            ifStatement: {
+              title: "if statement",
+              description: "Executes a block of code if the specified condition is true.",
+              syntax: "if (condition) {\n    // code to execute if condition is true\n}",
+              example: `int age = 18;
+if (age >= 18) {
+    System.out.println("You are eligible to vote.");
+}`,
+              flowchart: ["Start", "Check condition", "If true: Execute block", "Continue", "End"]
+            },
+            ifElseStatement: {
+              title: "if-else statement",
+              description: "Executes one block of code if condition is true, another block if condition is false.",
+              syntax: "if (condition) {\n    // code if true\n} else {\n    // code if false\n}",
+              example: `int number = 15;
+if (number % 2 == 0) {
+    System.out.println(number + " is even.");
+} else {
+    System.out.println(number + " is odd.");
+}`,
+              flowchart: ["Start", "Check condition", "If true: Execute if block", "If false: Execute else block", "Continue", "End"]
+            },
+            ifElseIfLadder: {
+              title: "if-else-if ladder",
+              description: "Tests multiple conditions in sequence. First true condition's block is executed.",
+              syntax: "if (condition1) {\n    // code\n} else if (condition2) {\n    // code\n} else {\n    // default code\n}",
+              example: `int marks = 85;
+if (marks >= 90) {
+    System.out.println("Grade: A+");
+} else if (marks >= 80) {
+    System.out.println("Grade: A");
+} else if (marks >= 70) {
+    System.out.println("Grade: B");
+} else if (marks >= 60) {
+    System.out.println("Grade: C");
+} else {
+    System.out.println("Grade: F");
+}`,
+              flowchart: ["Start", "Check condition1", "If true: Execute block1", "Check condition2", "If true: Execute block2", "Execute else block", "End"]
+            },
+            nestedIfStatement: {
+              title: "nested if statement",
+              description: "An if statement inside another if statement. Inner if is executed only if outer if is true.",
+              syntax: "if (condition1) {\n    if (condition2) {\n        // nested code\n    }\n}",
+              example: `int age = 25;
+boolean hasLicense = true;
+if (age >= 18) {
+    if (hasLicense) {
+        System.out.println("You can drive a car.");
+    } else {
+        System.out.println("You need a driving license.");
+    }
+} else {
+    System.out.println("You are too young to drive.");
+}`,
+              flowchart: ["Start", "Check outer condition", "If true: Check inner condition", "If inner true: Execute nested block", "End"]
+            },
+            switchStatement: {
+              title: "switch statement",
+              description: "Multi-way branch statement that compares a variable against many values.",
+              syntax: "switch (expression) {\n    case value1:\n        // code\n        break;\n    case value2:\n        // code\n        break;\n    default:\n        // default code\n}",
+              example: `int day = 3;
+switch (day) {
+    case 1:
+        System.out.println("Monday");
+        break;
+    case 2:
+        System.out.println("Tuesday");
+        break;
+    case 3:
+        System.out.println("Wednesday");
+        break;
+    case 4:
+        System.out.println("Thursday");
+        break;
+    case 5:
+        System.out.println("Friday");
+        break;
+    case 6:
+        System.out.println("Saturday");
+        break;
+    case 7:
+        System.out.println("Sunday");
+        break;
+    default:
+        System.out.println("Invalid day");
+}`,
+              enhancedSwitch: `// Java 14+ Enhanced Switch Expression
+String dayType = switch (day) {
+    case 1, 2, 3, 4, 5 -> "Weekday";
+    case 6, 7 -> "Weekend";
+    default -> "Invalid";
+};`,
+              flowchart: ["Start", "Evaluate expression", "Match case 1?", "Execute case 1", "Match case 2?", "Execute case 2", "Execute default", "End"]
+            }
+          }
+        },
+        looping: {
+          title: "Looping Statements",
+          description: "Looping statements allow you to execute a block of code repeatedly based on a condition.",
+          statements: {
+            forLoop: {
+              title: "for loop",
+              description: "Executes a block of code for a specific number of times. Best when you know the number of iterations.",
+              syntax: "for (initialization; condition; increment/decrement) {\n    // code to repeat\n}",
+              example: `// Print numbers 1 to 10
+for (int i = 1; i <= 10; i++) {
+    System.out.println("Number: " + i);
+}
+
+// Print even numbers from 2 to 20
+for (int i = 2; i <= 20; i += 2) {
+    System.out.println("Even number: " + i);
+}
+
+// Nested for loop - multiplication table
+for (int i = 1; i <= 5; i++) {
+    for (int j = 1; j <= 10; j++) {
+        System.out.print((i * j) + "\t");
+    }
+    System.out.println();
+}`,
+              flowchart: ["Start", "Initialize", "Check condition", "If true: Execute body", "Increment/Decrement", "Loop back", "If false: Exit", "End"]
+            },
+            whileLoop: {
+              title: "while loop",
+              description: "Executes a block of code as long as the condition is true. Best when number of iterations is unknown.",
+              syntax: "while (condition) {\n    // code to repeat\n    // update condition variable\n}",
+              example: `// Count from 1 to 5
+int count = 1;
+while (count <= 5) {
+    System.out.println("Count: " + count);
+    count++;
+}
+
+// Read user input until 'quit'
+Scanner scanner = new Scanner(System.in);
+String input = "";
+while (!input.equals("quit")) {
+    System.out.print("Enter command (quit to exit): ");
+    input = scanner.nextLine();
+    if (!input.equals("quit")) {
+        System.out.println("You entered: " + input);
+    }
+}`,
+              flowchart: ["Start", "Check condition", "If true: Execute body", "Update variables", "Loop back", "If false: Exit", "End"]
+            },
+            doWhileLoop: {
+              title: "do-while loop",
+              description: "Executes the code block at least once, then repeats as long as condition is true.",
+              syntax: "do {\n    // code to repeat\n    // update condition variable\n} while (condition);",
+              example: `// Menu-driven program
+Scanner scanner = new Scanner(System.in);
+int choice;
+do {
+    System.out.println("\n--- Menu ---");
+    System.out.println("1. Add");
+    System.out.println("2. Subtract");
+    System.out.println("3. Multiply");
+    System.out.println("4. Exit");
+    System.out.print("Enter your choice: ");
+    choice = scanner.nextInt();
+    
+    switch (choice) {
+        case 1:
+            System.out.println("Addition selected");
+            break;
+        case 2:
+            System.out.println("Subtraction selected");
+            break;
+        case 3:
+            System.out.println("Multiplication selected");
+            break;
+        case 4:
+            System.out.println("Exiting...");
+            break;
+        default:
+            System.out.println("Invalid choice!");
+    }
+} while (choice != 4);`,
+              flowchart: ["Start", "Execute body", "Update variables", "Check condition", "If true: Loop back", "If false: Exit", "End"]
+            },
+            enhancedForLoop: {
+              title: "Enhanced for-each loop",
+              description: "Simplified loop for iterating through arrays and collections. Also called for-each loop.",
+              syntax: "for (dataType variable : array/collection) {\n    // code using variable\n}",
+              example: `// Iterate through array
+int[] numbers = {10, 20, 30, 40, 50};
+for (int num : numbers) {
+    System.out.println("Number: " + num);
+}
+
+// Iterate through String array
+String[] fruits = {"Apple", "Banana", "Orange", "Mango"};
+for (String fruit : fruits) {
+    System.out.println("Fruit: " + fruit);
+}
+
+// Iterate through ArrayList
+ArrayList<String> cities = new ArrayList<>();
+cities.add("New York");
+cities.add("London");
+cities.add("Tokyo");
+for (String city : cities) {
+    System.out.println("City: " + city);
+}
+
+// Calculate sum using enhanced for loop
+int[] scores = {85, 92, 78, 96, 88};
+int total = 0;
+for (int score : scores) {
+    total += score;
+}
+System.out.println("Total score: " + total);
+System.out.println("Average: " + (total / scores.length));`,
+              advantages: [
+                "Cleaner and more readable code",
+                "Eliminates possibility of index out of bounds errors",
+                "No need to manage loop counter",
+                "Works with arrays and collections"
+              ],
+              limitations: [
+                "Cannot modify array/collection elements",
+                "Cannot access index of current element",
+                "Cannot iterate in reverse order",
+                "Cannot skip elements"
+              ],
+              flowchart: ["Start", "Get next element", "Element exists?", "If yes: Execute body with element", "Loop back", "If no: Exit", "End"]
+            }
+          }
+        },
+        branching: {
+          title: "Branching Statements",
+          description: "Branching statements alter the normal flow of control in loops and methods.",
+          statements: {
+            breakStatement: {
+              title: "break statement",
+              description: "Terminates the loop or switch statement and transfers control to the statement immediately following the terminated statement.",
+              types: {
+                unlabeled: {
+                  title: "Unlabeled break",
+                  description: "Terminates the innermost loop or switch statement",
+                  example: `// Break in for loop
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) {
+        break; // Exit loop when i equals 5
+    }
+    System.out.println("i = " + i);
+}
+System.out.println("Loop ended");
+
+// Break in while loop
+int count = 0;
+while (true) {
+    count++;
+    if (count > 3) {
+        break; // Exit infinite loop
+    }
+    System.out.println("Count: " + count);
+}
+
+// Break in switch statement
+int grade = 2;
+switch (grade) {
+    case 1:
+        System.out.println("First class");
+        break;
+    case 2:
+        System.out.println("Second class");
+        break; // Prevents fall-through
+    case 3:
+        System.out.println("Third class");
+        break;
+    default:
+        System.out.println("Invalid grade");
+}`
+                },
+                labeled: {
+                  title: "Labeled break",
+                  description: "Terminates the labeled statement (useful in nested loops)",
+                  example: `// Labeled break in nested loops
+outer: for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= 3; j++) {
+        if (i == 2 && j == 2) {
+            break outer; // Breaks out of both loops
+        }
+        System.out.println("i = " + i + ", j = " + j);
+    }
+}
+System.out.println("Both loops ended");
+
+// Search in 2D array
+int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+int target = 5;
+boolean found = false;
+
+search: for (int i = 0; i < matrix.length; i++) {
+    for (int j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j] == target) {
+            System.out.println("Found " + target + " at [" + i + "][" + j + "]");
+            found = true;
+            break search; // Exit both loops
+        }
+    }
+}
+if (!found) {
+    System.out.println("Target not found");
+}`
+                }
+              },
+              flowchart: ["Start", "Enter loop", "Check break condition", "If true: Break (exit loop)", "If false: Continue loop", "End"]
+            },
+            continueStatement: {
+              title: "continue statement",
+              description: "Skips the current iteration of the loop and moves to the next iteration.",
+              types: {
+                unlabeled: {
+                  title: "Unlabeled continue",
+                  description: "Skips current iteration of innermost loop",
+                  example: `// Skip even numbers
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue; // Skip even numbers
+    }
+    System.out.println("Odd number: " + i);
+}
+
+// Skip negative numbers
+int[] numbers = {-2, 5, -8, 10, -3, 7};
+for (int num : numbers) {
+    if (num < 0) {
+        continue; // Skip negative numbers
+    }
+    System.out.println("Positive number: " + num);
+}
+
+// Continue in while loop
+int count = 0;
+while (count < 10) {
+    count++;
+    if (count % 3 == 0) {
+        continue; // Skip multiples of 3
+    }
+    System.out.println("Count: " + count);
+}`
+                },
+                labeled: {
+                  title: "Labeled continue",
+                  description: "Skips current iteration of labeled loop",
+                  example: `// Labeled continue in nested loops
+outer: for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= 3; j++) {
+        if (j == 2) {
+            continue outer; // Skip to next iteration of outer loop
+        }
+        System.out.println("i = " + i + ", j = " + j);
+    }
+}
+
+// Print multiplication table skipping certain rows
+outer: for (int i = 1; i <= 5; i++) {
+    if (i == 3) {
+        continue outer; // Skip row 3
+    }
+    for (int j = 1; j <= 5; j++) {
+        System.out.print((i * j) + "\t");
+    }
+    System.out.println();
+}`
+                }
+              },
+              flowchart: ["Start", "Enter loop", "Check continue condition", "If true: Continue (skip to next iteration)", "If false: Execute remaining code", "End iteration"]
+            },
+            returnStatement: {
+              title: "return statement",
+              description: "Exits from the current method and optionally returns a value to the calling method.",
+              types: {
+                voidReturn: {
+                  title: "Return in void method",
+                  description: "Simply exits the method without returning any value",
+                  example: `public static void printPositiveNumber(int num) {
+    if (num <= 0) {
+        System.out.println("Number must be positive");
+        return; // Exit method early
+    }
+    System.out.println("Positive number: " + num);
+}
+
+public static void processArray(int[] arr) {
+    if (arr == null || arr.length == 0) {
+        System.out.println("Array is empty or null");
+        return; // Exit method early
+    }
+    
+    for (int num : arr) {
+        System.out.print(num + " ");
+    }
+    System.out.println();
+}`
+                },
+                valueReturn: {
+                  title: "Return with value",
+                  description: "Exits the method and returns a value to the caller",
+                  example: `public static int findMax(int[] arr) {
+    if (arr == null || arr.length == 0) {
+        return -1; // Return error code
+    }
+    
+    int max = arr[0];
+    for (int i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max; // Return the maximum value
+}
+
+public static String getGrade(int marks) {
+    if (marks >= 90) return "A+";
+    if (marks >= 80) return "A";
+    if (marks >= 70) return "B";
+    if (marks >= 60) return "C";
+    return "F"; // Default return
+}
+
+public static boolean isPrime(int num) {
+    if (num <= 1) return false;
+    if (num == 2) return true;
+    if (num % 2 == 0) return false;
+    
+    for (int i = 3; i <= Math.sqrt(num); i += 2) {
+        if (num % i == 0) {
+            return false; // Not prime
+        }
+    }
+    return true; // Prime number
+}`
+                },
+                earlyReturn: {
+                  title: "Early return pattern",
+                  description: "Using return statements to exit method early based on conditions",
+                  example: `public static double calculateDiscount(double price, String customerType) {
+    // Early returns for invalid input
+    if (price <= 0) {
+        return 0.0;
+    }
+    
+    if (customerType == null) {
+        return 0.0;
+    }
+    
+    // Calculate discount based on customer type
+    switch (customerType.toLowerCase()) {
+        case "premium":
+            return price * 0.20; // 20% discount
+        case "gold":
+            return price * 0.15; // 15% discount
+        case "silver":
+            return price * 0.10; // 10% discount
+        case "regular":
+            return price * 0.05; // 5% discount
+        default:
+            return 0.0; // No discount
+    }
+}
+
+public static String validateEmail(String email) {
+    if (email == null || email.trim().isEmpty()) {
+        return "Email cannot be empty";
+    }
+    
+    if (!email.contains("@")) {
+        return "Email must contain @ symbol";
+    }
+    
+    if (!email.contains(".")) {
+        return "Email must contain domain extension";
+    }
+    
+    return "Valid email"; // All validations passed
+}`
+                }
+              },
+              flowchart: ["Start method", "Check return condition", "If true: Return value/void", "If false: Continue execution", "End method"]
+            }
+          }
+        }
+      },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
