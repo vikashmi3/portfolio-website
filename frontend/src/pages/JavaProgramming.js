@@ -3805,6 +3805,864 @@ public class PayrollSystemDemo {
 }`
           }
         },
+        encapsulation: {
+          title: "Java Encapsulation",
+          description: "Encapsulation is the process of wrapping data (variables) and code (methods) into a single unit (class), hiding internal state and providing controlled access through methods.",
+          whatIsEncapsulation: {
+            title: "What is Encapsulation?",
+            definition: {
+              title: "Encapsulation is the process of wrapping data (variables) and code (methods) into a single unit (class).",
+              description: "It bundles related data and methods together, creating a protective barrier around the object's internal state.",
+              analogy: "Like a capsule that contains medicine - the contents are protected and can only be accessed in controlled ways."
+            },
+            hidingInternalState: {
+              title: "It hides the internal state of the object from the outside world and only allows controlled access via methods.",
+              description: "External code cannot directly access or modify the object's internal data, ensuring data integrity and security.",
+              benefits: [
+                "Prevents unauthorized access to sensitive data",
+                "Maintains object consistency and validity",
+                "Reduces coupling between classes",
+                "Enables controlled modification of internal state"
+              ]
+            },
+            oopPillar: {
+              title: "It's one of the four pillars of Object-Oriented Programming (OOP)",
+              description: "Encapsulation works together with other OOP principles to create robust, maintainable software.",
+              pillars: [
+                "Encapsulation - Data hiding and controlled access",
+                "Inheritance - Code reuse through parent-child relationships",
+                "Polymorphism - One interface, multiple implementations",
+                "Abstraction - Hiding implementation complexity"
+              ]
+            }
+          },
+          keyFeatures: {
+            title: "Key Features of Encapsulation",
+            description: "Essential characteristics that make encapsulation effective in protecting and managing object data.",
+            privateVariables: {
+              title: "Use of private variables",
+              description: "Class fields are declared as private to prevent direct external access.",
+              example: `public class BankAccount {
+    // Private variables - cannot be accessed directly from outside
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+    private String pin;
+    
+    // Constructor
+    public BankAccount(String accountNumber, String accountHolderName, String pin, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = accountHolderName;
+        this.pin = pin;
+        this.balance = initialBalance;
+    }
+}`
+            },
+            getterSetterMethods: {
+              title: "Use of public getter and setter methods to access and modify those variables",
+              description: "Controlled access to private data through public methods that can include validation and business logic.",
+              example: `public class BankAccount {
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+    private String pin;
+    private boolean isActive;
+    
+    // Getter methods - provide read access
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+    
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+    
+    public boolean isActive() {
+        return isActive;
+    }
+    
+    // Setter methods with validation - provide controlled write access
+    public void setAccountHolderName(String accountHolderName) {
+        if (accountHolderName != null && !accountHolderName.trim().isEmpty()) {
+            this.accountHolderName = accountHolderName.trim();
+        } else {
+            throw new IllegalArgumentException("Account holder name cannot be empty");
+        }
+    }
+    
+    public boolean changePin(String oldPin, String newPin) {
+        if (this.pin.equals(oldPin)) {
+            if (newPin != null && newPin.length() >= 4) {
+                this.pin = newPin;
+                return true;
+            } else {
+                throw new IllegalArgumentException("PIN must be at least 4 characters");
+            }
+        }
+        return false; // Old PIN doesn't match
+    }
+    
+    public void setActive(boolean active) {
+        this.isActive = active;
+        if (!active) {
+            System.out.println("Account " + accountNumber + " has been deactivated");
+        }
+    }
+    
+    // Business logic methods that modify private data
+    public boolean deposit(double amount) {
+        if (amount > 0 && isActive) {
+            balance += amount;
+            System.out.println("Deposited $" + amount + ". New balance: $" + balance);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean withdraw(double amount, String enteredPin) {
+        if (!isActive) {
+            System.out.println("Account is inactive");
+            return false;
+        }
+        
+        if (!this.pin.equals(enteredPin)) {
+            System.out.println("Invalid PIN");
+            return false;
+        }
+        
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn $" + amount + ". New balance: $" + balance);
+            return true;
+        } else {
+            System.out.println("Insufficient funds or invalid amount");
+            return false;
+        }
+    }
+}`
+            },
+            dataSecurity: {
+              title: "Improves data security",
+              description: "By controlling access to data, encapsulation prevents unauthorized modifications and maintains data integrity.",
+              securityFeatures: [
+                "Prevents direct field access",
+                "Validates input data",
+                "Implements access control",
+                "Maintains data consistency"
+              ]
+            },
+            maintainabilityFlexibility: {
+              title: "Promotes code maintainability and flexibility",
+              description: "Internal implementation can be changed without affecting external code that uses the class.",
+              advantages: [
+                "Internal changes don't break external code",
+                "Easy to add validation and business rules",
+                "Simplified debugging and testing",
+                "Better code organization"
+              ]
+            }
+          },
+          exampleOfEncapsulation: {
+            title: "Example of Encapsulation",
+            description: "Comprehensive example demonstrating proper encapsulation techniques.",
+            basicExample: {
+              title: "Basic Student Class Example",
+              example: `public class Student {
+    private String name;  // private = encapsulated
+    private int age;
+    private String studentId;
+    private double gpa;
+    
+    // Constructor
+    public Student(String name, int age, String studentId) {
+        this.name = name;
+        this.age = age;
+        this.studentId = studentId;
+        this.gpa = 0.0;
+    }
+    
+    // Getter methods
+    public String getName() {
+        return name;
+    }
+    
+    public int getAge() {
+        return age;
+    }
+    
+    public String getStudentId() {
+        return studentId;
+    }
+    
+    public double getGpa() {
+        return gpa;
+    }
+    
+    // Setter methods with validation
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name.trim();
+        } else {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+    }
+    
+    public void setAge(int age) {
+        if (age >= 16 && age <= 100) {
+            this.age = age;
+        } else {
+            throw new IllegalArgumentException("Age must be between 16 and 100");
+        }
+    }
+    
+    public void setGpa(double gpa) {
+        if (gpa >= 0.0 && gpa <= 4.0) {
+            this.gpa = gpa;
+        } else {
+            throw new IllegalArgumentException("GPA must be between 0.0 and 4.0");
+        }
+    }
+    
+    // Business logic method
+    public void displayStudentInfo() {
+        System.out.println("Student Information:");
+        System.out.println("ID: " + studentId);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("GPA: " + gpa);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student("Alice Johnson", 20, "STU001");
+        
+        // Setting values using setter methods
+        s.setName("Alice Smith");  // Valid name
+        s.setGpa(3.8);            // Valid GPA
+        
+        // Getting values using getter methods
+        System.out.println("Student Name: " + s.getName());
+        System.out.println("Student GPA: " + s.getGpa());
+        
+        // Display complete information
+        s.displayStudentInfo();
+        
+        // Attempting invalid operations
+        try {
+            s.setAge(150);  // This will throw an exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+        try {
+            s.setGpa(5.0);  // This will throw an exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}`
+            },
+            advancedExample: {
+              title: "Advanced Encapsulation Example - Employee Management",
+              example: `import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Employee {
+    // Private fields - encapsulated data
+    private String employeeId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String department;
+    private double salary;
+    private LocalDate hireDate;
+    private boolean isActive;
+    private List<String> skills;
+    
+    // Constructor
+    public Employee(String employeeId, String firstName, String lastName, 
+                   String email, String department, double salary) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.department = department;
+        this.salary = salary;
+        this.hireDate = LocalDate.now();
+        this.isActive = true;
+        this.skills = new ArrayList<>();
+    }
+    
+    // Getter methods - controlled read access
+    public String getEmployeeId() {
+        return employeeId;
+    }
+    
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+    
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public String getDepartment() {
+        return department;
+    }
+    
+    public double getSalary() {
+        return isActive ? salary : 0.0; // Only return salary if employee is active
+    }
+    
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+    
+    public boolean isActive() {
+        return isActive;
+    }
+    
+    public List<String> getSkills() {
+        return new ArrayList<>(skills); // Return copy to prevent external modification
+    }
+    
+    public int getYearsOfService() {
+        return Period.between(hireDate, LocalDate.now()).getYears();
+    }
+    
+    // Setter methods with validation - controlled write access
+    public void setFirstName(String firstName) {
+        if (firstName != null && !firstName.trim().isEmpty()) {
+            this.firstName = firstName.trim();
+        } else {
+            throw new IllegalArgumentException("First name cannot be empty");
+        }
+    }
+    
+    public void setLastName(String lastName) {
+        if (lastName != null && !lastName.trim().isEmpty()) {
+            this.lastName = lastName.trim();
+        } else {
+            throw new IllegalArgumentException("Last name cannot be empty");
+        }
+    }
+    
+    public void setEmail(String email) {
+        if (email != null && email.contains("@") && email.contains(".")) {
+            this.email = email.toLowerCase().trim();
+        } else {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+    }
+    
+    public void setDepartment(String department) {
+        if (department != null && !department.trim().isEmpty()) {
+            this.department = department.trim();
+        } else {
+            throw new IllegalArgumentException("Department cannot be empty");
+        }
+    }
+    
+    public void setSalary(double salary) {
+        if (salary >= 0) {
+            this.salary = salary;
+        } else {
+            throw new IllegalArgumentException("Salary cannot be negative");
+        }
+    }
+    
+    public void setActive(boolean active) {
+        this.isActive = active;
+        if (!active) {
+            System.out.println("Employee " + getFullName() + " has been deactivated");
+        }
+    }
+    
+    // Business logic methods
+    public void addSkill(String skill) {
+        if (skill != null && !skill.trim().isEmpty() && !skills.contains(skill.trim())) {
+            skills.add(skill.trim());
+            System.out.println("Skill '" + skill + "' added to " + getFullName());
+        }
+    }
+    
+    public boolean removeSkill(String skill) {
+        boolean removed = skills.remove(skill);
+        if (removed) {
+            System.out.println("Skill '" + skill + "' removed from " + getFullName());
+        }
+        return removed;
+    }
+    
+    public void giveRaise(double percentage) {
+        if (isActive && percentage > 0) {
+            double oldSalary = salary;
+            salary += salary * (percentage / 100);
+            System.out.println(getFullName() + " received a " + percentage + "% raise");
+            System.out.println("Salary increased from $" + oldSalary + " to $" + salary);
+        } else {
+            System.out.println("Cannot give raise: Employee inactive or invalid percentage");
+        }
+    }
+    
+    public void displayEmployeeDetails() {
+        System.out.println("\n=== Employee Details ===");
+        System.out.println("ID: " + employeeId);
+        System.out.println("Name: " + getFullName());
+        System.out.println("Email: " + email);
+        System.out.println("Department: " + department);
+        System.out.println("Salary: $" + (isActive ? salary : "N/A (Inactive)"));
+        System.out.println("Hire Date: " + hireDate);
+        System.out.println("Years of Service: " + getYearsOfService());
+        System.out.println("Status: " + (isActive ? "Active" : "Inactive"));
+        System.out.println("Skills: " + (skills.isEmpty() ? "None" : String.join(", ", skills)));
+    }
+}
+
+// Usage demonstration
+public class EmployeeManagementDemo {
+    public static void main(String[] args) {
+        // Create employee with encapsulated data
+        Employee emp = new Employee("EMP001", "John", "Doe", "john.doe@company.com", "Engineering", 75000);
+        
+        // Access data through getter methods
+        System.out.println("Employee: " + emp.getFullName());
+        System.out.println("Department: " + emp.getDepartment());
+        System.out.println("Salary: $" + emp.getSalary());
+        
+        // Modify data through setter methods with validation
+        emp.addSkill("Java");
+        emp.addSkill("Spring Framework");
+        emp.addSkill("Database Design");
+        
+        // Give a raise
+        emp.giveRaise(10); // 10% raise
+        
+        // Display complete details
+        emp.displayEmployeeDetails();
+        
+        // Demonstrate validation
+        try {
+            emp.setEmail("invalid-email"); // This will throw an exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("\nValidation Error: " + e.getMessage());
+        }
+        
+        try {
+            emp.setSalary(-1000); // This will throw an exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("Validation Error: " + e.getMessage());
+        }
+        
+        // Deactivate employee
+        emp.setActive(false);
+        System.out.println("\nSalary after deactivation: $" + emp.getSalary()); // Returns 0.0
+        
+        emp.displayEmployeeDetails();
+    }
+}`
+            }
+          },
+          whyUseEncapsulation: {
+            title: "Why Use Encapsulation?",
+            description: "Understanding the benefits and advantages of implementing encapsulation in your code.",
+            benefits: {
+              dataHiding: {
+                title: "Data Hiding",
+                explanation: "Prevents direct access to sensitive data",
+                example: `public class CreditCard {
+    private String cardNumber;     // Hidden from external access
+    private String cvv;           // Sensitive data protected
+    private String expiryDate;
+    private double creditLimit;
+    
+    // Controlled access through methods
+    public String getMaskedCardNumber() {
+        return "****-****-****-" + cardNumber.substring(cardNumber.length() - 4);
+    }
+    
+    public boolean validateTransaction(double amount, String enteredCvv) {
+        // Internal validation logic
+        return cvv.equals(enteredCvv) && amount <= creditLimit;
+    }
+    
+    // CVV is never exposed directly
+    public void changeCvv(String oldCvv, String newCvv) {
+        if (cvv.equals(oldCvv)) {
+            cvv = newCvv;
+        }
+    }
+}`
+              },
+              controlOverData: {
+                title: "Control over data",
+                explanation: "You can control what values are allowed",
+                example: `public class Temperature {
+    private double celsius;
+    
+    public void setCelsius(double celsius) {
+        if (celsius >= -273.15) {  // Absolute zero validation
+            this.celsius = celsius;
+        } else {
+            throw new IllegalArgumentException("Temperature cannot be below absolute zero");
+        }
+    }
+    
+    public void setFahrenheit(double fahrenheit) {
+        double celsiusValue = (fahrenheit - 32) * 5.0 / 9.0;
+        setCelsius(celsiusValue);  // Reuse validation
+    }
+    
+    public double getCelsius() {
+        return celsius;
+    }
+    
+    public double getFahrenheit() {
+        return (celsius * 9.0 / 5.0) + 32;
+    }
+    
+    public double getKelvin() {
+        return celsius + 273.15;
+    }
+}`
+              },
+              improvedMaintainability: {
+                title: "Improved maintainability",
+                explanation: "You can change internal implementation without breaking code",
+                example: `// Version 1 - Simple implementation
+public class UserAccount {
+    private String username;
+    private String password;  // Plain text (bad practice, but for demo)
+    
+    public boolean authenticate(String user, String pass) {
+        return username.equals(user) && password.equals(pass);
+    }
+}
+
+// Version 2 - Enhanced security (internal change, same interface)
+public class UserAccount {
+    private String username;
+    private String hashedPassword;  // Now using hashed passwords
+    private String salt;
+    
+    public boolean authenticate(String user, String pass) {
+        // Internal implementation changed, but method signature remains same
+        return username.equals(user) && 
+               hashedPassword.equals(hashPassword(pass, salt));
+    }
+    
+    private String hashPassword(String password, String salt) {
+        // Hash implementation (simplified)
+        return Integer.toString((password + salt).hashCode());
+    }
+}`
+              },
+              reusability: {
+                title: "Reusability",
+                explanation: "Class code can be reused across multiple applications",
+                example: `// Reusable encapsulated class
+public class Logger {
+    private String logLevel;
+    private String logFile;
+    private boolean isEnabled;
+    
+    public Logger(String logLevel, String logFile) {
+        this.logLevel = logLevel;
+        this.logFile = logFile;
+        this.isEnabled = true;
+    }
+    
+    public void log(String level, String message) {
+        if (isEnabled && shouldLog(level)) {
+            writeToFile(formatMessage(level, message));
+        }
+    }
+    
+    public void info(String message) { log("INFO", message); }
+    public void warn(String message) { log("WARN", message); }
+    public void error(String message) { log("ERROR", message); }
+    
+    // Private helper methods - implementation details hidden
+    private boolean shouldLog(String level) {
+        // Logic to determine if message should be logged
+        return true;
+    }
+    
+    private String formatMessage(String level, String message) {
+        return "[" + level + "] " + java.time.LocalDateTime.now() + ": " + message;
+    }
+    
+    private void writeToFile(String formattedMessage) {
+        // File writing implementation
+        System.out.println("Writing to " + logFile + ": " + formattedMessage);
+    }
+}
+
+// Can be reused in different applications
+public class WebApplication {
+    private Logger logger = new Logger("INFO", "web-app.log");
+    
+    public void handleRequest() {
+        logger.info("Handling web request");
+    }
+}
+
+public class DatabaseService {
+    private Logger logger = new Logger("ERROR", "database.log");
+    
+    public void executeQuery() {
+        logger.info("Executing database query");
+    }
+}`
+              }
+            }
+          },
+          bestPractices: {
+            title: "Best Practices for Encapsulation",
+            description: "Guidelines for implementing effective encapsulation in Java applications.",
+            alwaysPrivateVariables: {
+              title: "Always declare class variables as private",
+              description: "Make all instance variables private to ensure controlled access.",
+              example: `// Good practice
+public class GoodPractice {
+    private String name;        // Private - good
+    private int age;           // Private - good
+    private double salary;     // Private - good
+    
+    // Public methods for controlled access
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+}
+
+// Bad practice
+public class BadPractice {
+    public String name;        // Public - bad, direct access allowed
+    public int age;           // Public - bad, no validation possible
+    public double salary;     // Public - bad, sensitive data exposed
+}`
+            },
+            publicGettersSetters: {
+              title: "Use public getters/setters for controlled access",
+              description: "Provide public methods to access and modify private data with appropriate validation.",
+              example: `public class Person {
+    private String name;
+    private int age;
+    private String email;
+    
+    // Getter with business logic
+    public String getName() {
+        return name != null ? name : "Unknown";
+    }
+    
+    // Setter with validation
+    public void setName(String name) {
+        if (name != null && name.trim().length() >= 2) {
+            this.name = name.trim();
+        } else {
+            throw new IllegalArgumentException("Name must be at least 2 characters");
+        }
+    }
+    
+    // Getter with computed value
+    public String getAgeCategory() {
+        if (age < 13) return "Child";
+        if (age < 20) return "Teenager";
+        if (age < 60) return "Adult";
+        return "Senior";
+    }
+    
+    // Setter with range validation
+    public void setAge(int age) {
+        if (age >= 0 && age <= 150) {
+            this.age = age;
+        } else {
+            throw new IllegalArgumentException("Age must be between 0 and 150");
+        }
+    }
+    
+    // Setter with format validation
+    public void setEmail(String email) {
+        if (email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            this.email = email.toLowerCase();
+        } else {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+}`
+            },
+            validateInputs: {
+              title: "Validate inputs inside setters if needed",
+              description: "Implement validation logic in setter methods to ensure data integrity.",
+              example: `public class Product {
+    private String productId;
+    private String name;
+    private double price;
+    private int quantity;
+    private String category;
+    
+    // Comprehensive validation in setters
+    public void setProductId(String productId) {
+        if (productId != null && productId.matches("^[A-Z]{2}\\d{4}$")) {
+            this.productId = productId;
+        } else {
+            throw new IllegalArgumentException("Product ID must be in format: XX0000 (e.g., AB1234)");
+        }
+    }
+    
+    public void setName(String name) {
+        if (name != null && name.trim().length() >= 3 && name.trim().length() <= 50) {
+            this.name = name.trim();
+        } else {
+            throw new IllegalArgumentException("Product name must be 3-50 characters");
+        }
+    }
+    
+    public void setPrice(double price) {
+        if (price >= 0 && price <= 10000) {
+            this.price = Math.round(price * 100.0) / 100.0; // Round to 2 decimal places
+        } else {
+            throw new IllegalArgumentException("Price must be between $0 and $10,000");
+        }
+    }
+    
+    public void setQuantity(int quantity) {
+        if (quantity >= 0) {
+            this.quantity = quantity;
+        } else {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+    }
+    
+    public void setCategory(String category) {
+        String[] validCategories = {"Electronics", "Clothing", "Books", "Home", "Sports"};
+        if (category != null && java.util.Arrays.asList(validCategories).contains(category)) {
+            this.category = category;
+        } else {
+            throw new IllegalArgumentException("Invalid category. Must be one of: " + 
+                java.util.Arrays.toString(validCategories));
+        }
+    }
+    
+    // Business logic methods
+    public double getTotalValue() {
+        return price * quantity;
+    }
+    
+    public boolean isInStock() {
+        return quantity > 0;
+    }
+    
+    public void reduceQuantity(int amount) {
+        if (amount > 0 && amount <= quantity) {
+            quantity -= amount;
+        } else {
+            throw new IllegalArgumentException("Invalid quantity to reduce");
+        }
+    }
+}`
+            }
+          },
+          commonMisunderstanding: {
+            title: "Common Misunderstanding",
+            description: "Clarifying the difference between encapsulation and abstraction.",
+            encapsulationVsAbstraction: {
+              title: "Encapsulation ≠ Abstraction",
+              description: "While related, encapsulation and abstraction serve different purposes in OOP.",
+              encapsulation: {
+                title: "Encapsulation",
+                description: "Hides the data (variables) and provides controlled access through methods.",
+                focus: "Data hiding and access control",
+                example: "Private variables with public getters/setters"
+              },
+              abstraction: {
+                title: "Abstraction",
+                description: "Hides the implementation complexity and shows only essential features.",
+                focus: "Implementation hiding and interface simplification",
+                example: "Abstract classes and interfaces"
+              },
+              comparisonExample: {
+                title: "Comparison Example",
+                example: `// Encapsulation example - hiding data
+class EncapsulatedCar {
+    private String engine;      // Data hidden
+    private int speed;         // Data hidden
+    
+    // Controlled access to data
+    public int getSpeed() {
+        return speed;
+    }
+    
+    public void setSpeed(int speed) {
+        if (speed >= 0 && speed <= 200) {
+            this.speed = speed;
+        }
+    }
+}
+
+// Abstraction example - hiding implementation complexity
+abstract class AbstractCar {
+    // Abstract method - implementation hidden
+    public abstract void start();
+    
+    // Concrete method - implementation provided
+    public void displayInfo() {
+        System.out.println("This is a car");
+    }
+}
+
+class ConcreteCar extends AbstractCar {
+    @Override
+    public void start() {
+        // Complex implementation hidden from user
+        initializeEngine();
+        checkFuelLevel();
+        engageIgnition();
+        System.out.println("Car started");
+    }
+    
+    // Private methods - implementation details hidden
+    private void initializeEngine() { /* complex logic */ }
+    private void checkFuelLevel() { /* complex logic */ }
+    private void engageIgnition() { /* complex logic */ }
+}
+
+// Usage demonstrates the difference
+public class EncapsulationVsAbstractionDemo {
+    public static void main(String[] args) {
+        // Encapsulation - controlled access to data
+        EncapsulatedCar car1 = new EncapsulatedCar();
+        car1.setSpeed(60);  // Controlled access with validation
+        System.out.println("Speed: " + car1.getSpeed());
+        
+        // Abstraction - simplified interface, complex implementation hidden
+        AbstractCar car2 = new ConcreteCar();
+        car2.start();       // Simple method call, complex implementation hidden
+        car2.displayInfo(); // User doesn't need to know how info is displayed
+    }
+}`
+              }
+            }
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
