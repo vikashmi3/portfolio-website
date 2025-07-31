@@ -17,7 +17,8 @@ import {
   FaBrain,
   FaRobot,
   FaEye,
-  FaComments
+  FaComments,
+  FaUsers
 } from 'react-icons/fa';
 
 const ArtificialIntelligence = () => {

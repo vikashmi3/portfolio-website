@@ -15,7 +15,8 @@ import {
   FaProjectDiagram,
 
   FaBrain,
-  FaChartLine
+  FaChartLine,
+  FaUsers
 } from 'react-icons/fa';
 
 const MachineLearning = () => {
