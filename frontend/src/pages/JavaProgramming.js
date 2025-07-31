@@ -15472,9 +15472,6 @@ public class LibraryManagementSystem {
       "PDF downloads and resources"
     ]
   };
-  };
-  };
-  };
 
   const handleBack = () => {
     navigate('/courses');
