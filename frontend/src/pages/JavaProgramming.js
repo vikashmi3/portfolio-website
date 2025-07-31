@@ -7976,6 +7976,675 @@ public class TryCatchDemo {
     }
 }`
           },
+          multipleCatchBlocks: {
+            title: "Multiple Catch Blocks",
+            description: "Handling different types of exceptions with separate catch blocks.",
+            example: `// Multiple catch blocks demonstration
+public class MultipleCatchDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Multiple Catch Blocks ===");
+        
+        // Example 1: Different exception types
+        demonstrateDifferentExceptions();
+        
+        // Example 2: Exception hierarchy
+        demonstrateExceptionHierarchy();
+        
+        // Example 3: Multi-catch (Java 7+)
+        demonstrateMultiCatch();
+    }
+    
+    public static void demonstrateDifferentExceptions() {
+        System.out.println("\n1. Different Exception Types:");
+        
+        String[] testCases = {null, "123", "abc", "valid"};
+        int[] indices = {0, 1, 2, 10};
+        
+        for (int i = 0; i < testCases.length; i++) {
+            try {
+                String s = testCases[i];
+                System.out.println("Processing: " + s);
+                
+                // This might throw NullPointerException
+                int length = s.length();
+                
+                // This might throw NumberFormatException
+                int number = Integer.parseInt(s);
+                
+                // This might throw ArrayIndexOutOfBoundsException
+                int value = indices[number];
+                
+                System.out.println("Success: " + value);
+                
+            } catch (NullPointerException e) {
+                System.out.println("Caught NullPointerException: String is null");
+            } catch (NumberFormatException e) {
+                System.out.println("Caught NumberFormatException: " + e.getMessage());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Caught ArrayIndexOutOfBoundsException: " + e.getMessage());
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void demonstrateExceptionHierarchy() {
+        System.out.println("\n2. Exception Hierarchy (Order Matters):");
+        
+        try {
+            // This will throw ArithmeticException
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("Specific: ArithmeticException - " + e.getMessage());
+        } catch (RuntimeException e) {
+            System.out.println("General: RuntimeException - " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Most General: Exception - " + e.getMessage());
+        }
+        
+        // Note: More specific exceptions must come before general ones
+    }
+    
+    public static void demonstrateMultiCatch() {
+        System.out.println("\n3. Multi-catch (Java 7+):");
+        
+        try {
+            // Simulate different exceptions
+            String input = "abc";
+            int number = Integer.parseInt(input);
+            int result = 100 / number;
+            
+        } catch (NumberFormatException | ArithmeticException e) {
+            System.out.println("Caught either NumberFormatException or ArithmeticException");
+            System.out.println("Exception type: " + e.getClass().getSimpleName());
+            System.out.println("Message: " + e.getMessage());
+        }
+    }
+}`
+          },
+          finallyBlock: {
+            title: "Finally Block",
+            description: "Code that always executes regardless of whether an exception occurs or not.",
+            example: `// Finally block demonstration
+public class FinallyBlockDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Finally Block Examples ===");
+        
+        // Example 1: Exception occurs
+        System.out.println("\n1. Exception occurs:");
+        try {
+            int a = 5 / 0;
+            System.out.println("This won't print");
+        } catch (ArithmeticException e) {
+            System.out.println("Exception handled: " + e.getMessage());
+        } finally {
+            System.out.println("Finally block: This always runs");
+        }
+        
+        // Example 2: No exception
+        System.out.println("\n2. No exception:");
+        try {
+            int a = 10 / 2;
+            System.out.println("Result: " + a);
+        } catch (ArithmeticException e) {
+            System.out.println("This won't execute");
+        } finally {
+            System.out.println("Finally block: Executed even without exception");
+        }
+        
+        // Example 3: Resource cleanup
+        System.out.println("\n3. Resource cleanup:");
+        demonstrateResourceCleanup();
+        
+        // Example 4: Finally with return
+        System.out.println("\n4. Finally with return:");
+        int result = methodWithFinallyAndReturn();
+        System.out.println("Returned value: " + result);
+    }
+    
+    public static void demonstrateResourceCleanup() {
+        java.io.FileInputStream fis = null;
+        try {
+            System.out.println("Opening file...");
+            // Simulating file operations
+            fis = new java.io.FileInputStream("nonexistent.txt");
+            System.out.println("File opened successfully");
+            
+        } catch (java.io.FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        } finally {
+            // Cleanup resources
+            System.out.println("Cleanup: Closing resources...");
+            if (fis != null) {
+                try {
+                    fis.close();
+                    System.out.println("File closed successfully");
+                } catch (java.io.IOException e) {
+                    System.out.println("Error closing file: " + e.getMessage());
+                }
+            } else {
+                System.out.println("No file to close");
+            }
+        }
+    }
+    
+    public static int methodWithFinallyAndReturn() {
+        try {
+            System.out.println("In try block");
+            return 10;
+        } catch (Exception e) {
+            System.out.println("In catch block");
+            return 20;
+        } finally {
+            System.out.println("In finally block - executes even with return");
+            // Note: return in finally would override try/catch return
+        }
+    }
+}`
+          },
+          throwAndThrows: {
+            title: "Throw and Throws",
+            description: "Keywords for manually throwing exceptions and declaring potential exceptions.",
+            throwKeyword: {
+              title: "throw (used to manually throw an exception):",
+              syntax: "throw new ExceptionType(\"message\");",
+              description: "Used to explicitly throw an exception from code."
+            },
+            throwsKeyword: {
+              title: "throws (declares that a method may throw an exception):",
+              syntax: "public void methodName() throws ExceptionType { ... }",
+              description: "Used in method signature to declare potential exceptions."
+            },
+            example: `// Throw and throws demonstration
+public class ThrowThrowsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Throw and Throws Examples ===");
+        
+        // Example 1: Using throw
+        System.out.println("\n1. Using throw keyword:");
+        try {
+            validateAge(15);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught exception: " + e.getMessage());
+        }
+        
+        // Example 2: Using throws
+        System.out.println("\n2. Using throws keyword:");
+        try {
+            readFile("nonexistent.txt");
+        } catch (java.io.IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+        }
+        
+        // Example 3: Method that throws multiple exceptions
+        System.out.println("\n3. Multiple throws:");
+        try {
+            processData("invalid", -5);
+        } catch (NumberFormatException e) {
+            System.out.println("Number format error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Illegal argument: " + e.getMessage());
+        }
+    }
+    
+    // Method using throw keyword
+    public static void validateAge(int age) {
+        if (age < 18) {
+            throw new IllegalArgumentException("Age must be 18 or older. Provided: " + age);
+        }
+        System.out.println("Age validation passed: " + age);
+    }
+    
+    // Method using throws keyword
+    public static void readFile(String filename) throws java.io.IOException {
+        System.out.println("Attempting to read file: " + filename);
+        // Simulating file reading that might fail
+        if (!filename.equals("valid.txt")) {
+            throw new java.io.IOException("File not found: " + filename);
+        }
+        System.out.println("File read successfully");
+    }
+    
+    // Method with multiple throws
+    public static void processData(String numberStr, int value) 
+            throws NumberFormatException, IllegalArgumentException {
+        
+        // This might throw NumberFormatException
+        int number = Integer.parseInt(numberStr);
+        
+        // This might throw IllegalArgumentException
+        if (value < 0) {
+            throw new IllegalArgumentException("Value cannot be negative: " + value);
+        }
+        
+        System.out.println("Data processed successfully: " + number + ", " + value);
+    }
+    
+    // Method that handles and re-throws
+    public static void handleAndRethrow() throws Exception {
+        try {
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("Logging error: " + e.getMessage());
+            // Re-throw as a different exception
+            throw new Exception("Processing failed", e);
+        }
+    }
+}`
+          },
+          customExceptions: {
+            title: "Custom Exceptions",
+            description: "Creating application-specific exception classes for better error handling.",
+            example: `// Custom exceptions demonstration
+
+// Custom checked exception
+class InsufficientFundsException extends Exception {
+    private double balance;
+    private double requestedAmount;
+    
+    public InsufficientFundsException(String message, double balance, double requestedAmount) {
+        super(message);
+        this.balance = balance;
+        this.requestedAmount = requestedAmount;
+    }
+    
+    public double getBalance() { return balance; }
+    public double getRequestedAmount() { return requestedAmount; }
+    public double getShortfall() { return requestedAmount - balance; }
+}
+
+// Custom unchecked exception
+class InvalidAccountException extends RuntimeException {
+    private String accountNumber;
+    
+    public InvalidAccountException(String message, String accountNumber) {
+        super(message);
+        this.accountNumber = accountNumber;
+    }
+    
+    public String getAccountNumber() { return accountNumber; }
+}
+
+// Custom exception with cause
+class BankingException extends Exception {
+    public BankingException(String message) {
+        super(message);
+    }
+    
+    public BankingException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
+// Bank account class using custom exceptions
+class BankAccount {
+    private String accountNumber;
+    private double balance;
+    private boolean isActive;
+    
+    public BankAccount(String accountNumber, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+        this.isActive = true;
+    }
+    
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (!isActive) {
+            throw new InvalidAccountException("Account is inactive", accountNumber);
+        }
+        
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive");
+        }
+        
+        if (amount > balance) {
+            throw new InsufficientFundsException(
+                "Insufficient funds for withdrawal", balance, amount);
+        }
+        
+        balance -= amount;
+        System.out.println("Withdrawal successful. New balance: $" + balance);
+    }
+    
+    public void deposit(double amount) throws BankingException {
+        try {
+            if (!isActive) {
+                throw new InvalidAccountException("Account is inactive", accountNumber);
+            }
+            
+            if (amount <= 0) {
+                throw new IllegalArgumentException("Deposit amount must be positive");
+            }
+            
+            balance += amount;
+            System.out.println("Deposit successful. New balance: $" + balance);
+            
+        } catch (Exception e) {
+            throw new BankingException("Deposit operation failed", e);
+        }
+    }
+    
+    public double getBalance() { return balance; }
+    public String getAccountNumber() { return accountNumber; }
+    public void deactivate() { isActive = false; }
+}
+
+public class CustomExceptionsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Custom Exceptions Demo ===");
+        
+        BankAccount account = new BankAccount("ACC123", 1000.0);
+        
+        // Test successful operations
+        System.out.println("\n1. Successful operations:");
+        try {
+            account.deposit(500.0);
+            account.withdraw(200.0);
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+        }
+        
+        // Test insufficient funds
+        System.out.println("\n2. Insufficient funds:");
+        try {
+            account.withdraw(2000.0);
+        } catch (InsufficientFundsException e) {
+            System.out.println("Custom exception caught:");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Current balance: $" + e.getBalance());
+            System.out.println("Requested amount: $" + e.getRequestedAmount());
+            System.out.println("Shortfall: $" + e.getShortfall());
+        }
+        
+        // Test inactive account
+        System.out.println("\n3. Inactive account:");
+        account.deactivate();
+        try {
+            account.withdraw(100.0);
+        } catch (InvalidAccountException e) {
+            System.out.println("Runtime exception caught:");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Account: " + e.getAccountNumber());
+        } catch (InsufficientFundsException e) {
+            System.out.println("This won't be reached");
+        }
+        
+        // Test deposit with inactive account
+        System.out.println("\n4. Deposit with inactive account:");
+        try {
+            account.deposit(100.0);
+        } catch (BankingException e) {
+            System.out.println("Banking exception caught:");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Cause: " + e.getCause().getClass().getSimpleName());
+            System.out.println("Cause message: " + e.getCause().getMessage());
+        }
+    }
+}`
+          },
+          bestPractices: {
+            title: "Best Practices",
+            description: "Guidelines for effective exception handling in Java applications.",
+            practices: [
+              "Catch specific exceptions before generic ones",
+              "Avoid catching Exception unless necessary",
+              "Always close resources (finally or try-with-resources)",
+              "Don't ignore exceptions",
+              "Use meaningful exception messages",
+              "Log exceptions appropriately"
+            ],
+            example: `// Exception handling best practices
+public class ExceptionBestPracticesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Exception Handling Best Practices ===");
+        
+        // Practice 1: Catch specific exceptions first
+        demonstrateSpecificExceptions();
+        
+        // Practice 2: Proper resource management
+        demonstrateResourceManagement();
+        
+        // Practice 3: Meaningful error messages
+        demonstrateMeaningfulMessages();
+        
+        // Practice 4: Don't ignore exceptions
+        demonstrateProperExceptionHandling();
+    }
+    
+    // Good: Catch specific exceptions before general ones
+    public static void demonstrateSpecificExceptions() {
+        System.out.println("\n1. Specific Exception Handling:");
+        
+        try {
+            String[] data = {"123", "abc", null};
+            for (String item : data) {
+                int number = Integer.parseInt(item);
+                int result = 100 / number;
+                System.out.println("Result: " + result);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Specific: Invalid number format - " + e.getMessage());
+        } catch (ArithmeticException e) {
+            System.out.println("Specific: Arithmetic error - " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Specific: Null value encountered");
+        } catch (Exception e) {
+            System.out.println("General: Unexpected error - " + e.getMessage());
+        }
+    }
+    
+    // Good: Proper resource management
+    public static void demonstrateResourceManagement() {
+        System.out.println("\n2. Resource Management:");
+        
+        // Traditional approach with finally
+        java.io.BufferedReader reader = null;
+        try {
+            reader = new java.io.BufferedReader(
+                new java.io.StringReader("Sample text for reading"));
+            String line = reader.readLine();
+            System.out.println("Read: " + line);
+        } catch (java.io.IOException e) {
+            System.out.println("IO Error: " + e.getMessage());
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                    System.out.println("Resource closed in finally block");
+                } catch (java.io.IOException e) {
+                    System.out.println("Error closing resource: " + e.getMessage());
+                }
+            }
+        }
+    }
+    
+    // Good: Meaningful error messages
+    public static void demonstrateMeaningfulMessages() {
+        System.out.println("\n3. Meaningful Error Messages:");
+        
+        try {
+            validateUserInput("", -5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+        }
+    }
+    
+    public static void validateUserInput(String name, int age) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                "Name cannot be null or empty. Provided: '" + name + "'");
+        }
+        
+        if (age < 0 || age > 150) {
+            throw new IllegalArgumentException(
+                "Age must be between 0 and 150. Provided: " + age);
+        }
+    }
+    
+    // Good: Don't ignore exceptions
+    public static void demonstrateProperExceptionHandling() {
+        System.out.println("\n4. Proper Exception Handling:");
+        
+        // Bad: Empty catch block (don't do this)
+        try {
+            int result = Integer.parseInt("abc");
+        } catch (NumberFormatException e) {
+            // Bad: Ignoring the exception
+        }
+        
+        // Good: Handle the exception appropriately
+        try {
+            int result = Integer.parseInt("abc");
+        } catch (NumberFormatException e) {
+            System.out.println("Failed to parse number: " + e.getMessage());
+            // Log the exception, show user-friendly message, or take corrective action
+        }
+    }
+}`
+          },
+          tryWithResources: {
+            title: "Try-with-Resources (Java 7+)",
+            description: "Automatic resource management that ensures resources are closed properly.",
+            syntax: "try (ResourceType resource = new ResourceType()) { ... }",
+            example: `import java.io.*;
+
+// Try-with-resources demonstration
+public class TryWithResourcesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Try-with-Resources Examples ===");
+        
+        // Example 1: Single resource
+        demonstrateSingleResource();
+        
+        // Example 2: Multiple resources
+        demonstrateMultipleResources();
+        
+        // Example 3: Custom resource
+        demonstrateCustomResource();
+        
+        // Example 4: Comparison with traditional approach
+        demonstrateComparison();
+    }
+    
+    public static void demonstrateSingleResource() {
+        System.out.println("\n1. Single Resource:");
+        
+        // Try-with-resources automatically closes the resource
+        try (BufferedReader reader = new BufferedReader(
+                new StringReader("Line 1\nLine 2\nLine 3"))) {
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println("Read: " + line);
+            }
+            
+        } catch (IOException e) {
+            System.out.println("IO Error: " + e.getMessage());
+        }
+        // Resource is automatically closed here
+        System.out.println("Resource automatically closed");
+    }
+    
+    public static void demonstrateMultipleResources() {
+        System.out.println("\n2. Multiple Resources:");
+        
+        // Multiple resources separated by semicolons
+        try (StringReader stringReader = new StringReader("Source data");
+             BufferedReader bufferedReader = new BufferedReader(stringReader);
+             StringWriter stringWriter = new StringWriter();
+             BufferedWriter bufferedWriter = new BufferedWriter(stringWriter)) {
+            
+            String data = bufferedReader.readLine();
+            bufferedWriter.write("Processed: " + data);
+            bufferedWriter.flush();
+            
+            System.out.println("Output: " + stringWriter.toString());
+            
+        } catch (IOException e) {
+            System.out.println("IO Error: " + e.getMessage());
+        }
+        // All resources are automatically closed in reverse order
+        System.out.println("All resources automatically closed");
+    }
+    
+    public static void demonstrateCustomResource() {
+        System.out.println("\n3. Custom Resource:");
+        
+        try (CustomResource resource = new CustomResource("MyResource")) {
+            resource.doSomething();
+            // Simulate an exception
+            if (true) {
+                throw new RuntimeException("Simulated error");
+            }
+        } catch (Exception e) {
+            System.out.println("Caught exception: " + e.getMessage());
+        }
+        // CustomResource.close() is automatically called
+    }
+    
+    public static void demonstrateComparison() {
+        System.out.println("\n4. Comparison - Traditional vs Try-with-Resources:");
+        
+        System.out.println("\nTraditional approach:");
+        traditionalResourceHandling();
+        
+        System.out.println("\nTry-with-resources approach:");
+        tryWithResourcesApproach();
+    }
+    
+    // Traditional resource handling (verbose)
+    public static void traditionalResourceHandling() {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new StringReader("Traditional approach"));
+            String line = reader.readLine();
+            System.out.println("Read: " + line);
+        } catch (IOException e) {
+            System.out.println("IO Error: " + e.getMessage());
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                    System.out.println("Manually closed resource");
+                } catch (IOException e) {
+                    System.out.println("Error closing resource: " + e.getMessage());
+                }
+            }
+        }
+    }
+    
+    // Try-with-resources (concise)
+    public static void tryWithResourcesApproach() {
+        try (BufferedReader reader = new BufferedReader(
+                new StringReader("Try-with-resources approach"))) {
+            String line = reader.readLine();
+            System.out.println("Read: " + line);
+        } catch (IOException e) {
+            System.out.println("IO Error: " + e.getMessage());
+        }
+        System.out.println("Automatically closed resource");
+    }
+}
+
+// Custom resource class implementing AutoCloseable
+class CustomResource implements AutoCloseable {
+    private String name;
+    
+    public CustomResource(String name) {
+        this.name = name;
+        System.out.println("Resource " + name + " created");
+    }
+    
+    public void doSomething() {
+        System.out.println("Resource " + name + " is doing something");
+    }
+    
+    @Override
+    public void close() {
+        System.out.println("Resource " + name + " is being closed");
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
