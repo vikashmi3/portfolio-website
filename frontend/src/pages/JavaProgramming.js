@@ -11829,6 +11829,316 @@ public class PrinterSynchronizationDemo {
 }`
           }
         },
+        fileHandling: {
+          title: "Java File Handling",
+          description: "Java provides comprehensive file I/O capabilities through java.io, java.nio.file, and java.util packages for creating, reading, writing, and managing files.",
+          whatIsFileHandling: {
+            title: "What is File Handling?",
+            definition: {
+              title: "File handling allows a Java program to create, read, write, update, and delete files on the file system.",
+              description: "It enables programs to persist data beyond program execution and interact with external files.",
+              operations: [
+                "Create new files and directories",
+                "Read data from existing files",
+                "Write data to files",
+                "Update file contents",
+                "Delete files and directories",
+                "Navigate file system structure"
+              ]
+            },
+            packages: {
+              title: "Java provides java.io, java.nio.file, and java.util packages for file operations.",
+              description: "Different packages offer various approaches to file handling.",
+              javaIo: "java.io - Traditional I/O with streams and readers/writers",
+              javaNio: "java.nio.file - Modern NIO.2 API with Path and Files classes",
+              javaUtil: "java.util - Utility classes like Scanner for file reading"
+            },
+            example: `// File handling overview demonstration
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class FileHandlingOverviewDemo {
+    public static void main(String[] args) {
+        System.out.println("=== File Handling Overview ===");
+        
+        String fileName = "demo-file.txt";
+        String content = "Hello, File Handling!\nThis is a demonstration.";
+        
+        try {
+            // 1. Create and write to file
+            createAndWriteFile(fileName, content);
+            
+            // 2. Read from file
+            readFile(fileName);
+            
+            // 3. File information
+            displayFileInfo(fileName);
+            
+            // 4. Update file
+            updateFile(fileName, "\nUpdated content added.");
+            
+            // 5. Read updated file
+            System.out.println("\nAfter update:");
+            readFile(fileName);
+            
+            // 6. Clean up
+            deleteFile(fileName);
+            
+        } catch (IOException e) {
+            System.err.println("File operation failed: " + e.getMessage());
+        }
+    }
+    
+    public static void createAndWriteFile(String fileName, String content) throws IOException {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write(content);
+            System.out.println("File created and content written: " + fileName);
+        }
+    }
+    
+    public static void readFile(String fileName) throws IOException {
+        System.out.println("\nReading file: " + fileName);
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+    }
+    
+    public static void displayFileInfo(String fileName) {
+        File file = new File(fileName);
+        System.out.println("\nFile Information:");
+        System.out.println("Name: " + file.getName());
+        System.out.println("Exists: " + file.exists());
+        System.out.println("Size: " + file.length() + " bytes");
+        System.out.println("Can read: " + file.canRead());
+        System.out.println("Can write: " + file.canWrite());
+        System.out.println("Last modified: " + new Date(file.lastModified()));
+    }
+    
+    public static void updateFile(String fileName, String additionalContent) throws IOException {
+        try (FileWriter writer = new FileWriter(fileName, true)) { // append mode
+            writer.write(additionalContent);
+            System.out.println("File updated with additional content");
+        }
+    }
+    
+    public static void deleteFile(String fileName) {
+        File file = new File(fileName);
+        if (file.delete()) {
+            System.out.println("\nFile deleted: " + fileName);
+        } else {
+            System.out.println("\nFailed to delete file: " + fileName);
+        }
+    }
+}`
+          },
+          fileClass: {
+            title: "File Class (java.io.File)",
+            description: "Used to work with file and directory properties (not content). Provides metadata and file system operations.",
+            commonMethods: {
+              createNewFile: "createNewFile() - Create file",
+              exists: "exists() - Check if file exists",
+              getName: "getName() - File name",
+              length: "length() - File size",
+              delete: "delete() - Delete file",
+              mkdir: "mkdir() - Create directory"
+            },
+            example: `// File class comprehensive demonstration
+import java.io.*;
+import java.util.Date;
+
+public class FileClassDemo {
+    public static void main(String[] args) {
+        System.out.println("=== File Class Demonstration ===");
+        
+        // File operations
+        demonstrateFileOperations();
+        
+        // Directory operations
+        demonstrateDirectoryOperations();
+        
+        // File properties
+        demonstrateFileProperties();
+        
+        // File system navigation
+        demonstrateFileSystemNavigation();
+    }
+    
+    public static void demonstrateFileOperations() {
+        System.out.println("\n1. File Operations:");
+        
+        String fileName = "test-file.txt";
+        File file = new File(fileName);
+        
+        try {
+            // Create file
+            if (file.createNewFile()) {
+                System.out.println("File created: " + fileName);
+            } else {
+                System.out.println("File already exists: " + fileName);
+            }
+            
+            // Check existence
+            System.out.println("File exists: " + file.exists());
+            
+            // Write some content to get file size
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("This is test content for file operations.");
+            }
+            
+            // File properties
+            System.out.println("File name: " + file.getName());
+            System.out.println("File size: " + file.length() + " bytes");
+            System.out.println("Absolute path: " + file.getAbsolutePath());
+            System.out.println("Parent directory: " + file.getParent());
+            
+            // File permissions
+            System.out.println("Can read: " + file.canRead());
+            System.out.println("Can write: " + file.canWrite());
+            System.out.println("Can execute: " + file.canExecute());
+            
+            // Timestamps
+            System.out.println("Last modified: " + new Date(file.lastModified()));
+            
+            // Delete file
+            if (file.delete()) {
+                System.out.println("File deleted successfully");
+            }
+            
+        } catch (IOException e) {
+            System.err.println("File operation error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateDirectoryOperations() {
+        System.out.println("\n2. Directory Operations:");
+        
+        String dirName = "test-directory";
+        File directory = new File(dirName);
+        
+        // Create directory
+        if (directory.mkdir()) {
+            System.out.println("Directory created: " + dirName);
+        } else {
+            System.out.println("Directory already exists or creation failed: " + dirName);
+        }
+        
+        // Create nested directories
+        File nestedDir = new File(dirName + "/nested/deep");
+        if (nestedDir.mkdirs()) {
+            System.out.println("Nested directories created: " + nestedDir.getPath());
+        }
+        
+        // Create files in directory
+        try {
+            File file1 = new File(directory, "file1.txt");
+            File file2 = new File(directory, "file2.txt");
+            File file3 = new File(nestedDir, "deep-file.txt");
+            
+            file1.createNewFile();
+            file2.createNewFile();
+            file3.createNewFile();
+            
+            System.out.println("Files created in directories");
+            
+        } catch (IOException e) {
+            System.err.println("Error creating files: " + e.getMessage());
+        }
+        
+        // List directory contents
+        System.out.println("\nDirectory contents:");
+        listDirectoryContents(directory, 0);
+        
+        // Clean up
+        deleteDirectoryRecursively(directory);
+        System.out.println("Directory and contents deleted");
+    }
+    
+    public static void demonstrateFileProperties() {
+        System.out.println("\n3. File Properties:");
+        
+        // Current directory
+        File currentDir = new File(".");
+        System.out.println("Current directory: " + currentDir.getAbsolutePath());
+        
+        // System properties
+        System.out.println("User home: " + System.getProperty("user.home"));
+        System.out.println("User directory: " + System.getProperty("user.dir"));
+        System.out.println("File separator: '" + File.separator + "'");
+        System.out.println("Path separator: '" + File.pathSeparator + "'");
+        
+        // Root directories
+        File[] roots = File.listRoots();
+        System.out.println("\nRoot directories:");
+        for (File root : roots) {
+            System.out.println("Root: " + root.getAbsolutePath());
+            System.out.println("  Total space: " + (root.getTotalSpace() / (1024 * 1024 * 1024)) + " GB");
+            System.out.println("  Free space: " + (root.getFreeSpace() / (1024 * 1024 * 1024)) + " GB");
+            System.out.println("  Usable space: " + (root.getUsableSpace() / (1024 * 1024 * 1024)) + " GB");
+        }
+    }
+    
+    public static void demonstrateFileSystemNavigation() {
+        System.out.println("\n4. File System Navigation:");
+        
+        File currentDir = new File(".");
+        File[] files = currentDir.listFiles();
+        
+        if (files != null) {
+            System.out.println("Files and directories in current directory:");
+            for (File file : files) {
+                String type = file.isDirectory() ? "[DIR]" : "[FILE]";
+                String size = file.isFile() ? " (" + file.length() + " bytes)" : "";
+                System.out.println(type + " " + file.getName() + size);
+            }
+        }
+        
+        // File filtering
+        System.out.println("\nJava files in current directory:");
+        File[] javaFiles = currentDir.listFiles((dir, name) -> name.endsWith(".java"));
+        if (javaFiles != null) {
+            for (File javaFile : javaFiles) {
+                System.out.println("Java file: " + javaFile.getName());
+            }
+        }
+    }
+    
+    // Helper method to list directory contents recursively
+    public static void listDirectoryContents(File directory, int level) {
+        if (!directory.isDirectory()) return;
+        
+        String indent = "  ".repeat(level);
+        File[] files = directory.listFiles();
+        
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    System.out.println(indent + "[DIR] " + file.getName());
+                    listDirectoryContents(file, level + 1);
+                } else {
+                    System.out.println(indent + "[FILE] " + file.getName() + " (" + file.length() + " bytes)");
+                }
+            }
+        }
+    }
+    
+    // Helper method to delete directory recursively
+    public static boolean deleteDirectoryRecursively(File directory) {
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    deleteDirectoryRecursively(file);
+                }
+            }
+        }
+        return directory.delete();
+    }
+}`
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
