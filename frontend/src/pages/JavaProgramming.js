@@ -862,6 +862,930 @@ public static String validateEmail(String email) {
           }
         }
       },
+      classAndObject: {
+        classInJava: {
+          title: "Class in Java",
+          description: "A class is a blueprint or template that defines the structure and behavior of objects. It encapsulates data (fields) and methods that operate on that data.",
+          definingClass: {
+            title: "Defining a class",
+            description: "A class is defined using the 'class' keyword followed by the class name and body enclosed in curly braces.",
+            syntax: "[access_modifier] class ClassName {\n    // fields (variables)\n    // methods\n    // constructors\n}",
+            example: `// Basic class definition
+public class Student {
+    // Fields (instance variables)
+    private String name;
+    private int age;
+    private String studentId;
+    private double gpa;
+    
+    // Constructor
+    public Student(String name, int age, String studentId) {
+        this.name = name;
+        this.age = age;
+        this.studentId = studentId;
+        this.gpa = 0.0;
+    }
+    
+    // Methods
+    public void displayInfo() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Student ID: " + studentId);
+        System.out.println("GPA: " + gpa);
+    }
+    
+    public void updateGPA(double newGPA) {
+        if (newGPA >= 0.0 && newGPA <= 4.0) {
+            this.gpa = newGPA;
+        }
+    }
+}`
+          },
+          classMembers: {
+            title: "Class members (fields and methods)",
+            description: "Class members include fields (variables) that store data and methods that define behavior.",
+            fields: {
+              title: "Fields (Instance Variables)",
+              description: "Variables declared inside a class but outside any method. They represent the state of an object.",
+              types: [
+                "Instance variables - Belong to specific object instances",
+                "Static variables - Belong to the class itself, shared among all instances",
+                "Final variables - Constants that cannot be changed after initialization"
+              ],
+              example: `public class Car {
+    // Instance variables
+    private String brand;
+    private String model;
+    private int year;
+    private double price;
+    
+    // Static variable (class variable)
+    private static int totalCars = 0;
+    
+    // Final variable (constant)
+    private final String VIN_PREFIX = "CAR";
+    
+    // Constructor
+    public Car(String brand, String model, int year, double price) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.price = price;
+        totalCars++; // Increment static counter
+    }
+    
+    // Static method to get total cars
+    public static int getTotalCars() {
+        return totalCars;
+    }
+}`
+            },
+            methods: {
+              title: "Methods",
+              description: "Functions defined inside a class that define the behavior of objects.",
+              types: [
+                "Instance methods - Operate on instance variables, called on objects",
+                "Static methods - Belong to class, can be called without creating objects",
+                "Abstract methods - Declared without implementation (in abstract classes)",
+                "Final methods - Cannot be overridden in subclasses"
+              ],
+              example: `public class Calculator {
+    // Instance variable
+    private String calculatorName;
+    
+    // Constructor
+    public Calculator(String name) {
+        this.calculatorName = name;
+    }
+    
+    // Instance method
+    public double add(double a, double b) {
+        System.out.println(calculatorName + " is performing addition");
+        return a + b;
+    }
+    
+    // Static method - utility function
+    public static double multiply(double a, double b) {
+        return a * b;
+    }
+    
+    // Method with multiple parameters
+    public double calculateAverage(double... numbers) {
+        if (numbers.length == 0) return 0;
+        
+        double sum = 0;
+        for (double num : numbers) {
+            sum += num;
+        }
+        return sum / numbers.length;
+    }
+    
+    // Getter method
+    public String getCalculatorName() {
+        return calculatorName;
+    }
+    
+    // Setter method
+    public void setCalculatorName(String name) {
+        this.calculatorName = name;
+    }
+}`
+            }
+          },
+          constructors: {
+            title: "Constructors (default and parameterized)",
+            description: "Special methods used to initialize objects when they are created. They have the same name as the class and no return type.",
+            defaultConstructor: {
+              title: "Default Constructor",
+              description: "Constructor with no parameters. If not explicitly defined, Java provides one automatically.",
+              example: `public class Book {
+    private String title;
+    private String author;
+    private int pages;
+    
+    // Default constructor
+    public Book() {
+        this.title = "Unknown";
+        this.author = "Unknown";
+        this.pages = 0;
+        System.out.println("Default constructor called");
+    }
+    
+    // Method to display book info
+    public void displayInfo() {
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("Pages: " + pages);
+    }
+}`
+            },
+            parameterizedConstructor: {
+              title: "Parameterized Constructor",
+              description: "Constructor that accepts parameters to initialize object with specific values.",
+              example: `public class Employee {
+    private String name;
+    private int id;
+    private String department;
+    private double salary;
+    
+    // Parameterized constructor
+    public Employee(String name, int id, String department, double salary) {
+        this.name = name;
+        this.id = id;
+        this.department = department;
+        this.salary = salary;
+        System.out.println("Employee created: " + name);
+    }
+    
+    // Another parameterized constructor (constructor overloading)
+    public Employee(String name, int id) {
+        this.name = name;
+        this.id = id;
+        this.department = "General";
+        this.salary = 30000.0;
+        System.out.println("Employee created with default department and salary");
+    }
+    
+    public void displayEmployee() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Department: " + department);
+        System.out.println("Salary: $" + salary);
+    }
+}`
+            },
+            constructorChaining: {
+              title: "Constructor Chaining",
+              description: "Calling one constructor from another using this() keyword.",
+              example: `public class Rectangle {
+    private double length;
+    private double width;
+    private String color;
+    
+    // Constructor with all parameters
+    public Rectangle(double length, double width, String color) {
+        this.length = length;
+        this.width = width;
+        this.color = color;
+        System.out.println("Rectangle created with all parameters");
+    }
+    
+    // Constructor with length and width (default color)
+    public Rectangle(double length, double width) {
+        this(length, width, "White"); // Call the main constructor
+        System.out.println("Rectangle created with default color");
+    }
+    
+    // Constructor for square (equal length and width)
+    public Rectangle(double side) {
+        this(side, side, "White"); // Call the main constructor
+        System.out.println("Square created");
+    }
+    
+    public double getArea() {
+        return length * width;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Length: " + length);
+        System.out.println("Width: " + width);
+        System.out.println("Color: " + color);
+        System.out.println("Area: " + getArea());
+    }
+}`
+            }
+          },
+          staticVsInstance: {
+            title: "Static vs instance members",
+            description: "Understanding the difference between static (class-level) and instance (object-level) members.",
+            instanceMembers: {
+              title: "Instance Members",
+              description: "Belong to specific object instances. Each object has its own copy.",
+              characteristics: [
+                "Accessed through object references",
+                "Each object has separate copy",
+                "Can access both static and instance members",
+                "Memory allocated when object is created"
+              ]
+            },
+            staticMembers: {
+              title: "Static Members",
+              description: "Belong to the class itself. Shared among all instances of the class.",
+              characteristics: [
+                "Accessed through class name",
+                "Single copy shared by all objects",
+                "Can only directly access other static members",
+                "Memory allocated when class is first loaded"
+              ]
+            },
+            example: `public class Counter {
+    // Static variable - shared among all instances
+    private static int totalCount = 0;
+    
+    // Instance variable - unique to each object
+    private int instanceCount;
+    private String counterName;
+    
+    // Static block - executed when class is first loaded
+    static {
+        System.out.println("Counter class loaded");
+        totalCount = 0;
+    }
+    
+    // Constructor
+    public Counter(String name) {
+        this.counterName = name;
+        this.instanceCount = 0;
+        totalCount++; // Increment static counter
+        System.out.println("Counter '" + name + "' created");
+    }
+    
+    // Instance method
+    public void increment() {
+        instanceCount++;
+        totalCount++;
+        System.out.println(counterName + " incremented. Instance: " + instanceCount);
+    }
+    
+    // Static method
+    public static int getTotalCount() {
+        // Can only access static members directly
+        return totalCount;
+    }
+    
+    // Static method to reset total count
+    public static void resetTotalCount() {
+        totalCount = 0;
+        System.out.println("Total count reset to 0");
+    }
+    
+    // Instance method to get instance count
+    public int getInstanceCount() {
+        return instanceCount;
+    }
+    
+    // Instance method that can access both static and instance members
+    public void displayCounts() {
+        System.out.println("Counter: " + counterName);
+        System.out.println("Instance count: " + instanceCount);
+        System.out.println("Total count: " + totalCount);
+    }
+}
+
+// Usage example
+public class CounterDemo {
+    public static void main(String[] args) {
+        // Access static method without creating object
+        System.out.println("Initial total: " + Counter.getTotalCount());
+        
+        // Create objects
+        Counter c1 = new Counter("Counter1");
+        Counter c2 = new Counter("Counter2");
+        
+        // Use instance methods
+        c1.increment();
+        c1.increment();
+        c2.increment();
+        
+        // Display counts
+        c1.displayCounts();
+        c2.displayCounts();
+        
+        // Access static method
+        System.out.println("Final total: " + Counter.getTotalCount());
+    }
+}`
+          },
+          nestedClasses: {
+            title: "Nested classes (static and non-static)",
+            description: "Classes defined inside other classes. They provide better encapsulation and logical grouping.",
+            staticNestedClass: {
+              title: "Static Nested Class",
+              description: "Nested class that doesn't need reference to outer class instance. Cannot access non-static members of outer class directly.",
+              example: `public class OuterClass {
+    private static String staticOuterField = "Static Outer Field";
+    private String instanceOuterField = "Instance Outer Field";
+    
+    // Static nested class
+    public static class StaticNestedClass {
+        private String nestedField = "Nested Field";
+        
+        public void display() {
+            // Can access static members of outer class
+            System.out.println("Accessing: " + staticOuterField);
+            
+            // Cannot access instance members directly
+            // System.out.println(instanceOuterField); // Compilation error
+            
+            System.out.println("Nested field: " + nestedField);
+        }
+        
+        // Static method in nested class
+        public static void staticMethod() {
+            System.out.println("Static method in nested class");
+            System.out.println("Accessing: " + staticOuterField);
+        }
+    }
+    
+    public void outerMethod() {
+        // Create instance of static nested class
+        StaticNestedClass nested = new StaticNestedClass();
+        nested.display();
+    }
+}
+
+// Usage
+public class NestedClassDemo {
+    public static void main(String[] args) {
+        // Create static nested class instance without outer class instance
+        OuterClass.StaticNestedClass nested = new OuterClass.StaticNestedClass();
+        nested.display();
+        
+        // Call static method of nested class
+        OuterClass.StaticNestedClass.staticMethod();
+        
+        // Create outer class and use nested class
+        OuterClass outer = new OuterClass();
+        outer.outerMethod();
+    }
+}`
+            },
+            innerClass: {
+              title: "Non-static Nested Class (Inner Class)",
+              description: "Nested class that has access to all members of outer class, including private members.",
+              example: `public class BankAccount {
+    private String accountNumber;
+    private double balance;
+    private String ownerName;
+    
+    public BankAccount(String accountNumber, String ownerName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.ownerName = ownerName;
+        this.balance = initialBalance;
+    }
+    
+    // Inner class for transaction history
+    public class Transaction {
+        private String transactionId;
+        private String type;
+        private double amount;
+        private String date;
+        
+        public Transaction(String transactionId, String type, double amount, String date) {
+            this.transactionId = transactionId;
+            this.type = type;
+            this.amount = amount;
+            this.date = date;
+        }
+        
+        public void processTransaction() {
+            // Inner class can access private members of outer class
+            System.out.println("Processing transaction for account: " + accountNumber);
+            System.out.println("Owner: " + ownerName);
+            System.out.println("Transaction: " + type + " of $" + amount);
+            
+            if (type.equals("DEPOSIT")) {
+                balance += amount; // Directly access outer class private field
+            } else if (type.equals("WITHDRAWAL")) {
+                if (balance >= amount) {
+                    balance -= amount;
+                } else {
+                    System.out.println("Insufficient funds!");
+                    return;
+                }
+            }
+            
+            System.out.println("New balance: $" + balance);
+            System.out.println("Transaction completed on: " + date);
+        }
+        
+        public void displayTransaction() {
+            System.out.println("Transaction ID: " + transactionId);
+            System.out.println("Type: " + type);
+            System.out.println("Amount: $" + amount);
+            System.out.println("Date: " + date);
+        }
+    }
+    
+    // Method to create and process transaction
+    public void makeTransaction(String transactionId, String type, double amount, String date) {
+        Transaction transaction = new Transaction(transactionId, type, amount, date);
+        transaction.processTransaction();
+    }
+    
+    public void displayAccountInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Owner: " + ownerName);
+        System.out.println("Balance: $" + balance);
+    }
+}
+
+// Usage
+public class BankDemo {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount("ACC001", "John Doe", 1000.0);
+        account.displayAccountInfo();
+        
+        // Make transactions
+        account.makeTransaction("TXN001", "DEPOSIT", 500.0, "2024-01-15");
+        account.makeTransaction("TXN002", "WITHDRAWAL", 200.0, "2024-01-16");
+        
+        account.displayAccountInfo();
+        
+        // Create inner class instance (requires outer class instance)
+        BankAccount.Transaction transaction = account.new Transaction("TXN003", "DEPOSIT", 300.0, "2024-01-17");
+        transaction.displayTransaction();
+        transaction.processTransaction();
+    }
+}`
+            }
+          }
+        },
+        objectInJava: {
+          title: "Object in Java",
+          description: "An object is an instance of a class. It represents a real-world entity with state (attributes) and behavior (methods).",
+          creatingObjects: {
+            title: "Creating objects using new keyword",
+            description: "Objects are created using the 'new' keyword followed by a constructor call.",
+            syntax: "ClassName objectName = new ClassName(parameters);",
+            example: `// Creating objects of different classes
+public class ObjectCreationDemo {
+    public static void main(String[] args) {
+        // Creating Student objects
+        Student student1 = new Student("Alice Johnson", 20, "STU001");
+        Student student2 = new Student("Bob Smith", 19, "STU002");
+        
+        // Creating Car objects
+        Car car1 = new Car("Toyota", "Camry", 2023, 25000.0);
+        Car car2 = new Car("Honda", "Civic", 2022, 22000.0);
+        
+        // Creating objects with different constructors
+        Employee emp1 = new Employee("John Doe", 101, "IT", 75000.0);
+        Employee emp2 = new Employee("Jane Smith", 102); // Using overloaded constructor
+        
+        // Array of objects
+        Book[] library = new Book[3];
+        library[0] = new Book("Java Programming", "James Gosling", 500);
+        library[1] = new Book("Data Structures", "Robert Sedgewick", 600);
+        library[2] = new Book(); // Using default constructor
+        
+        // Display object information
+        System.out.println("=== Students ===");
+        student1.displayInfo();
+        student2.displayInfo();
+        
+        System.out.println("\n=== Cars ===");
+        System.out.println("Total cars created: " + Car.getTotalCars());
+        
+        System.out.println("\n=== Employees ===");
+        emp1.displayEmployee();
+        emp2.displayEmployee();
+        
+        System.out.println("\n=== Library Books ===");
+        for (int i = 0; i < library.length; i++) {
+            System.out.println("Book " + (i + 1) + ":");
+            library[i].displayInfo();
+            System.out.println();
+        }
+    }
+}`,
+            memoryAllocation: {
+              title: "Memory allocation during object creation",
+              description: "When an object is created, memory is allocated in the heap for instance variables.",
+              steps: [
+                "Memory is allocated in heap for the object",
+                "Instance variables are initialized with default values",
+                "Constructor is called to initialize the object",
+                "Reference to the object is returned"
+              ],
+              example: `public class MemoryDemo {
+    private int instanceVar = 10;        // Stored in heap
+    private static int staticVar = 20;   // Stored in method area
+    
+    public MemoryDemo(int value) {
+        this.instanceVar = value;
+        System.out.println("Object created with instanceVar = " + instanceVar);
+    }
+    
+    public void showMemoryInfo() {
+        int localVar = 30;  // Stored in stack
+        System.out.println("Instance variable (heap): " + instanceVar);
+        System.out.println("Static variable (method area): " + staticVar);
+        System.out.println("Local variable (stack): " + localVar);
+    }
+    
+    public static void main(String[] args) {
+        // Object reference stored in stack, object data in heap
+        MemoryDemo obj1 = new MemoryDemo(100);
+        MemoryDemo obj2 = new MemoryDemo(200);
+        
+        obj1.showMemoryInfo();
+        obj2.showMemoryInfo();
+        
+        // Multiple references to same object
+        MemoryDemo obj3 = obj1;  // obj3 points to same object as obj1
+        obj3.instanceVar = 300;  // Changes obj1's instanceVar too
+        
+        System.out.println("After modifying through obj3:");
+        obj1.showMemoryInfo();
+    }
+}`
+            }
+          },
+          accessingMembers: {
+            title: "Accessing class members via objects",
+            description: "Object members are accessed using the dot (.) operator.",
+            syntax: "objectName.memberName",
+            example: `public class MemberAccessDemo {
+    public static void main(String[] args) {
+        // Create a Calculator object
+        Calculator calc = new Calculator("Scientific Calculator");
+        
+        // Access instance methods
+        double sum = calc.add(10.5, 20.3);
+        System.out.println("Sum: " + sum);
+        
+        double average = calc.calculateAverage(85, 92, 78, 96, 88);
+        System.out.println("Average: " + average);
+        
+        // Access getter method
+        String name = calc.getCalculatorName();
+        System.out.println("Calculator name: " + name);
+        
+        // Access setter method
+        calc.setCalculatorName("Advanced Calculator");
+        System.out.println("Updated name: " + calc.getCalculatorName());
+        
+        // Access static method (can be called on class or object)
+        double product1 = Calculator.multiply(5.0, 4.0);  // Using class name
+        double product2 = calc.multiply(3.0, 7.0);        // Using object reference
+        System.out.println("Product 1: " + product1);
+        System.out.println("Product 2: " + product2);
+        
+        // Working with Counter objects
+        Counter counter1 = new Counter("Counter A");
+        Counter counter2 = new Counter("Counter B");
+        
+        // Access instance methods
+        counter1.increment();
+        counter1.increment();
+        counter2.increment();
+        
+        // Access instance method that shows both instance and static data
+        counter1.displayCounts();
+        counter2.displayCounts();
+        
+        // Access static method
+        System.out.println("Total count across all counters: " + Counter.getTotalCount());
+    }
+}`,
+            accessModifiers: {
+              title: "Access modifiers and member visibility",
+              description: "Different access levels control how class members can be accessed.",
+              levels: [
+                "public - Accessible from anywhere",
+                "protected - Accessible within package and subclasses",
+                "default (package-private) - Accessible within same package",
+                "private - Accessible only within the same class"
+              ],
+              example: `public class AccessModifierDemo {
+    public String publicField = "Public field";           // Accessible everywhere
+    protected String protectedField = "Protected field";  // Package + subclasses
+    String defaultField = "Default field";               // Package only
+    private String privateField = "Private field";       // Class only
+    
+    // Public method - accessible everywhere
+    public void publicMethod() {
+        System.out.println("Public method called");
+        // Can access all fields within same class
+        System.out.println(privateField);
+    }
+    
+    // Protected method - package + subclasses
+    protected void protectedMethod() {
+        System.out.println("Protected method called");
+    }
+    
+    // Default method - package only
+    void defaultMethod() {
+        System.out.println("Default method called");
+    }
+    
+    // Private method - class only
+    private void privateMethod() {
+        System.out.println("Private method called");
+    }
+    
+    // Public method to demonstrate access
+    public void demonstrateAccess() {
+        System.out.println("Accessing all fields from within class:");
+        System.out.println(publicField);
+        System.out.println(protectedField);
+        System.out.println(defaultField);
+        System.out.println(privateField);
+        
+        // Can call all methods from within class
+        publicMethod();
+        protectedMethod();
+        defaultMethod();
+        privateMethod();
+    }
+}
+
+// Usage from another class in same package
+class AccessTest {
+    public static void main(String[] args) {
+        AccessModifierDemo demo = new AccessModifierDemo();
+        
+        // Accessible fields and methods
+        System.out.println(demo.publicField);     // OK
+        System.out.println(demo.protectedField);  // OK (same package)
+        System.out.println(demo.defaultField);    // OK (same package)
+        // System.out.println(demo.privateField); // Compilation error
+        
+        demo.publicMethod();     // OK
+        demo.protectedMethod();  // OK (same package)
+        demo.defaultMethod();    // OK (same package)
+        // demo.privateMethod(); // Compilation error
+        
+        demo.demonstrateAccess();
+    }
+}`
+            }
+          },
+          objectLifecycle: {
+            title: "Object lifecycle (creation, usage, destruction)",
+            description: "Objects go through different phases from creation to destruction.",
+            phases: {
+              creation: {
+                title: "Object Creation",
+                description: "Objects are created using 'new' keyword and constructor is called.",
+                steps: [
+                  "Memory allocation in heap",
+                  "Instance variables initialized with default values",
+                  "Constructor execution",
+                  "Object reference returned"
+                ]
+              },
+              usage: {
+                title: "Object Usage",
+                description: "Objects are used by calling methods and accessing fields.",
+                activities: [
+                  "Method invocation",
+                  "Field access and modification",
+                  "Object interaction",
+                  "State changes"
+                ]
+              },
+              destruction: {
+                title: "Object Destruction",
+                description: "Objects are destroyed by garbage collector when no longer referenced.",
+                conditions: [
+                  "No more references to the object",
+                  "References go out of scope",
+                  "References are set to null",
+                  "Circular references with no external references"
+                ]
+              }
+            },
+            example: `public class ObjectLifecycleDemo {
+    private String name;
+    private static int objectCount = 0;
+    
+    // Constructor - Object Creation Phase
+    public ObjectLifecycleDemo(String name) {
+        this.name = name;
+        objectCount++;
+        System.out.println("Object '" + name + "' created. Total objects: " + objectCount);
+    }
+    
+    // Method for object usage
+    public void doWork() {
+        System.out.println(name + " is working...");
+    }
+    
+    // finalize method - called before garbage collection (deprecated in Java 9+)
+    @Override
+    protected void finalize() throws Throwable {
+        objectCount--;
+        System.out.println("Object '" + name + "' is being garbage collected. Remaining: " + objectCount);
+        super.finalize();
+    }
+    
+    public static void demonstrateLifecycle() {
+        System.out.println("=== Object Lifecycle Demonstration ===");
+        
+        // Creation phase
+        ObjectLifecycleDemo obj1 = new ObjectLifecycleDemo("Object1");
+        ObjectLifecycleDemo obj2 = new ObjectLifecycleDemo("Object2");
+        
+        // Usage phase
+        obj1.doWork();
+        obj2.doWork();
+        
+        // Creating objects in a block scope
+        {
+            ObjectLifecycleDemo obj3 = new ObjectLifecycleDemo("Object3");
+            obj3.doWork();
+            // obj3 goes out of scope here
+        }
+        
+        // Making objects eligible for garbage collection
+        obj1 = null;  // Remove reference
+        obj2 = new ObjectLifecycleDemo("Object4");  // obj2 now points to new object
+        
+        // Suggest garbage collection (not guaranteed to run immediately)
+        System.gc();
+        
+        // Give some time for garbage collection
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        obj2.doWork();
+        
+        System.out.println("End of method - local references will be removed");
+    }
+    
+    public static void main(String[] args) {
+        demonstrateLifecycle();
+        
+        // Suggest garbage collection again
+        System.gc();
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Program ending...");
+    }
+}`
+          },
+          garbageCollection: {
+            title: "Garbage collection",
+            description: "Automatic memory management process that reclaims memory used by objects that are no longer reachable.",
+            howItWorks: {
+              title: "How Garbage Collection Works",
+              description: "GC identifies unreachable objects and frees their memory.",
+              steps: [
+                "Mark phase - Identify which objects are still reachable",
+                "Sweep phase - Remove unreachable objects",
+                "Compact phase - Defragment memory (optional)"
+              ]
+            },
+            whenObjectsEligible: {
+              title: "When Objects Become Eligible for GC",
+              scenarios: [
+                "All references to object are set to null",
+                "Object goes out of scope",
+                "Object is reassigned to another object",
+                "Circular reference with no external references"
+              ]
+            },
+            example: `public class GarbageCollectionDemo {
+    private String data;
+    private static int instanceCount = 0;
+    
+    public GarbageCollectionDemo(String data) {
+        this.data = data;
+        instanceCount++;
+        System.out.println("Created: " + data + " (Total instances: " + instanceCount + ")");
+    }
+    
+    @Override
+    protected void finalize() throws Throwable {
+        instanceCount--;
+        System.out.println("Finalizing: " + data + " (Remaining instances: " + instanceCount + ")");
+        super.finalize();
+    }
+    
+    public static void demonstrateGC() {
+        System.out.println("=== Garbage Collection Demo ===");
+        
+        // Scenario 1: Reference set to null
+        GarbageCollectionDemo obj1 = new GarbageCollectionDemo("Object1");
+        obj1 = null;  // Object1 becomes eligible for GC
+        
+        // Scenario 2: Object goes out of scope
+        {
+            GarbageCollectionDemo obj2 = new GarbageCollectionDemo("Object2");
+            // obj2 goes out of scope here
+        }
+        
+        // Scenario 3: Reference reassignment
+        GarbageCollectionDemo obj3 = new GarbageCollectionDemo("Object3");
+        obj3 = new GarbageCollectionDemo("Object4");  // Object3 becomes eligible
+        
+        // Scenario 4: Array of objects
+        GarbageCollectionDemo[] array = new GarbageCollectionDemo[3];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new GarbageCollectionDemo("ArrayObject" + i);
+        }
+        array = null;  // All array objects become eligible
+        
+        // Scenario 5: Circular reference
+        CircularRefDemo circular1 = new CircularRefDemo("Circular1");
+        CircularRefDemo circular2 = new CircularRefDemo("Circular2");
+        circular1.setReference(circular2);
+        circular2.setReference(circular1);
+        circular1 = null;
+        circular2 = null;  // Both objects become eligible despite circular reference
+        
+        // Request garbage collection
+        System.out.println("\nRequesting garbage collection...");
+        System.gc();
+        
+        // Give time for GC to run
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("\nAfter GC request - Final instance count: " + instanceCount);
+    }
+    
+    // Helper class to demonstrate circular references
+    static class CircularRefDemo {
+        private String name;
+        private CircularRefDemo reference;
+        
+        public CircularRefDemo(String name) {
+            this.name = name;
+            System.out.println("Created circular ref object: " + name);
+        }
+        
+        public void setReference(CircularRefDemo ref) {
+            this.reference = ref;
+        }
+        
+        @Override
+        protected void finalize() throws Throwable {
+            System.out.println("Finalizing circular ref object: " + name);
+            super.finalize();
+        }
+    }
+    
+    public static void main(String[] args) {
+        demonstrateGC();
+        
+        // Final GC request
+        System.gc();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Program completed.");
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
