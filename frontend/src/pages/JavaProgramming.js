@@ -7646,6 +7646,336 @@ public class StringRegexDemo {
 }`
           }
         },
+        exceptionHandling: {
+          title: "Java Exception Handling",
+          description: "Exception handling is a mechanism to handle runtime errors and maintain normal application flow when unexpected events occur.",
+          whatIsException: {
+            title: "What is an Exception?",
+            definition: {
+              title: "An exception is an unexpected event that disrupts the normal flow of a program.",
+              description: "Exceptions represent error conditions that occur during program execution.",
+              characteristics: [
+                "Occurs at runtime",
+                "Disrupts normal program flow",
+                "Can be handled to prevent program termination",
+                "Provides information about the error"
+              ]
+            },
+            objectRepresentation: {
+              title: "It is an object that represents an error.",
+              description: "In Java, exceptions are objects that contain information about the error condition.",
+              information: [
+                "Error message describing what went wrong",
+                "Stack trace showing where the error occurred",
+                "Exception type indicating the kind of error",
+                "Cause of the exception (if applicable)"
+              ]
+            }
+          },
+          typesOfExceptions: {
+            title: "Types of Exceptions",
+            description: "Java exceptions are categorized into checked and unchecked exceptions based on when they are detected.",
+            checkedExceptions: {
+              title: "Checked Exceptions",
+              description: "Exceptions that are checked at compile-time and must be handled or declared.",
+              characteristics: [
+                "Checked at compile-time",
+                "Must be either caught or declared",
+                "Extend Exception class (but not RuntimeException)",
+                "Represent recoverable conditions"
+              ],
+              examples: ["IOException", "SQLException", "ClassNotFoundException", "InterruptedException"]
+            },
+            uncheckedExceptions: {
+              title: "Unchecked Exceptions",
+              description: "Exceptions that are checked at runtime and are not required to be handled.",
+              characteristics: [
+                "Checked at runtime",
+                "Not required to be handled",
+                "Extend RuntimeException class",
+                "Usually represent programming errors"
+              ],
+              examples: ["NullPointerException", "ArithmeticException", "ArrayIndexOutOfBoundsException", "IllegalArgumentException"]
+            },
+            example: `// Exception types demonstration
+public class ExceptionTypesDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Unchecked Exceptions (Runtime) ===");
+        
+        // These don't need to be declared or caught (but should be handled)
+        demonstrateUncheckedExceptions();
+        
+        System.out.println("\n=== Checked Exceptions (Compile-time) ===");
+        
+        // These must be handled or declared
+        try {
+            demonstrateCheckedExceptions();
+        } catch (Exception e) {
+            System.out.println("Caught checked exception: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateUncheckedExceptions() {
+        try {
+            // ArithmeticException
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException: " + e.getMessage());
+        }
+        
+        try {
+            // NullPointerException
+            String str = null;
+            int length = str.length();
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException: Cannot call method on null");
+        }
+        
+        try {
+            // ArrayIndexOutOfBoundsException
+            int[] arr = {1, 2, 3};
+            int value = arr[5];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
+        }
+    }
+    
+    // This method must declare the checked exception
+    public static void demonstrateCheckedExceptions() throws java.io.IOException {
+        // Simulating a checked exception
+        throw new java.io.IOException("File not found");
+    }
+}`
+          },
+          commonExceptionClasses: {
+            title: "Common Exception Classes",
+            description: "Frequently encountered exception types and their typical causes.",
+            exceptions: {
+              arithmeticException: {
+                type: "ArithmeticException",
+                description: "Divide by zero error",
+                commonCause: "Division by zero or invalid arithmetic operation"
+              },
+              nullPointerException: {
+                type: "NullPointerException",
+                description: "Using null object reference",
+                commonCause: "Calling methods or accessing fields on null objects"
+              },
+              arrayIndexOutOfBounds: {
+                type: "ArrayIndexOutOfBoundsException",
+                description: "Accessing invalid array index",
+                commonCause: "Index less than 0 or greater than array length-1"
+              },
+              numberFormatException: {
+                type: "NumberFormatException",
+                description: "Invalid conversion (e.g., 'abc' to int)",
+                commonCause: "Parsing non-numeric strings to numbers"
+              },
+              ioException: {
+                type: "IOException",
+                description: "Input/Output failure",
+                commonCause: "File operations, network operations, stream operations"
+              }
+            },
+            example: `// Common exceptions demonstration
+public class CommonExceptionsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Common Exception Examples ===");
+        
+        // 1. ArithmeticException
+        demonstrateArithmeticException();
+        
+        // 2. NullPointerException
+        demonstrateNullPointerException();
+        
+        // 3. ArrayIndexOutOfBoundsException
+        demonstrateArrayIndexOutOfBoundsException();
+        
+        // 4. NumberFormatException
+        demonstrateNumberFormatException();
+        
+        // 5. StringIndexOutOfBoundsException
+        demonstrateStringIndexOutOfBoundsException();
+        
+        // 6. IllegalArgumentException
+        demonstrateIllegalArgumentException();
+    }
+    
+    public static void demonstrateArithmeticException() {
+        System.out.println("\n1. ArithmeticException:");
+        try {
+            int a = 10;
+            int b = 0;
+            int result = a / b;  // Division by zero
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Cannot divide by zero!");
+        }
+    }
+    
+    public static void demonstrateNullPointerException() {
+        System.out.println("\n2. NullPointerException:");
+        try {
+            String text = null;
+            int length = text.length();  // Calling method on null
+            System.out.println("Length: " + length);
+        } catch (NullPointerException e) {
+            System.out.println("Error: Cannot call method on null object");
+            System.out.println("Exception: " + e.getClass().getSimpleName());
+        }
+    }
+    
+    public static void demonstrateArrayIndexOutOfBoundsException() {
+        System.out.println("\n3. ArrayIndexOutOfBoundsException:");
+        try {
+            int[] numbers = {1, 2, 3, 4, 5};
+            System.out.println("Array length: " + numbers.length);
+            int value = numbers[10];  // Invalid index
+            System.out.println("Value: " + value);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Array index out of bounds!");
+        }
+    }
+    
+    public static void demonstrateNumberFormatException() {
+        System.out.println("\n4. NumberFormatException:");
+        try {
+            String invalidNumber = "abc123";
+            int number = Integer.parseInt(invalidNumber);  // Invalid conversion
+            System.out.println("Number: " + number);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Cannot convert '" + "abc123" + "' to integer");
+        }
+    }
+    
+    public static void demonstrateStringIndexOutOfBoundsException() {
+        System.out.println("\n5. StringIndexOutOfBoundsException:");
+        try {
+            String text = "Hello";
+            char character = text.charAt(10);  // Invalid string index
+            System.out.println("Character: " + character);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("String index out of bounds!");
+        }
+    }
+    
+    public static void demonstrateIllegalArgumentException() {
+        System.out.println("\n6. IllegalArgumentException:");
+        try {
+            Thread.sleep(-1000);  // Negative sleep time
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Sleep time cannot be negative!");
+        } catch (InterruptedException e) {
+            System.out.println("Thread interrupted");
+        }
+    }
+}`
+          },
+          tryCatchBlock: {
+            title: "Try-Catch Block",
+            description: "The fundamental mechanism for handling exceptions in Java.",
+            syntax: "try { // risky code } catch (ExceptionType e) { // handle exception }",
+            example: `// Try-catch block demonstration
+public class TryCatchDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Basic Try-Catch ===");
+        
+        // Basic try-catch
+        try {
+            int result = 10 / 0;  // This will throw ArithmeticException
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Caught ArithmeticException: " + e.getMessage());
+            System.out.println("Cannot divide by zero.");
+        }
+        
+        System.out.println("Program continues after exception handling...");
+        
+        // Try-catch with different exception types
+        demonstrateMultipleScenarios();
+        
+        // Exception information
+        demonstrateExceptionInformation();
+        
+        // Nested try-catch
+        demonstrateNestedTryCatch();
+    }
+    
+    public static void demonstrateMultipleScenarios() {
+        System.out.println("\n=== Multiple Scenarios ===");
+        
+        // Scenario 1: Exception occurs
+        System.out.println("\nScenario 1: Exception occurs");
+        try {
+            String str = null;
+            int length = str.length();
+            System.out.println("Length: " + length);
+        } catch (NullPointerException e) {
+            System.out.println("Handled NullPointerException");
+        }
+        
+        // Scenario 2: No exception
+        System.out.println("\nScenario 2: No exception");
+        try {
+            String str = "Hello World";
+            int length = str.length();
+            System.out.println("Length: " + length);
+        } catch (NullPointerException e) {
+            System.out.println("This won't be executed");
+        }
+        
+        // Scenario 3: Exception not caught
+        System.out.println("\nScenario 3: Different exception type");
+        try {
+            int[] arr = {1, 2, 3};
+            System.out.println("Element: " + arr[1]);  // Valid access
+        } catch (NullPointerException e) {
+            System.out.println("This won't catch ArrayIndexOutOfBoundsException");
+        }
+    }
+    
+    public static void demonstrateExceptionInformation() {
+        System.out.println("\n=== Exception Information ===");
+        
+        try {
+            int[] numbers = {1, 2, 3};
+            int value = numbers[5];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Exception class: " + e.getClass().getName());
+            System.out.println("Exception message: " + e.getMessage());
+            System.out.println("Exception toString: " + e.toString());
+            
+            System.out.println("\nStack trace:");
+            e.printStackTrace();
+        }
+    }
+    
+    public static void demonstrateNestedTryCatch() {
+        System.out.println("\n=== Nested Try-Catch ===");
+        
+        try {
+            System.out.println("Outer try block");
+            
+            try {
+                System.out.println("Inner try block");
+                int result = 10 / 0;
+            } catch (ArithmeticException e) {
+                System.out.println("Inner catch: " + e.getMessage());
+                // Re-throwing the exception
+                throw e;
+            }
+            
+        } catch (ArithmeticException e) {
+            System.out.println("Outer catch: Handled re-thrown exception");
+        }
+    }
+}`
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
