@@ -15477,6 +15477,10 @@ public class LibraryManagementSystem {
     navigate('/courses');
   };
 
+  const handleBack = () => {
+    navigate('/courses');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
