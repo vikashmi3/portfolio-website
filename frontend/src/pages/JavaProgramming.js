@@ -1786,6 +1786,661 @@ class AccessTest {
 }`
           }
         },
+        inheritance: {
+          title: "Java Inheritance",
+          description: "Inheritance is a fundamental OOP concept that allows a class to inherit properties and methods from another class, promoting code reusability and establishing IS-A relationships.",
+          basicsOfInheritance: {
+            title: "Basics of Inheritance",
+            whatIsInheritance: {
+              title: "What is inheritance?",
+              description: "Inheritance is a mechanism where a new class (child/subclass) acquires the properties and behaviors of an existing class (parent/superclass). It represents an IS-A relationship.",
+              benefits: [
+                "Code Reusability - Avoid writing duplicate code",
+                "Method Overriding - Provide specific implementation in child class",
+                "Polymorphism - Same interface, different implementations",
+                "Extensibility - Easy to add new features to existing code",
+                "Maintainability - Changes in parent class reflect in child classes"
+              ],
+              realWorldExample: "A Car IS-A Vehicle, a Dog IS-A Animal, a Student IS-A Person"
+            },
+            superclass: {
+              title: "Superclass (parent class)",
+              description: "The class whose properties and methods are inherited by another class. Also called base class or parent class.",
+              example: `// Superclass - Vehicle
+public class Vehicle {
+    // Protected fields - accessible to subclasses
+    protected String brand;
+    protected String model;
+    protected int year;
+    protected double price;
+    
+    // Private field - not directly accessible to subclasses
+    private String engineNumber;
+    
+    // Constructor
+    public Vehicle(String brand, String model, int year, double price) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.price = price;
+        this.engineNumber = generateEngineNumber();
+        System.out.println("Vehicle constructor called");
+    }
+    
+    // Public methods - inherited by subclasses
+    public void start() {
+        System.out.println(brand + " " + model + " is starting...");
+    }
+    
+    public void stop() {
+        System.out.println(brand + " " + model + " has stopped.");
+    }
+    
+    public void displayInfo() {
+        System.out.println("Brand: " + brand);
+        System.out.println("Model: " + model);
+        System.out.println("Year: " + year);
+        System.out.println("Price: $" + price);
+    }
+    
+    // Protected method - accessible to subclasses
+    protected void performMaintenance() {
+        System.out.println("Performing basic vehicle maintenance");
+    }
+    
+    // Private method - not inherited
+    private String generateEngineNumber() {
+        return "ENG" + System.currentTimeMillis();
+    }
+    
+    // Getter for private field
+    public String getEngineNumber() {
+        return engineNumber;
+    }
+}`
+            },
+            subclass: {
+              title: "Subclass (child class)",
+              description: "The class that inherits properties and methods from another class. Also called derived class or child class.",
+              example: `// Subclass - Car extends Vehicle
+public class Car extends Vehicle {
+    // Additional fields specific to Car
+    private int numberOfDoors;
+    private String fuelType;
+    private boolean isAutomatic;
+    
+    // Constructor
+    public Car(String brand, String model, int year, double price, 
+               int numberOfDoors, String fuelType, boolean isAutomatic) {
+        // Call parent class constructor
+        super(brand, model, year, price);
+        this.numberOfDoors = numberOfDoors;
+        this.fuelType = fuelType;
+        this.isAutomatic = isAutomatic;
+        System.out.println("Car constructor called");
+    }
+    
+    // Additional methods specific to Car
+    public void honk() {
+        System.out.println(brand + " " + model + " is honking: Beep! Beep!");
+    }
+    
+    public void openTrunk() {
+        System.out.println("Car trunk opened");
+    }
+    
+    // Override parent class method
+    @Override
+    public void displayInfo() {
+        // Call parent class method
+        super.displayInfo();
+        // Add car-specific information
+        System.out.println("Number of doors: " + numberOfDoors);
+        System.out.println("Fuel type: " + fuelType);
+        System.out.println("Automatic: " + (isAutomatic ? "Yes" : "No"));
+    }
+    
+    // Override parent class method with different implementation
+    @Override
+    public void start() {
+        System.out.println("Inserting key and starting " + brand + " " + model);
+        super.start(); // Call parent implementation
+        System.out.println("Car is ready to drive!");
+    }
+    
+    // Access protected method from parent
+    public void serviceCar() {
+        System.out.println("Servicing car...");
+        performMaintenance(); // Call protected method from parent
+        System.out.println("Checking car-specific components");
+    }
+}`
+            },
+            extendsKeyword: {
+              title: "extends keyword",
+              description: "The 'extends' keyword is used to create inheritance relationship between classes.",
+              syntax: "class ChildClass extends ParentClass { ... }",
+              example: `// Demonstration of extends keyword usage
+
+// Another subclass - Motorcycle extends Vehicle
+public class Motorcycle extends Vehicle {
+    private boolean hasSidecar;
+    private int engineCapacity;
+    
+    public Motorcycle(String brand, String model, int year, double price, 
+                     boolean hasSidecar, int engineCapacity) {
+        super(brand, model, year, price);
+        this.hasSidecar = hasSidecar;
+        this.engineCapacity = engineCapacity;
+        System.out.println("Motorcycle constructor called");
+    }
+    
+    public void wheelie() {
+        System.out.println(brand + " " + model + " is doing a wheelie!");
+    }
+    
+    @Override
+    public void start() {
+        System.out.println("Kick-starting " + brand + " " + model);
+        super.start();
+        System.out.println("Motorcycle is ready to ride!");
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Engine capacity: " + engineCapacity + "cc");
+        System.out.println("Has sidecar: " + (hasSidecar ? "Yes" : "No"));
+    }
+}
+
+// Usage demonstration
+public class InheritanceDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Creating Vehicle ===");
+        Vehicle vehicle = new Vehicle("Generic", "Vehicle", 2023, 15000);
+        vehicle.displayInfo();
+        vehicle.start();
+        vehicle.stop();
+        
+        System.out.println("\n=== Creating Car ===");
+        Car car = new Car("Toyota", "Camry", 2023, 30000, 4, "Gasoline", true);
+        car.displayInfo();
+        car.start();
+        car.honk();
+        car.serviceCar();
+        car.stop();
+        
+        System.out.println("\n=== Creating Motorcycle ===");
+        Motorcycle bike = new Motorcycle("Harley-Davidson", "Street 750", 2023, 8000, false, 750);
+        bike.displayInfo();
+        bike.start();
+        bike.wheelie();
+        bike.stop();
+        
+        // Demonstrating IS-A relationship
+        System.out.println("\n=== IS-A Relationship ===");
+        System.out.println("car instanceof Vehicle: " + (car instanceof Vehicle));
+        System.out.println("bike instanceof Vehicle: " + (bike instanceof Vehicle));
+        System.out.println("car instanceof Car: " + (car instanceof Car));
+        System.out.println("vehicle instanceof Car: " + (vehicle instanceof Car));
+    }
+}`
+            }
+          },
+          typesOfInheritance: {
+            title: "Types of Inheritance in Java",
+            description: "Java supports different types of inheritance patterns, though multiple inheritance with classes is not allowed.",
+            singleInheritance: {
+              title: "Single inheritance",
+              description: "A subclass inherits from only one superclass. This is the most basic form of inheritance.",
+              diagram: "Parent Class → Child Class",
+              example: `// Single Inheritance Example
+
+// Parent class
+class Animal {
+    protected String name;
+    protected int age;
+    
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public void eat() {
+        System.out.println(name + " is eating");
+    }
+    
+    public void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+    
+    public void displayInfo() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+}
+
+// Child class - Single inheritance
+class Dog extends Animal {
+    private String breed;
+    
+    public Dog(String name, int age, String breed) {
+        super(name, age);
+        this.breed = breed;
+    }
+    
+    public void bark() {
+        System.out.println(name + " is barking: Woof! Woof!");
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Breed: " + breed);
+    }
+}
+
+// Usage
+public class SingleInheritanceDemo {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy", 3, "Golden Retriever");
+        dog.displayInfo();
+        dog.eat();    // Inherited method
+        dog.sleep();  // Inherited method
+        dog.bark();   // Own method
+    }
+}`
+            },
+            multilevelInheritance: {
+              title: "Multilevel inheritance",
+              description: "A chain of inheritance where a class inherits from another class, which in turn inherits from another class.",
+              diagram: "Grandparent Class → Parent Class → Child Class",
+              example: `// Multilevel Inheritance Example
+
+// Grandparent class
+class LivingBeing {
+    protected boolean isAlive;
+    
+    public LivingBeing() {
+        this.isAlive = true;
+        System.out.println("LivingBeing constructor called");
+    }
+    
+    public void breathe() {
+        System.out.println("Breathing...");
+    }
+    
+    public void grow() {
+        System.out.println("Growing...");
+    }
+}
+
+// Parent class - inherits from LivingBeing
+class Animal extends LivingBeing {
+    protected String species;
+    
+    public Animal(String species) {
+        super();
+        this.species = species;
+        System.out.println("Animal constructor called");
+    }
+    
+    public void move() {
+        System.out.println(species + " is moving");
+    }
+    
+    public void eat() {
+        System.out.println(species + " is eating");
+    }
+}
+
+// Child class - inherits from Animal (which inherits from LivingBeing)
+class Mammal extends Animal {
+    private boolean hasHair;
+    
+    public Mammal(String species, boolean hasHair) {
+        super(species);
+        this.hasHair = hasHair;
+        System.out.println("Mammal constructor called");
+    }
+    
+    public void giveBirth() {
+        System.out.println(species + " gives birth to live young");
+    }
+    
+    public void produceMilk() {
+        System.out.println(species + " produces milk");
+    }
+    
+    public void displayCharacteristics() {
+        System.out.println("Species: " + species);
+        System.out.println("Has hair: " + hasHair);
+        System.out.println("Is alive: " + isAlive);
+    }
+}
+
+// Usage
+public class MultilevelInheritanceDemo {
+    public static void main(String[] args) {
+        System.out.println("Creating a Mammal:");
+        Mammal mammal = new Mammal("Dog", true);
+        
+        System.out.println("\nMammal capabilities:");
+        mammal.breathe();      // From LivingBeing
+        mammal.grow();         // From LivingBeing
+        mammal.move();         // From Animal
+        mammal.eat();          // From Animal
+        mammal.giveBirth();    // From Mammal
+        mammal.produceMilk();  // From Mammal
+        
+        mammal.displayCharacteristics();
+    }
+}`
+            },
+            hierarchicalInheritance: {
+              title: "Hierarchical inheritance",
+              description: "Multiple subclasses inherit from a single superclass, creating a tree-like structure.",
+              diagram: "Parent Class → Child Class 1, Child Class 2, Child Class 3",
+              example: `// Hierarchical Inheritance Example
+
+// Parent class
+class Shape {
+    protected String color;
+    protected boolean filled;
+    
+    public Shape(String color, boolean filled) {
+        this.color = color;
+        this.filled = filled;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Color: " + color);
+        System.out.println("Filled: " + filled);
+    }
+    
+    // Abstract-like method to be overridden
+    public void draw() {
+        System.out.println("Drawing a shape");
+    }
+    
+    public double getArea() {
+        return 0.0; // Default implementation
+    }
+}
+
+// Child class 1
+class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, boolean filled, double radius) {
+        super(color, filled);
+        this.radius = radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle with radius " + radius);
+    }
+    
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Radius: " + radius);
+        System.out.println("Area: " + getArea());
+    }
+}
+
+// Child class 2
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+    
+    public Rectangle(String color, boolean filled, double length, double width) {
+        super(color, filled);
+        this.length = length;
+        this.width = width;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle " + length + "x" + width);
+    }
+    
+    @Override
+    public double getArea() {
+        return length * width;
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Length: " + length);
+        System.out.println("Width: " + width);
+        System.out.println("Area: " + getArea());
+    }
+}
+
+// Child class 3
+class Triangle extends Shape {
+    private double base;
+    private double height;
+    
+    public Triangle(String color, boolean filled, double base, double height) {
+        super(color, filled);
+        this.base = base;
+        this.height = height;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a triangle with base " + base + " and height " + height);
+    }
+    
+    @Override
+    public double getArea() {
+        return 0.5 * base * height;
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Base: " + base);
+        System.out.println("Height: " + height);
+        System.out.println("Area: " + getArea());
+    }
+}
+
+// Usage
+public class HierarchicalInheritanceDemo {
+    public static void main(String[] args) {
+        // Create different shapes
+        Circle circle = new Circle("Red", true, 5.0);
+        Rectangle rectangle = new Rectangle("Blue", false, 10.0, 6.0);
+        Triangle triangle = new Triangle("Green", true, 8.0, 4.0);
+        
+        // Array of shapes (polymorphism)
+        Shape[] shapes = {circle, rectangle, triangle};
+        
+        System.out.println("=== Shape Information ===");
+        for (Shape shape : shapes) {
+            shape.draw();
+            shape.displayInfo();
+            System.out.println();
+        }
+    }
+}`
+            },
+            multipleInheritanceInterfaces: {
+              title: "Multiple inheritance using interfaces",
+              description: "Java doesn't support multiple inheritance with classes but allows it through interfaces.",
+              whyNotClasses: [
+                "Diamond Problem - Ambiguity when same method exists in multiple parent classes",
+                "Complexity in method resolution",
+                "Memory layout complications"
+              ],
+              example: `// Multiple Inheritance using Interfaces
+
+// Interface 1
+interface Flyable {
+    void fly();
+    
+    default void takeOff() {
+        System.out.println("Taking off...");
+    }
+}
+
+// Interface 2
+interface Swimmable {
+    void swim();
+    
+    default void dive() {
+        System.out.println("Diving into water...");
+    }
+}
+
+// Interface 3
+interface Walkable {
+    void walk();
+    
+    default void run() {
+        System.out.println("Running fast...");
+    }
+}
+
+// Base class
+class Bird {
+    protected String name;
+    protected String species;
+    
+    public Bird(String name, String species) {
+        this.name = name;
+        this.species = species;
+    }
+    
+    public void eat() {
+        System.out.println(name + " is eating");
+    }
+    
+    public void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+}
+
+// Class implementing multiple interfaces
+class Duck extends Bird implements Flyable, Swimmable, Walkable {
+    public Duck(String name) {
+        super(name, "Duck");
+    }
+    
+    @Override
+    public void fly() {
+        System.out.println(name + " the duck is flying");
+    }
+    
+    @Override
+    public void swim() {
+        System.out.println(name + " the duck is swimming");
+    }
+    
+    @Override
+    public void walk() {
+        System.out.println(name + " the duck is walking");
+    }
+    
+    public void quack() {
+        System.out.println(name + " says: Quack! Quack!");
+    }
+}
+
+// Another class with different interface combinations
+class Penguin extends Bird implements Swimmable, Walkable {
+    public Penguin(String name) {
+        super(name, "Penguin");
+    }
+    
+    @Override
+    public void swim() {
+        System.out.println(name + " the penguin is swimming gracefully");
+    }
+    
+    @Override
+    public void walk() {
+        System.out.println(name + " the penguin is waddling");
+    }
+    
+    // Penguins can't fly, so no Flyable interface
+}
+
+// Class implementing only one interface
+class Eagle extends Bird implements Flyable {
+    public Eagle(String name) {
+        super(name, "Eagle");
+    }
+    
+    @Override
+    public void fly() {
+        System.out.println(name + " the eagle is soaring high");
+    }
+    
+    public void hunt() {
+        System.out.println(name + " is hunting for prey");
+    }
+}
+
+// Usage
+public class MultipleInheritanceDemo {
+    public static void main(String[] args) {
+        Duck duck = new Duck("Donald");
+        Penguin penguin = new Penguin("Pingu");
+        Eagle eagle = new Eagle("Eddie");
+        
+        System.out.println("=== Duck Capabilities ===");
+        duck.eat();     // From Bird class
+        duck.fly();     // From Flyable interface
+        duck.swim();    // From Swimmable interface
+        duck.walk();    // From Walkable interface
+        duck.takeOff(); // Default method from Flyable
+        duck.dive();    // Default method from Swimmable
+        duck.run();     // Default method from Walkable
+        duck.quack();   // Own method
+        
+        System.out.println("\n=== Penguin Capabilities ===");
+        penguin.eat();  // From Bird class
+        penguin.swim(); // From Swimmable interface
+        penguin.walk(); // From Walkable interface
+        penguin.dive(); // Default method from Swimmable
+        penguin.run();  // Default method from Walkable
+        // penguin.fly(); // Not available - doesn't implement Flyable
+        
+        System.out.println("\n=== Eagle Capabilities ===");
+        eagle.eat();     // From Bird class
+        eagle.fly();     // From Flyable interface
+        eagle.takeOff(); // Default method from Flyable
+        eagle.hunt();    // Own method
+        // eagle.swim();  // Not available - doesn't implement Swimmable
+        
+        // Demonstrating polymorphism with interfaces
+        System.out.println("\n=== Interface Polymorphism ===");
+        Flyable[] flyingBirds = {duck, eagle};
+        for (Flyable bird : flyingBirds) {
+            bird.fly();
+            bird.takeOff();
+        }
+        
+        Swimmable[] swimmingBirds = {duck, penguin};
+        for (Swimmable bird : swimmingBirds) {
+            bird.swim();
+            bird.dive();
+        }
+    }
+}`
+            }
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
