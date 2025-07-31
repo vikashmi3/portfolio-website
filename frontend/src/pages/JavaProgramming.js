@@ -8645,6 +8645,432 @@ class CustomResource implements AutoCloseable {
 }`
           }
         },
+        multithreading: {
+          title: "Java Multithreading",
+          description: "Multithreading enables concurrent execution of multiple threads, allowing programs to perform multiple tasks simultaneously for better performance and responsiveness.",
+          whatIsMultithreading: {
+            title: "What is Multithreading?",
+            definition: {
+              title: "Multithreading is the process of executing multiple threads simultaneously.",
+              description: "It allows a program to perform multiple operations concurrently, improving efficiency and responsiveness.",
+              benefits: [
+                "Better CPU utilization",
+                "Improved application responsiveness",
+                "Parallel processing capabilities",
+                "Enhanced user experience"
+              ]
+            },
+            sharedMemory: {
+              title: "Threads share the same memory but run independently.",
+              description: "All threads in a process share the same memory space, including heap memory, but have their own stack.",
+              characteristics: [
+                "Shared heap memory for objects",
+                "Individual stack memory for each thread",
+                "Shared static variables and class-level data",
+                "Independent program counters and registers"
+              ]
+            },
+            efficiency: {
+              title: "It helps in efficient CPU utilization and faster execution of tasks like animations, downloads, etc.",
+              description: "Multithreading enables better resource utilization and concurrent task execution.",
+              useCases: [
+                "User interface responsiveness",
+                "Background file downloads",
+                "Database operations",
+                "Web server request handling",
+                "Real-time data processing"
+              ]
+            },
+            example: `// Basic multithreading demonstration
+public class MultithreadingIntroDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Multithreading Introduction ===");
+        
+        // Main thread information
+        Thread mainThread = Thread.currentThread();
+        System.out.println("Main thread: " + mainThread.getName());
+        System.out.println("Main thread priority: " + mainThread.getPriority());
+        
+        // Demonstrate single-threaded vs multi-threaded execution
+        System.out.println("\n=== Single-threaded execution ===");
+        long startTime = System.currentTimeMillis();
+        
+        performTask("Task 1", 2000);
+        performTask("Task 2", 2000);
+        performTask("Task 3", 2000);
+        
+        long singleThreadTime = System.currentTimeMillis() - startTime;
+        System.out.println("Single-threaded total time: " + singleThreadTime + "ms");
+        
+        // Multi-threaded execution
+        System.out.println("\n=== Multi-threaded execution ===");
+        startTime = System.currentTimeMillis();
+        
+        Thread t1 = new Thread(() -> performTask("Task 1", 2000));
+        Thread t2 = new Thread(() -> performTask("Task 2", 2000));
+        Thread t3 = new Thread(() -> performTask("Task 3", 2000));
+        
+        t1.start();
+        t2.start();
+        t3.start();
+        
+        try {
+            t1.join();
+            t2.join();
+            t3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        long multiThreadTime = System.currentTimeMillis() - startTime;
+        System.out.println("Multi-threaded total time: " + multiThreadTime + "ms");
+        System.out.println("Performance improvement: " + 
+                          (singleThreadTime - multiThreadTime) + "ms");
+    }
+    
+    public static void performTask(String taskName, int duration) {
+        System.out.println(taskName + " started by " + Thread.currentThread().getName());
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(taskName + " completed by " + Thread.currentThread().getName());
+    }
+}`
+          },
+          threadCreation: {
+            title: "Thread Creation in Java",
+            description: "Java provides two main ways to create threads: extending Thread class or implementing Runnable interface.",
+            extendingThread: {
+              title: "By Extending the Thread class",
+              description: "Create a subclass of Thread and override the run() method.",
+              pros: ["Simple and direct approach", "Direct access to Thread methods"],
+              cons: ["Single inheritance limitation", "Tight coupling with Thread class"],
+              example: `// Thread creation by extending Thread class
+class MyThread extends Thread {
+    private String threadName;
+    private int iterations;
+    
+    public MyThread(String name, int iterations) {
+        this.threadName = name;
+        this.iterations = iterations;
+        setName(threadName); // Set thread name
+    }
+    
+    @Override
+    public void run() {
+        System.out.println(threadName + " started");
+        
+        for (int i = 1; i <= iterations; i++) {
+            System.out.println(threadName + " - Iteration " + i);
+            try {
+                Thread.sleep(1000); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                System.out.println(threadName + " interrupted");
+                return;
+            }
+        }
+        
+        System.out.println(threadName + " finished");
+    }
+}
+
+public class ThreadExtensionDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Thread Creation by Extension ===");
+        
+        // Create thread instances
+        MyThread thread1 = new MyThread("Worker-1", 3);
+        MyThread thread2 = new MyThread("Worker-2", 3);
+        MyThread thread3 = new MyThread("Worker-3", 3);
+        
+        // Display thread information before starting
+        System.out.println("Thread 1 state: " + thread1.getState());
+        System.out.println("Thread 1 priority: " + thread1.getPriority());
+        
+        // Start threads
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        
+        System.out.println("All threads started");
+        
+        // Wait for threads to complete
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("All threads completed");
+    }
+}`
+            },
+            implementingRunnable: {
+              title: "By Implementing the Runnable interface",
+              description: "Implement the Runnable interface and pass it to a Thread constructor.",
+              pros: ["Better OOP design", "Can extend other classes", "Separation of concerns"],
+              cons: ["Slightly more verbose", "Indirect access to Thread methods"],
+              example: `// Thread creation by implementing Runnable interface
+class MyRunnable implements Runnable {
+    private String taskName;
+    private int count;
+    
+    public MyRunnable(String taskName, int count) {
+        this.taskName = taskName;
+        this.count = count;
+    }
+    
+    @Override
+    public void run() {
+        Thread currentThread = Thread.currentThread();
+        System.out.println(taskName + " started by " + currentThread.getName());
+        
+        for (int i = 1; i <= count; i++) {
+            System.out.println(taskName + " - Count " + i + 
+                             " (Thread: " + currentThread.getName() + ")");
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.println(taskName + " interrupted");
+                return;
+            }
+        }
+        
+        System.out.println(taskName + " completed by " + currentThread.getName());
+    }
+}
+
+// Alternative: Using lambda expressions (Java 8+)
+class LambdaThreadDemo {
+    public static void performTask(String taskName, int duration) {
+        System.out.println(taskName + " executing on " + Thread.currentThread().getName());
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        System.out.println(taskName + " completed");
+    }
+}
+
+public class RunnableImplementationDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Thread Creation with Runnable ===");
+        
+        // Method 1: Using Runnable implementation
+        MyRunnable task1 = new MyRunnable("Database-Task", 3);
+        MyRunnable task2 = new MyRunnable("Network-Task", 3);
+        MyRunnable task3 = new MyRunnable("File-Task", 3);
+        
+        Thread thread1 = new Thread(task1, "DB-Thread");
+        Thread thread2 = new Thread(task2, "Network-Thread");
+        Thread thread3 = new Thread(task3, "File-Thread");
+        
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        
+        // Method 2: Using anonymous inner class
+        Thread anonymousThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Anonymous thread running on " + 
+                                 Thread.currentThread().getName());
+            }
+        }, "Anonymous-Thread");
+        anonymousThread.start();
+        
+        // Method 3: Using lambda expressions (Java 8+)
+        Thread lambdaThread1 = new Thread(() -> 
+            LambdaThreadDemo.performTask("Lambda-Task-1", 1500), "Lambda-Thread-1");
+        
+        Thread lambdaThread2 = new Thread(() -> {
+            for (int i = 1; i <= 3; i++) {
+                System.out.println("Lambda task iteration " + i + 
+                                 " on " + Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }, "Lambda-Thread-2");
+        
+        lambdaThread1.start();
+        lambdaThread2.start();
+        
+        // Wait for all threads to complete
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+            anonymousThread.join();
+            lambdaThread1.join();
+            lambdaThread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("All threads completed");
+    }
+}`
+            }
+          },
+          threadMethods: {
+            title: "Important Thread Methods",
+            description: "Essential methods for thread control and management.",
+            methods: {
+              start: {
+                method: "start()",
+                description: "Starts a thread (calls run() method)",
+                note: "Can only be called once per thread instance"
+              },
+              run: {
+                method: "run()",
+                description: "Defines the task",
+                note: "Override this method to define thread behavior"
+              },
+              sleep: {
+                method: "sleep(ms)",
+                description: "Suspends thread temporarily",
+                note: "Static method, affects current thread"
+              },
+              join: {
+                method: "join()",
+                description: "Waits for another thread to finish",
+                note: "Blocks calling thread until target thread completes"
+              },
+              yield: {
+                method: "yield()",
+                description: "Pauses current thread to let others run",
+                note: "Hint to scheduler, not guaranteed"
+              },
+              isAlive: {
+                method: "isAlive()",
+                description: "Checks if thread is alive",
+                note: "Returns true if thread has started and not yet died"
+              }
+            },
+            example: `// Thread methods demonstration
+public class ThreadMethodsDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Thread Methods Demonstration ===");
+        
+        // Create worker threads
+        WorkerThread worker1 = new WorkerThread("Worker-1", 5);
+        WorkerThread worker2 = new WorkerThread("Worker-2", 3);
+        
+        System.out.println("\n1. Thread state before start():");
+        System.out.println("Worker-1 isAlive: " + worker1.isAlive());
+        System.out.println("Worker-1 state: " + worker1.getState());
+        
+        // Start threads
+        System.out.println("\n2. Starting threads:");
+        worker1.start();
+        worker2.start();
+        
+        System.out.println("Worker-1 isAlive after start: " + worker1.isAlive());
+        System.out.println("Worker-1 state after start: " + worker1.getState());
+        
+        // Demonstrate join() method
+        System.out.println("\n3. Main thread waiting for Worker-1 to complete (join):");
+        try {
+            worker1.join(); // Wait for worker1 to complete
+            System.out.println("Worker-1 has completed");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        // Check if worker2 is still alive
+        System.out.println("\n4. Checking Worker-2 status:");
+        System.out.println("Worker-2 isAlive: " + worker2.isAlive());
+        
+        // Wait for worker2 with timeout
+        try {
+            worker2.join(2000); // Wait max 2 seconds
+            if (worker2.isAlive()) {
+                System.out.println("Worker-2 still running after timeout");
+            } else {
+                System.out.println("Worker-2 completed within timeout");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        // Demonstrate sleep and yield
+        System.out.println("\n5. Demonstrating sleep and yield:");
+        Thread sleepYieldDemo = new Thread(new SleepYieldDemo(), "SleepYield-Thread");
+        sleepYieldDemo.start();
+        
+        try {
+            sleepYieldDemo.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("\nAll demonstrations completed");
+    }
+}
+
+class WorkerThread extends Thread {
+    private String workerName;
+    private int taskCount;
+    
+    public WorkerThread(String name, int taskCount) {
+        this.workerName = name;
+        this.taskCount = taskCount;
+        setName(workerName);
+    }
+    
+    @Override
+    public void run() {
+        System.out.println(workerName + " started");
+        
+        for (int i = 1; i <= taskCount; i++) {
+            System.out.println(workerName + " executing task " + i);
+            try {
+                Thread.sleep(1000); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                System.out.println(workerName + " interrupted");
+                return;
+            }
+        }
+        
+        System.out.println(workerName + " completed all tasks");
+    }
+}
+
+class SleepYieldDemo implements Runnable {
+    @Override
+    public void run() {
+        String threadName = Thread.currentThread().getName();
+        
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(threadName + " - Iteration " + i);
+            
+            if (i % 2 == 0) {
+                // Sleep every even iteration
+                try {
+                    System.out.println(threadName + " sleeping for 500ms");
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            } else {
+                // Yield every odd iteration
+                System.out.println(threadName + " yielding to other threads");
+                Thread.yield();
+            }
+        }
+    }
+}`
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
