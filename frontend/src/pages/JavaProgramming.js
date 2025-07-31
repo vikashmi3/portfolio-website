@@ -12139,6 +12139,605 @@ public class FileClassDemo {
     }
 }`
           },
+          readingFromFile: {
+            title: "Reading from a File",
+            description: "Different approaches to read data from files using various Java I/O classes.",
+            usingScanner: {
+              title: "Using Scanner",
+              description: "Simple and convenient way to read formatted data from files.",
+              syntax: "Scanner sc = new Scanner(new File(\"filename\"));",
+              example: `// Reading files using Scanner
+import java.io.*;
+import java.util.*;
+
+public class ScannerFileReadingDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Scanner File Reading Demo ===");
+        
+        // Create sample file
+        createSampleFile();
+        
+        // Read using Scanner - different approaches
+        readWithScanner();
+        readFormattedData();
+        readTokenByToken();
+        
+        // Cleanup
+        new File("sample-data.txt").delete();
+        new File("formatted-data.txt").delete();
+    }
+    
+    public static void createSampleFile() {
+        try (PrintWriter writer = new PrintWriter("sample-data.txt")) {
+            writer.println("Hello World");
+            writer.println("Java File Handling");
+            writer.println("Scanner is useful for reading");
+            writer.println("Line by line processing");
+            writer.println("End of file");
+            
+            System.out.println("Sample file created");
+        } catch (IOException e) {
+            System.err.println("Error creating sample file: " + e.getMessage());
+        }
+        
+        // Create formatted data file
+        try (PrintWriter writer = new PrintWriter("formatted-data.txt")) {
+            writer.println("John 25 85.5");
+            writer.println("Alice 30 92.0");
+            writer.println("Bob 28 78.5");
+            writer.println("Diana 35 88.0");
+            
+            System.out.println("Formatted data file created");
+        } catch (IOException e) {
+            System.err.println("Error creating formatted file: " + e.getMessage());
+        }
+    }
+    
+    public static void readWithScanner() {
+        System.out.println("\n1. Reading line by line with Scanner:");
+        
+        try (Scanner sc = new Scanner(new File("sample-data.txt"))) {
+            int lineNumber = 1;
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                System.out.println("Line " + lineNumber + ": " + line);
+                lineNumber++;
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
+        }
+    }
+    
+    public static void readFormattedData() {
+        System.out.println("\n2. Reading formatted data with Scanner:");
+        
+        try (Scanner sc = new Scanner(new File("formatted-data.txt"))) {
+            System.out.println("Name\t\tAge\tScore");
+            System.out.println("------------------------");
+            
+            while (sc.hasNext()) {
+                String name = sc.next();
+                int age = sc.nextInt();
+                double score = sc.nextDouble();
+                
+                System.out.printf("%-10s\t%d\t%.1f%n", name, age, score);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
+        } catch (InputMismatchException e) {
+            System.err.println("Invalid data format: " + e.getMessage());
+        }
+    }
+    
+    public static void readTokenByToken() {
+        System.out.println("\n3. Reading token by token:");
+        
+        try (Scanner sc = new Scanner(new File("sample-data.txt"))) {
+            sc.useDelimiter("\\s+"); // Use whitespace as delimiter
+            
+            int tokenCount = 0;
+            while (sc.hasNext()) {
+                String token = sc.next();
+                System.out.println("Token " + (++tokenCount) + ": " + token);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
+        }
+    }
+}`
+            },
+            usingBufferedReader: {
+              title: "Using BufferedReader",
+              description: "Efficient way to read large files with buffering for better performance.",
+              syntax: "BufferedReader br = new BufferedReader(new FileReader(\"filename\"));",
+              example: `// Reading files using BufferedReader
+import java.io.*;
+import java.util.*;
+
+public class BufferedReaderDemo {
+    public static void main(String[] args) {
+        System.out.println("=== BufferedReader File Reading Demo ===");
+        
+        // Create sample files
+        createSampleFiles();
+        
+        // Different reading approaches
+        readLineByLine();
+        readWithCharacterCount();
+        readLargeFile();
+        performanceComparison();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void createSampleFiles() {
+        // Create small file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("small-file.txt"))) {
+            writer.write("This is line 1");
+            writer.newLine();
+            writer.write("This is line 2 with more content");
+            writer.newLine();
+            writer.write("Final line with special characters: @#$%");
+            writer.newLine();
+        } catch (IOException e) {
+            System.err.println("Error creating small file: " + e.getMessage());
+        }
+        
+        // Create large file for performance testing
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("large-file.txt"))) {
+            for (int i = 1; i <= 10000; i++) {
+                writer.write("This is line number " + i + " with some content for testing.");
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error creating large file: " + e.getMessage());
+        }
+        
+        System.out.println("Sample files created");
+    }
+    
+    public static void readLineByLine() {
+        System.out.println("\n1. Reading line by line:");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("small-file.txt"))) {
+            String line;
+            int lineNumber = 1;
+            
+            while ((line = br.readLine()) != null) {
+                System.out.println("Line " + lineNumber + ": " + line);
+                System.out.println("  Length: " + line.length() + " characters");
+                lineNumber++;
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+    
+    public static void readWithCharacterCount() {
+        System.out.println("\n2. Reading with character counting:");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("small-file.txt"))) {
+            int character;
+            int charCount = 0;
+            int lineCount = 0;
+            int wordCount = 0;
+            boolean inWord = false;
+            
+            while ((character = br.read()) != -1) {
+                char ch = (char) character;
+                charCount++;
+                
+                if (ch == '\n') {
+                    lineCount++;
+                    inWord = false;
+                } else if (Character.isWhitespace(ch)) {
+                    inWord = false;
+                } else if (!inWord) {
+                    wordCount++;
+                    inWord = true;
+                }
+            }
+            
+            System.out.println("File statistics:");
+            System.out.println("Characters: " + charCount);
+            System.out.println("Lines: " + lineCount);
+            System.out.println("Words: " + wordCount);
+            
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+    
+    public static void readLargeFile() {
+        System.out.println("\n3. Reading large file (first and last 5 lines):");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("large-file.txt"))) {
+            List<String> allLines = new ArrayList<>();
+            String line;
+            
+            // Read all lines
+            while ((line = br.readLine()) != null) {
+                allLines.add(line);
+            }
+            
+            System.out.println("Total lines read: " + allLines.size());
+            
+            // Display first 5 lines
+            System.out.println("\nFirst 5 lines:");
+            for (int i = 0; i < Math.min(5, allLines.size()); i++) {
+                System.out.println((i + 1) + ": " + allLines.get(i));
+            }
+            
+            // Display last 5 lines
+            System.out.println("\nLast 5 lines:");
+            int start = Math.max(0, allLines.size() - 5);
+            for (int i = start; i < allLines.size(); i++) {
+                System.out.println((i + 1) + ": " + allLines.get(i));
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Error reading large file: " + e.getMessage());
+        }
+    }
+    
+    public static void performanceComparison() {
+        System.out.println("\n4. Performance comparison:");
+        
+        // BufferedReader performance
+        long startTime = System.currentTimeMillis();
+        int bufferedLines = 0;
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("large-file.txt"))) {
+            while (br.readLine() != null) {
+                bufferedLines++;
+            }
+        } catch (IOException e) {
+            System.err.println("Error in buffered reading: " + e.getMessage());
+        }
+        
+        long bufferedTime = System.currentTimeMillis() - startTime;
+        
+        // FileReader performance (without buffering)
+        startTime = System.currentTimeMillis();
+        int unbufferedLines = 0;
+        
+        try (FileReader fr = new FileReader("large-file.txt")) {
+            StringBuilder line = new StringBuilder();
+            int ch;
+            
+            while ((ch = fr.read()) != -1) {
+                if (ch == '\n') {
+                    unbufferedLines++;
+                    line.setLength(0);
+                } else {
+                    line.append((char) ch);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error in unbuffered reading: " + e.getMessage());
+        }
+        
+        long unbufferedTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("BufferedReader: " + bufferedLines + " lines in " + bufferedTime + "ms");
+        System.out.println("FileReader: " + unbufferedLines + " lines in " + unbufferedTime + "ms");
+        System.out.println("Performance improvement: " + (unbufferedTime - bufferedTime) + "ms faster");
+    }
+    
+    public static void cleanup() {
+        new File("small-file.txt").delete();
+        new File("large-file.txt").delete();
+        System.out.println("\nCleanup completed");
+    }
+}`
+            }
+          },
+          writingToFile: {
+            title: "Writing to a File",
+            description: "Various methods to write data to files with different approaches and performance characteristics.",
+            usingFileWriter: {
+              title: "Using FileWriter",
+              description: "Simple character-based file writing.",
+              syntax: "FileWriter fw = new FileWriter(\"filename\");",
+              example: `// Writing files using FileWriter
+import java.io.*;
+
+public class FileWriterDemo {
+    public static void main(String[] args) {
+        System.out.println("=== FileWriter Demo ===");
+        
+        // Basic writing
+        basicWriting();
+        
+        // Append mode
+        appendMode();
+        
+        // Writing different data types
+        writeDifferentDataTypes();
+        
+        // Read and display results
+        displayResults();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void basicWriting() {
+        System.out.println("\n1. Basic FileWriter usage:");
+        
+        try (FileWriter fw = new FileWriter("basic-output.txt")) {
+            fw.write("Hello, FileWriter!");
+            fw.write("\n");
+            fw.write("This is a new line.");
+            fw.write(System.lineSeparator()); // Platform-independent line separator
+            fw.write("Writing complete.");
+            
+            System.out.println("Basic writing completed");
+        } catch (IOException e) {
+            System.err.println("Error in basic writing: " + e.getMessage());
+        }
+    }
+    
+    public static void appendMode() {
+        System.out.println("\n2. Append mode:");
+        
+        // First write
+        try (FileWriter fw = new FileWriter("append-test.txt")) {
+            fw.write("Initial content");
+            fw.write(System.lineSeparator());
+            System.out.println("Initial content written");
+        } catch (IOException e) {
+            System.err.println("Error in initial write: " + e.getMessage());
+        }
+        
+        // Append mode (true parameter)
+        try (FileWriter fw = new FileWriter("append-test.txt", true)) {
+            fw.write("Appended content 1");
+            fw.write(System.lineSeparator());
+            fw.write("Appended content 2");
+            fw.write(System.lineSeparator());
+            System.out.println("Content appended");
+        } catch (IOException e) {
+            System.err.println("Error in append mode: " + e.getMessage());
+        }
+    }
+    
+    public static void writeDifferentDataTypes() {
+        System.out.println("\n3. Writing different data types:");
+        
+        try (FileWriter fw = new FileWriter("data-types.txt")) {
+            // String
+            fw.write("String data: Hello World");
+            fw.write(System.lineSeparator());
+            
+            // Numbers (converted to strings)
+            int number = 42;
+            fw.write("Integer: " + number);
+            fw.write(System.lineSeparator());
+            
+            double decimal = 3.14159;
+            fw.write("Double: " + decimal);
+            fw.write(System.lineSeparator());
+            
+            // Boolean
+            boolean flag = true;
+            fw.write("Boolean: " + flag);
+            fw.write(System.lineSeparator());
+            
+            // Character array
+            char[] chars = {'A', 'r', 'r', 'a', 'y'};
+            fw.write("Char array: ");
+            fw.write(chars);
+            fw.write(System.lineSeparator());
+            
+            // Formatted output
+            fw.write(String.format("Formatted: Name=%s, Age=%d, Score=%.2f", 
+                                 "Alice", 25, 95.75));
+            fw.write(System.lineSeparator());
+            
+            System.out.println("Different data types written");
+        } catch (IOException e) {
+            System.err.println("Error writing data types: " + e.getMessage());
+        }
+    }
+    
+    public static void displayResults() {
+        System.out.println("\n4. Reading back written files:");
+        
+        String[] files = {"basic-output.txt", "append-test.txt", "data-types.txt"};
+        
+        for (String fileName : files) {
+            System.out.println("\nContents of " + fileName + ":");
+            try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println("  " + line);
+                }
+            } catch (IOException e) {
+                System.err.println("Error reading " + fileName + ": " + e.getMessage());
+            }
+        }
+    }
+    
+    public static void cleanup() {
+        String[] files = {"basic-output.txt", "append-test.txt", "data-types.txt"};
+        for (String fileName : files) {
+            new File(fileName).delete();
+        }
+        System.out.println("\nCleanup completed");
+    }
+}`
+            },
+            usingBufferedWriter: {
+              title: "Using BufferedWriter",
+              description: "Efficient writing with buffering for better performance.",
+              syntax: "BufferedWriter bw = new BufferedWriter(new FileWriter(\"filename\"));",
+              example: `// Writing files using BufferedWriter
+import java.io.*;
+
+public class BufferedWriterDemo {
+    public static void main(String[] args) {
+        System.out.println("=== BufferedWriter Demo ===");
+        
+        // Basic buffered writing
+        basicBufferedWriting();
+        
+        // Performance comparison
+        performanceComparison();
+        
+        // Writing structured data
+        writeStructuredData();
+        
+        // Display results
+        displayResults();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void basicBufferedWriting() {
+        System.out.println("\n1. Basic BufferedWriter usage:");
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("buffered-output.txt"))) {
+            bw.write("Buffered writing is more efficient");
+            bw.newLine(); // Platform-independent new line
+            bw.write("for large amounts of data.");
+            bw.newLine();
+            bw.write("It reduces the number of system calls.");
+            bw.newLine();
+            
+            // Writing multiple lines
+            String[] lines = {
+                "Line 1: Introduction",
+                "Line 2: Content",
+                "Line 3: More content",
+                "Line 4: Conclusion"
+            };
+            
+            for (String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+            
+            System.out.println("Buffered writing completed");
+        } catch (IOException e) {
+            System.err.println("Error in buffered writing: " + e.getMessage());
+        }
+    }
+    
+    public static void performanceComparison() {
+        System.out.println("\n2. Performance comparison:");
+        
+        int iterations = 10000;
+        
+        // BufferedWriter performance
+        long startTime = System.currentTimeMillis();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("buffered-perf.txt"))) {
+            for (int i = 1; i <= iterations; i++) {
+                bw.write("Line " + i + ": This is a test line for performance measurement.");
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error in buffered performance test: " + e.getMessage());
+        }
+        long bufferedTime = System.currentTimeMillis() - startTime;
+        
+        // FileWriter performance (without buffering)
+        startTime = System.currentTimeMillis();
+        try (FileWriter fw = new FileWriter("unbuffered-perf.txt")) {
+            for (int i = 1; i <= iterations; i++) {
+                fw.write("Line " + i + ": This is a test line for performance measurement.");
+                fw.write(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.err.println("Error in unbuffered performance test: " + e.getMessage());
+        }
+        long unbufferedTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("BufferedWriter time: " + bufferedTime + "ms");
+        System.out.println("FileWriter time: " + unbufferedTime + "ms");
+        System.out.println("Performance improvement: " + (unbufferedTime - bufferedTime) + "ms faster");
+        
+        // File sizes
+        File bufferedFile = new File("buffered-perf.txt");
+        File unbufferedFile = new File("unbuffered-perf.txt");
+        System.out.println("Buffered file size: " + bufferedFile.length() + " bytes");
+        System.out.println("Unbuffered file size: " + unbufferedFile.length() + " bytes");
+    }
+    
+    public static void writeStructuredData() {
+        System.out.println("\n3. Writing structured data:");
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("structured-data.txt"))) {
+            // Write header
+            bw.write("Employee Data Report");
+            bw.newLine();
+            bw.write("Generated on: " + java.time.LocalDateTime.now());
+            bw.newLine();
+            bw.write("=".repeat(50));
+            bw.newLine();
+            bw.newLine();
+            
+            // Write table header
+            bw.write(String.format("%-15s %-10s %-15s %-10s", "Name", "Age", "Department", "Salary"));
+            bw.newLine();
+            bw.write("-".repeat(50));
+            bw.newLine();
+            
+            // Sample employee data
+            String[][] employees = {
+                {"John Doe", "30", "Engineering", "75000"},
+                {"Jane Smith", "28", "Marketing", "65000"},
+                {"Bob Johnson", "35", "Sales", "70000"},
+                {"Alice Brown", "32", "HR", "60000"}
+            };
+            
+            // Write employee data
+            for (String[] employee : employees) {
+                bw.write(String.format("%-15s %-10s %-15s $%-9s", 
+                                     employee[0], employee[1], employee[2], employee[3]));
+                bw.newLine();
+            }
+            
+            // Write footer
+            bw.newLine();
+            bw.write("Total employees: " + employees.length);
+            bw.newLine();
+            bw.write("Report end");
+            
+            System.out.println("Structured data written");
+        } catch (IOException e) {
+            System.err.println("Error writing structured data: " + e.getMessage());
+        }
+    }
+    
+    public static void displayResults() {
+        System.out.println("\n4. Reading back structured data:");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("structured-data.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading structured data: " + e.getMessage());
+        }
+    }
+    
+    public static void cleanup() {
+        String[] files = {
+            "buffered-output.txt", "buffered-perf.txt", 
+            "unbuffered-perf.txt", "structured-data.txt"
+        };
+        for (String fileName : files) {
+            new File(fileName).delete();
+        }
+        System.out.println("\nCleanup completed");
+    }
+}`
+            }
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
