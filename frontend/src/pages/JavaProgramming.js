@@ -12738,6 +12738,826 @@ public class BufferedWriterDemo {
 }`
             }
           },
+          binaryFiles: {
+            title: "Reading & Writing Binary Files",
+            description: "Handling binary data using FileInputStream and FileOutputStream for non-text files.",
+            syntax: "FileInputStream fis = new FileInputStream(\"file.bin\");",
+            example: `// Binary file handling demonstration
+import java.io.*;
+
+public class BinaryFileHandlingDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Binary File Handling Demo ===");
+        
+        // Create binary data
+        createBinaryFile();
+        
+        // Copy binary file
+        copyBinaryFile();
+        
+        // Read and analyze binary file
+        analyzeBinaryFile();
+        
+        // Work with different binary formats
+        workWithDataTypes();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void createBinaryFile() {
+        System.out.println("\n1. Creating binary file:");
+        
+        try (FileOutputStream fos = new FileOutputStream("binary-data.bin")) {
+            // Write various binary data
+            byte[] data = {65, 66, 67, 68, 69}; // ASCII values for ABCDE
+            fos.write(data);
+            
+            // Write individual bytes
+            for (int i = 70; i <= 90; i++) { // F to Z
+                fos.write(i);
+            }
+            
+            // Write some numbers as bytes
+            fos.write(255); // Maximum byte value
+            fos.write(0);   // Minimum byte value
+            fos.write(128); // Middle value
+            
+            System.out.println("Binary file created with " + (data.length + 21 + 3) + " bytes");
+        } catch (IOException e) {
+            System.err.println("Error creating binary file: " + e.getMessage());
+        }
+    }
+    
+    public static void copyBinaryFile() {
+        System.out.println("\n2. Copying binary file:");
+        
+        try (FileInputStream fis = new FileInputStream("binary-data.bin");
+             FileOutputStream fos = new FileOutputStream("binary-copy.bin")) {
+            
+            int byteData;
+            int bytesRead = 0;
+            
+            // Copy byte by byte
+            while ((byteData = fis.read()) != -1) {
+                fos.write(byteData);
+                bytesRead++;
+            }
+            
+            System.out.println("Binary file copied: " + bytesRead + " bytes");
+        } catch (IOException e) {
+            System.err.println("Error copying binary file: " + e.getMessage());
+        }
+    }
+    
+    public static void analyzeBinaryFile() {
+        System.out.println("\n3. Analyzing binary file:");
+        
+        try (FileInputStream fis = new FileInputStream("binary-data.bin")) {
+            byte[] buffer = new byte[1024];
+            int bytesRead = fis.read(buffer);
+            
+            System.out.println("Bytes read: " + bytesRead);
+            System.out.println("Binary content (as integers):");
+            
+            for (int i = 0; i < bytesRead; i++) {
+                int value = buffer[i] & 0xFF; // Convert to unsigned
+                char character = (char) value;
+                System.out.printf("Byte %2d: %3d (0x%02X) '%c'%n", 
+                                i, value, value, 
+                                (Character.isISOControl(character) ? '.' : character));
+            }
+        } catch (IOException e) {
+            System.err.println("Error analyzing binary file: " + e.getMessage());
+        }
+    }
+    
+    public static void workWithDataTypes() {
+        System.out.println("\n4. Working with different data types:");
+        
+        // Write different data types to binary file
+        try (DataOutputStream dos = new DataOutputStream(
+                new FileOutputStream("datatypes.bin"))) {
+            
+            // Write different primitive types
+            dos.writeInt(12345);
+            dos.writeDouble(3.14159);
+            dos.writeBoolean(true);
+            dos.writeUTF("Hello Binary World");
+            dos.writeLong(9876543210L);
+            dos.writeFloat(2.718f);
+            
+            System.out.println("Data types written to binary file");
+        } catch (IOException e) {
+            System.err.println("Error writing data types: " + e.getMessage());
+        }
+        
+        // Read different data types from binary file
+        try (DataInputStream dis = new DataInputStream(
+                new FileInputStream("datatypes.bin"))) {
+            
+            int intValue = dis.readInt();
+            double doubleValue = dis.readDouble();
+            boolean boolValue = dis.readBoolean();
+            String stringValue = dis.readUTF();
+            long longValue = dis.readLong();
+            float floatValue = dis.readFloat();
+            
+            System.out.println("Data types read from binary file:");
+            System.out.println("Integer: " + intValue);
+            System.out.println("Double: " + doubleValue);
+            System.out.println("Boolean: " + boolValue);
+            System.out.println("String: " + stringValue);
+            System.out.println("Long: " + longValue);
+            System.out.println("Float: " + floatValue);
+            
+        } catch (IOException e) {
+            System.err.println("Error reading data types: " + e.getMessage());
+        }
+    }
+    
+    public static void cleanup() {
+        String[] files = {"binary-data.bin", "binary-copy.bin", "datatypes.bin"};
+        for (String fileName : files) {
+            if (new File(fileName).delete()) {
+                System.out.println("Deleted: " + fileName);
+            }
+        }
+    }
+}`
+          },
+          exceptionHandling: {
+            title: "Exception Handling",
+            description: "All file I/O operations must handle checked exceptions like IOException.",
+            requiredExceptions: [
+              "IOException - General I/O operations",
+              "FileNotFoundException - File not found",
+              "SecurityException - Access denied",
+              "IllegalArgumentException - Invalid parameters"
+            ],
+            example: `// File I/O exception handling demonstration
+import java.io.*;
+
+public class FileExceptionHandlingDemo {
+    public static void main(String[] args) {
+        System.out.println("=== File Exception Handling Demo ===");
+        
+        // Different exception scenarios
+        handleFileNotFoundException();
+        handleIOException();
+        handleSecurityException();
+        demonstrateTryWithResources();
+        demonstrateProperCleanup();
+    }
+    
+    public static void handleFileNotFoundException() {
+        System.out.println("\n1. FileNotFoundException handling:");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("nonexistent-file.txt"))) {
+            String line = br.readLine();
+            System.out.println("Read: " + line);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+            System.out.println("Creating the file...");
+            
+            // Create the missing file
+            try (FileWriter fw = new FileWriter("nonexistent-file.txt")) {
+                fw.write("File created due to exception handling");
+                System.out.println("File created successfully");
+            } catch (IOException createException) {
+                System.err.println("Failed to create file: " + createException.getMessage());
+            }
+        } catch (IOException e) {
+            System.err.println("General I/O error: " + e.getMessage());
+        }
+    }
+    
+    public static void handleIOException() {
+        System.out.println("\n2. IOException handling:");
+        
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter("test-io-exception.txt");
+            writer.write("Testing IOException handling");
+            
+            // Simulate an error by closing and trying to write again
+            writer.close();
+            writer.write("This will cause an IOException");
+            
+        } catch (IOException e) {
+            System.out.println("IOException caught: " + e.getMessage());
+            System.out.println("Exception type: " + e.getClass().getSimpleName());
+        } finally {
+            // Cleanup in finally block
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    System.err.println("Error closing writer: " + e.getMessage());
+                }
+            }
+        }
+    }
+    
+    public static void handleSecurityException() {
+        System.out.println("\n3. SecurityException handling:");
+        
+        try {
+            // Try to access a system file (may cause SecurityException)
+            String restrictedPath = System.getProperty("java.home") + "/bin/java";
+            File restrictedFile = new File(restrictedPath);
+            
+            System.out.println("Attempting to access: " + restrictedPath);
+            System.out.println("File exists: " + restrictedFile.exists());
+            System.out.println("Can read: " + restrictedFile.canRead());
+            System.out.println("Can write: " + restrictedFile.canWrite());
+            
+            // This might throw SecurityException in restricted environments
+            if (restrictedFile.canWrite()) {
+                try (FileWriter fw = new FileWriter(restrictedFile, true)) {
+                    fw.write("test");
+                }
+            } else {
+                System.out.println("No write permission - this is expected");
+            }
+            
+        } catch (SecurityException e) {
+            System.out.println("SecurityException: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateTryWithResources() {
+        System.out.println("\n4. Try-with-resources (recommended approach):");
+        
+        // Multiple resources in try-with-resources
+        try (FileReader fr = new FileReader("nonexistent-file.txt");
+             BufferedReader br = new BufferedReader(fr);
+             FileWriter fw = new FileWriter("output-file.txt");
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            
+            String line;
+            while ((line = br.readLine()) != null) {
+                bw.write("Processed: " + line);
+                bw.newLine();
+            }
+            
+            System.out.println("File processing completed");
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("Input file not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("I/O error during processing: " + e.getMessage());
+        }
+        // Resources are automatically closed here
+    }
+    
+    public static void demonstrateProperCleanup() {
+        System.out.println("\n5. Proper cleanup and error recovery:");
+        
+        String inputFile = "input-data.txt";
+        String outputFile = "processed-data.txt";
+        String backupFile = "backup-data.txt";
+        
+        // Create input file first
+        try (FileWriter fw = new FileWriter(inputFile)) {
+            fw.write("Line 1: Sample data\n");
+            fw.write("Line 2: More data\n");
+            fw.write("Line 3: Final data\n");
+        } catch (IOException e) {
+            System.err.println("Failed to create input file: " + e.getMessage());
+            return;
+        }
+        
+        // Process with proper error handling and cleanup
+        boolean success = false;
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
+            
+            String line;
+            int lineNumber = 1;
+            
+            while ((line = br.readLine()) != null) {
+                // Process each line
+                String processedLine = "[" + lineNumber + "] " + line.toUpperCase();
+                bw.write(processedLine);
+                bw.newLine();
+                lineNumber++;
+            }
+            
+            success = true;
+            System.out.println("File processing completed successfully");
+            
+        } catch (IOException e) {
+            System.err.println("Error during file processing: " + e.getMessage());
+            
+            // Create backup of partial data if possible
+            try {
+                File outputFileObj = new File(outputFile);
+                if (outputFileObj.exists()) {
+                    Files.copy(outputFileObj.toPath(), 
+                              new File(backupFile).toPath(), 
+                              StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Partial data backed up to: " + backupFile);
+                }
+            } catch (Exception backupException) {
+                System.err.println("Backup failed: " + backupException.getMessage());
+            }
+        }
+        
+        // Cleanup based on success/failure
+        if (success) {
+            System.out.println("Processing successful - keeping output file");
+        } else {
+            File outputFileObj = new File(outputFile);
+            if (outputFileObj.exists() && outputFileObj.delete()) {
+                System.out.println("Cleaned up incomplete output file");
+            }
+        }
+        
+        // Cleanup temporary files
+        new File(inputFile).delete();
+        new File(backupFile).delete();
+        if (success) {
+            new File(outputFile).delete();
+        }
+    }
+}`
+          },
+          nioPackage: {
+            title: "Advanced: NIO Package (java.nio.file)",
+            description: "Modern and efficient file operations using the NIO.2 API introduced in Java 7.",
+            advantages: [
+              "Better performance for large files",
+              "More intuitive API",
+              "Better error handling",
+              "Support for file attributes and metadata",
+              "Atomic file operations"
+            ],
+            example: `// NIO.2 file operations demonstration
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.io.IOException;
+import java.util.*;
+
+public class NIOFileHandlingDemo {
+    public static void main(String[] args) {
+        System.out.println("=== NIO.2 File Handling Demo ===");
+        
+        // Basic NIO operations
+        basicNIOOperations();
+        
+        // File attributes and metadata
+        fileAttributesDemo();
+        
+        // Directory operations
+        directoryOperations();
+        
+        // File watching
+        // fileWatchingDemo(); // Commented out as it's a long-running operation
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void basicNIOOperations() {
+        System.out.println("\n1. Basic NIO operations:");
+        
+        try {
+            // Create path
+            Path filePath = Paths.get("nio-demo.txt");
+            
+            // Write to file
+            List<String> lines = Arrays.asList(
+                "NIO.2 File Operations",
+                "Line 2: Modern file handling",
+                "Line 3: Better performance",
+                "Line 4: Improved API"
+            );
+            
+            Files.write(filePath, lines, StandardCharsets.UTF_8);
+            System.out.println("File written using NIO.2");
+            
+            // Read from file
+            List<String> readLines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
+            System.out.println("\nFile contents:");
+            for (int i = 0; i < readLines.size(); i++) {
+                System.out.println((i + 1) + ": " + readLines.get(i));
+            }
+            
+            // Append to file
+            Files.write(filePath, 
+                       Arrays.asList("Line 5: Appended content"), 
+                       StandardCharsets.UTF_8, 
+                       StandardOpenOption.APPEND);
+            
+            System.out.println("\nAfter appending:");
+            Files.lines(filePath).forEach(line -> System.out.println("  " + line));
+            
+            // File operations
+            System.out.println("\nFile operations:");
+            System.out.println("File exists: " + Files.exists(filePath));
+            System.out.println("File size: " + Files.size(filePath) + " bytes");
+            System.out.println("Is regular file: " + Files.isRegularFile(filePath));
+            System.out.println("Is readable: " + Files.isReadable(filePath));
+            System.out.println("Is writable: " + Files.isWritable(filePath));
+            
+        } catch (IOException e) {
+            System.err.println("NIO operation error: " + e.getMessage());
+        }
+    }
+    
+    public static void fileAttributesDemo() {
+        System.out.println("\n2. File attributes and metadata:");
+        
+        try {
+            Path filePath = Paths.get("nio-demo.txt");
+            
+            // Basic attributes
+            BasicFileAttributes attrs = Files.readAttributes(filePath, BasicFileAttributes.class);
+            
+            System.out.println("File attributes:");
+            System.out.println("Creation time: " + attrs.creationTime());
+            System.out.println("Last modified: " + attrs.lastModifiedTime());
+            System.out.println("Last accessed: " + attrs.lastAccessTime());
+            System.out.println("Size: " + attrs.size() + " bytes");
+            System.out.println("Is directory: " + attrs.isDirectory());
+            System.out.println("Is regular file: " + attrs.isRegularFile());
+            System.out.println("Is symbolic link: " + attrs.isSymbolicLink());
+            
+            // File store information
+            FileStore store = Files.getFileStore(filePath);
+            System.out.println("\nFile store information:");
+            System.out.println("Type: " + store.type());
+            System.out.println("Total space: " + (store.getTotalSpace() / (1024 * 1024 * 1024)) + " GB");
+            System.out.println("Usable space: " + (store.getUsableSpace() / (1024 * 1024 * 1024)) + " GB");
+            
+            // Set file attributes
+            FileTime newTime = FileTime.fromMillis(System.currentTimeMillis());
+            Files.setLastModifiedTime(filePath, newTime);
+            System.out.println("\nLast modified time updated");
+            
+        } catch (IOException e) {
+            System.err.println("Error reading file attributes: " + e.getMessage());
+        }
+    }
+    
+    public static void directoryOperations() {
+        System.out.println("\n3. Directory operations:");
+        
+        try {
+            // Create directory structure
+            Path baseDir = Paths.get("nio-test-dir");
+            Path subDir = baseDir.resolve("subdir");
+            Path deepDir = subDir.resolve("deep");
+            
+            Files.createDirectories(deepDir);
+            System.out.println("Directory structure created: " + deepDir);
+            
+            // Create files in directories
+            Files.write(baseDir.resolve("file1.txt"), 
+                       Arrays.asList("Content of file1"));
+            Files.write(subDir.resolve("file2.txt"), 
+                       Arrays.asList("Content of file2"));
+            Files.write(deepDir.resolve("file3.txt"), 
+                       Arrays.asList("Content of file3"));
+            
+            System.out.println("Files created in directory structure");
+            
+            // List directory contents
+            System.out.println("\nDirectory contents:");
+            Files.walk(baseDir)
+                 .forEach(path -> {
+                     int depth = path.getNameCount() - baseDir.getNameCount();
+                     String indent = "  ".repeat(depth);
+                     String type = Files.isDirectory(path) ? "[DIR]" : "[FILE]";
+                     System.out.println(indent + type + " " + path.getFileName());
+                 });
+            
+            // Copy and move operations
+            Path copyPath = baseDir.resolve("file1-copy.txt");
+            Files.copy(baseDir.resolve("file1.txt"), copyPath);
+            System.out.println("\nFile copied to: " + copyPath);
+            
+            Path movePath = baseDir.resolve("file1-moved.txt");
+            Files.move(copyPath, movePath);
+            System.out.println("File moved to: " + movePath);
+            
+            // Delete operations
+            Files.delete(movePath);
+            System.out.println("Moved file deleted");
+            
+        } catch (IOException e) {
+            System.err.println("Directory operation error: " + e.getMessage());
+        }
+    }
+    
+    public static void cleanup() {
+        System.out.println("\n4. Cleanup:");
+        
+        try {
+            // Delete test files and directories
+            Path nioFile = Paths.get("nio-demo.txt");
+            if (Files.exists(nioFile)) {
+                Files.delete(nioFile);
+                System.out.println("Deleted: " + nioFile);
+            }
+            
+            Path testDir = Paths.get("nio-test-dir");
+            if (Files.exists(testDir)) {
+                // Delete directory tree
+                Files.walk(testDir)
+                     .sorted(Comparator.reverseOrder())
+                     .forEach(path -> {
+                         try {
+                             Files.delete(path);
+                         } catch (IOException e) {
+                             System.err.println("Failed to delete: " + path);
+                         }
+                     });
+                System.out.println("Deleted directory tree: " + testDir);
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Cleanup error: " + e.getMessage());
+        }
+    }
+}`
+          },
+          bestPractices: {
+            title: "Best Practices",
+            description: "Guidelines for effective and safe file handling in Java applications.",
+            practices: [
+              "Always close file streams (or use try-with-resources)",
+              "Handle exceptions properly",
+              "Use BufferedReader/Writer for large files",
+              "Validate file paths and permissions",
+              "Use appropriate character encoding",
+              "Consider thread safety for concurrent access"
+            ],
+            example: `// File handling best practices demonstration
+import java.io.*;
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+public class FileHandlingBestPracticesDemo {
+    private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    
+    public static void main(String[] args) {
+        System.out.println("=== File Handling Best Practices ===");
+        
+        // Practice 1: Always use try-with-resources
+        demonstrateTryWithResources();
+        
+        // Practice 2: Proper exception handling
+        demonstrateExceptionHandling();
+        
+        // Practice 3: Use buffered I/O for performance
+        demonstrateBufferedIO();
+        
+        // Practice 4: Validate inputs and paths
+        demonstrateInputValidation();
+        
+        // Practice 5: Handle character encoding
+        demonstrateCharacterEncoding();
+        
+        // Practice 6: Thread-safe file operations
+        demonstrateThreadSafety();
+        
+        // Cleanup
+        cleanup();
+    }
+    
+    public static void demonstrateTryWithResources() {
+        System.out.println("\n1. Try-with-resources (automatic resource management):");
+        
+        // Good practice: try-with-resources
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                Paths.get("best-practices.txt"), StandardCharsets.UTF_8);
+             BufferedReader reader = Files.newBufferedReader(
+                Paths.get("best-practices.txt"), StandardCharsets.UTF_8)) {
+            
+            writer.write("Best practices content");
+            writer.newLine();
+            writer.write("Automatic resource management");
+            writer.flush(); // Ensure data is written before reading
+            
+            // Note: In real scenarios, you wouldn't read from the same file
+            // you're writing to simultaneously
+            
+            System.out.println("Resources will be automatically closed");
+            
+        } catch (IOException e) {
+            System.err.println("I/O error: " + e.getMessage());
+        }
+        // Resources are automatically closed here, even if an exception occurs
+    }
+    
+    public static void demonstrateExceptionHandling() {
+        System.out.println("\n2. Proper exception handling:");
+        
+        String fileName = "test-exceptions.txt";
+        
+        try {
+            // Validate file before operations
+            Path filePath = Paths.get(fileName);
+            
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+                System.out.println("File created: " + fileName);
+            }
+            
+            // Perform file operations with specific exception handling
+            try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
+                writer.write("Exception handling example");
+                System.out.println("Content written successfully");
+            }
+            
+        } catch (FileAlreadyExistsException e) {
+            System.out.println("File already exists: " + e.getMessage());
+        } catch (AccessDeniedException e) {
+            System.err.println("Access denied: " + e.getMessage());
+        } catch (NoSuchFileException e) {
+            System.err.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("General I/O error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateBufferedIO() {
+        System.out.println("\n3. Buffered I/O for performance:");
+        
+        String fileName = "buffered-performance.txt";
+        int iterations = 10000;
+        
+        // Good practice: Use buffered I/O
+        long startTime = System.currentTimeMillis();
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(fileName), 8192)) { // 8KB buffer
+            
+            for (int i = 0; i < iterations; i++) {
+                writer.write("Line " + i + ": Buffered writing is efficient\n");
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Buffered write error: " + e.getMessage());
+        }
+        long bufferedTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("Buffered write time: " + bufferedTime + "ms");
+        System.out.println("File size: " + new File(fileName).length() + " bytes");
+    }
+    
+    public static void demonstrateInputValidation() {
+        System.out.println("\n4. Input validation and path safety:");
+        
+        String[] testPaths = {
+            "valid-file.txt",
+            "", // Empty path
+            "../../../etc/passwd", // Path traversal attempt
+            "con", // Reserved name on Windows
+            "very-long-filename-" + "x".repeat(300) + ".txt" // Very long name
+        };
+        
+        for (String pathString : testPaths) {
+            if (isValidAndSafePath(pathString)) {
+                System.out.println("Valid path: " + pathString);
+                try {
+                    Path path = Paths.get(pathString);
+                    Files.write(path, Arrays.asList("Safe content"));
+                    System.out.println("  File created successfully");
+                } catch (IOException e) {
+                    System.out.println("  Failed to create file: " + e.getMessage());
+                }
+            } else {
+                System.out.println("Invalid/unsafe path rejected: " + pathString);
+            }
+        }
+    }
+    
+    public static boolean isValidAndSafePath(String pathString) {
+        if (pathString == null || pathString.trim().isEmpty()) {
+            return false;
+        }
+        
+        // Check for path traversal attempts
+        if (pathString.contains("..") || pathString.contains("~")) {
+            return false;
+        }
+        
+        // Check for reserved names (Windows)
+        String[] reservedNames = {"CON", "PRN", "AUX", "NUL", "COM1", "LPT1"};
+        String upperPath = pathString.toUpperCase();
+        for (String reserved : reservedNames) {
+            if (upperPath.equals(reserved) || upperPath.startsWith(reserved + ".")) {
+                return false;
+            }
+        }
+        
+        // Check length
+        if (pathString.length() > 255) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public static void demonstrateCharacterEncoding() {
+        System.out.println("\n5. Character encoding handling:");
+        
+        String fileName = "encoding-test.txt";
+        String content = "Hello World! ÄÖÜ αβγ 中文"; // Mixed characters
+        
+        try {
+            // Write with explicit encoding
+            Files.write(Paths.get(fileName), 
+                       content.getBytes(StandardCharsets.UTF_8));
+            
+            // Read with explicit encoding
+            String readContent = new String(
+                Files.readAllBytes(Paths.get(fileName)), 
+                StandardCharsets.UTF_8);
+            
+            System.out.println("Original: " + content);
+            System.out.println("Read back: " + readContent);
+            System.out.println("Encoding preserved: " + content.equals(readContent));
+            
+        } catch (IOException e) {
+            System.err.println("Encoding test error: " + e.getMessage());
+        }
+    }
+    
+    public static void demonstrateThreadSafety() {
+        System.out.println("\n6. Thread-safe file operations:");
+        
+        String fileName = "thread-safe.txt";
+        
+        // Create multiple threads that write to the same file
+        Thread[] writers = new Thread[3];
+        for (int i = 0; i < writers.length; i++) {
+            final int threadId = i;
+            writers[i] = new Thread(() -> {
+                safeWriteToFile(fileName, "Thread " + threadId + " data\n");
+            });
+        }
+        
+        // Start all threads
+        for (Thread writer : writers) {
+            writer.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread writer : writers) {
+            try {
+                writer.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        
+        // Read and display the file content
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(fileName));
+            System.out.println("Thread-safe file content:");
+            lines.forEach(line -> System.out.println("  " + line));
+        } catch (IOException e) {
+            System.err.println("Error reading thread-safe file: " + e.getMessage());
+        }
+    }
+    
+    public static void safeWriteToFile(String fileName, String content) {
+        lock.writeLock().lock();
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(fileName, true))) { // Append mode
+            writer.write(content);
+            System.out.println(Thread.currentThread().getName() + " wrote to file");
+        } catch (IOException e) {
+            System.err.println("Thread-safe write error: " + e.getMessage());
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+    
+    public static void cleanup() {
+        String[] files = {
+            "best-practices.txt", "test-exceptions.txt", "buffered-performance.txt",
+            "valid-file.txt", "encoding-test.txt", "thread-safe.txt"
+        };
+        
+        for (String fileName : files) {
+            try {
+                Files.deleteIfExists(Paths.get(fileName));
+            } catch (IOException e) {
+                System.err.println("Failed to delete " + fileName + ": " + e.getMessage());
+            }
+        }
+        System.out.println("\nCleanup completed");
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
