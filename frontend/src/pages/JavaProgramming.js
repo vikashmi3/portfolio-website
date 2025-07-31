@@ -5283,6 +5283,821 @@ class Student {
 }`
             }
           },
+          multidimensionalArrays: {
+            title: "Multidimensional Arrays (2D Arrays)",
+            description: "Arrays with multiple dimensions for representing matrices, tables, and complex data structures.",
+            syntax: "dataType[][] arrayName = new dataType[rows][columns];",
+            example: `// Comprehensive 2D array examples
+public class TwoDArrayDemo {
+    public static void main(String[] args) {
+        // Method 1: Direct initialization
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        // Method 2: Declaration and initialization
+        double[][] grades = new double[3][4]; // 3 students, 4 subjects
+        
+        // Fill grades array
+        grades[0] = new double[]{85.5, 92.0, 78.5, 88.0}; // Student 1
+        grades[1] = new double[]{90.0, 88.5, 95.0, 87.5}; // Student 2
+        grades[2] = new double[]{76.5, 82.0, 89.5, 91.0}; // Student 3
+        
+        // Method 3: Dynamic allocation
+        String[][] schedule = new String[5][6]; // 5 days, 6 periods
+        
+        // Fill schedule
+        String[] subjects = {"Math", "English", "Science", "History", "Art", "PE"};
+        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        
+        for (int day = 0; day < schedule.length; day++) {
+            for (int period = 0; period < schedule[day].length; period++) {
+                schedule[day][period] = subjects[period];
+            }
+        }
+        
+        // Display matrix
+        System.out.println("Matrix:");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        
+        // Calculate and display student averages
+        System.out.println("\nStudent Grade Report:");
+        String[] subjectNames = {"Math", "English", "Science", "History"};
+        
+        for (int student = 0; student < grades.length; student++) {
+            System.out.println("Student " + (student + 1) + ":");
+            double sum = 0;
+            for (int subject = 0; subject < grades[student].length; subject++) {
+                System.out.println("  " + subjectNames[subject] + ": " + grades[student][subject]);
+                sum += grades[student][subject];
+            }
+            double average = sum / grades[student].length;
+            System.out.println("  Average: " + String.format("%.2f", average));
+            System.out.println();
+        }
+        
+        // Display class schedule
+        System.out.println("Class Schedule:");
+        System.out.print("\t\t");
+        for (int period = 0; period < subjects.length; period++) {
+            System.out.print("Period " + (period + 1) + "\t");
+        }
+        System.out.println();
+        
+        for (int day = 0; day < schedule.length; day++) {
+            System.out.print(days[day] + "\t");
+            for (int period = 0; period < schedule[day].length; period++) {
+                System.out.print(schedule[day][period] + "\t\t");
+            }
+            System.out.println();
+        }
+        
+        // Matrix operations
+        System.out.println("\nMatrix Operations:");
+        
+        // Transpose matrix
+        int[][] transpose = transposeMatrix(matrix);
+        System.out.println("Original Matrix:");
+        printMatrix(matrix);
+        System.out.println("Transposed Matrix:");
+        printMatrix(transpose);
+        
+        // Matrix multiplication
+        int[][] matrixA = {{1, 2}, {3, 4}};
+        int[][] matrixB = {{5, 6}, {7, 8}};
+        int[][] product = multiplyMatrices(matrixA, matrixB);
+        
+        System.out.println("Matrix A:");
+        printMatrix(matrixA);
+        System.out.println("Matrix B:");
+        printMatrix(matrixB);
+        System.out.println("A × B:");
+        printMatrix(product);
+    }
+    
+    // Method to transpose a matrix
+    public static int[][] transposeMatrix(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] transpose = new int[cols][rows];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                transpose[j][i] = matrix[i][j];
+            }
+        }
+        return transpose;
+    }
+    
+    // Method to multiply two matrices
+    public static int[][] multiplyMatrices(int[][] a, int[][] b) {
+        int rowsA = a.length;
+        int colsA = a[0].length;
+        int colsB = b[0].length;
+        
+        int[][] result = new int[rowsA][colsB];
+        
+        for (int i = 0; i < rowsA; i++) {
+            for (int j = 0; j < colsB; j++) {
+                for (int k = 0; k < colsA; k++) {
+                    result[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        return result;
+    }
+    
+    // Method to print matrix
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}`
+          },
+          arrayInMemory: {
+            title: "Array in Memory",
+            description: "Understanding how arrays are stored and managed in Java memory.",
+            heapStorage: {
+              title: "Arrays in Java are objects stored in heap memory.",
+              description: "Arrays are reference types, with the array object stored in heap and reference in stack.",
+              memoryLayout: [
+                "Array reference stored in stack memory",
+                "Array object (with elements) stored in heap memory",
+                "Array elements stored contiguously in heap",
+                "Array metadata (length, type) stored with the object"
+              ]
+            },
+            lengthProperty: {
+              title: "Every array has a built-in property: .length",
+              description: "The length property provides the number of elements in the array.",
+              characteristics: [
+                "Read-only property - cannot be modified",
+                "Available for all array types",
+                "Returns int value",
+                "Useful for bounds checking and iteration"
+              ]
+            },
+            example: `// Array memory and length demonstration
+public class ArrayMemoryDemo {
+    public static void main(String[] args) {
+        // Array creation and memory allocation
+        int[] numbers = new int[5];        // Heap: array object with 5 int elements
+        String[] names = new String[3];    // Heap: array object with 3 String references
+        
+        // Array length property
+        System.out.println("Array Lengths:");
+        System.out.println("numbers.length: " + numbers.length);  // Output: 5
+        System.out.println("names.length: " + names.length);      // Output: 3
+        
+        // Default values in arrays
+        System.out.println("\nDefault Values:");
+        System.out.println("int array defaults:");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println("numbers[" + i + "] = " + numbers[i]); // Output: 0
+        }
+        
+        System.out.println("\nString array defaults:");
+        for (int i = 0; i < names.length; i++) {
+            System.out.println("names[" + i + "] = " + names[i]); // Output: null
+        }
+        
+        // Memory sharing demonstration
+        int[] original = {1, 2, 3, 4, 5};
+        int[] reference = original;  // Both point to same array object
+        
+        System.out.println("\nMemory Sharing:");
+        System.out.println("Original array: " + java.util.Arrays.toString(original));
+        System.out.println("Reference array: " + java.util.Arrays.toString(reference));
+        
+        // Modify through reference
+        reference[2] = 99;
+        System.out.println("\nAfter modifying through reference:");
+        System.out.println("Original array: " + java.util.Arrays.toString(original));
+        System.out.println("Reference array: " + java.util.Arrays.toString(reference));
+        
+        // Array copying (creates new object)
+        int[] copy = original.clone();
+        copy[1] = 88;
+        
+        System.out.println("\nAfter cloning and modifying copy:");
+        System.out.println("Original array: " + java.util.Arrays.toString(original));
+        System.out.println("Copied array: " + java.util.Arrays.toString(copy));
+        
+        // Memory usage demonstration
+        demonstrateMemoryUsage();
+        
+        // Length property with different array types
+        boolean[] flags = {true, false, true};
+        double[] prices = {19.99, 25.50, 12.75, 8.99};
+        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+        
+        System.out.println("\nDifferent Array Lengths:");
+        System.out.println("flags.length: " + flags.length);
+        System.out.println("prices.length: " + prices.length);
+        System.out.println("vowels.length: " + vowels.length);
+        
+        // 2D array length
+        int[][] matrix = {{1, 2, 3}, {4, 5}, {6, 7, 8, 9}};
+        System.out.println("\n2D Array Lengths:");
+        System.out.println("matrix.length: " + matrix.length);           // Number of rows
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.println("matrix[" + i + "].length: " + matrix[i].length);
+        }
+    }
+    
+    public static void demonstrateMemoryUsage() {
+        System.out.println("\nMemory Usage Demonstration:");
+        
+        // Small array
+        int[] small = new int[10];
+        System.out.println("Small array length: " + small.length);
+        
+        // Large array
+        int[] large = new int[1000000];
+        System.out.println("Large array length: " + large.length);
+        
+        // Array of objects
+        String[] strings = new String[5];
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = "String " + i;
+        }
+        System.out.println("String array length: " + strings.length);
+        
+        // Demonstrate that length is read-only
+        // strings.length = 10; // This would cause compilation error
+        
+        System.out.println("Array length is read-only and cannot be modified");
+    }
+}`
+          },
+          arrayWithMethods: {
+            title: "Array with Methods",
+            description: "Passing arrays to methods and returning arrays from methods.",
+            passingArrays: {
+              title: "Passing arrays to methods",
+              description: "Arrays are passed by reference, allowing methods to modify the original array."
+            },
+            returningArrays: {
+              title: "Returning arrays from methods",
+              description: "Methods can create and return new arrays or return references to existing arrays."
+            },
+            example: `// Array methods demonstration
+public class ArrayMethodsDemo {
+    public static void main(String[] args) {
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90};
+        String[] names = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
+        double[] prices = {19.99, 25.50, 12.75, 8.99, 15.25};
+        
+        System.out.println("Original arrays:");
+        System.out.println("Numbers: " + java.util.Arrays.toString(numbers));
+        System.out.println("Names: " + java.util.Arrays.toString(names));
+        System.out.println("Prices: " + java.util.Arrays.toString(prices));
+        
+        // Method calls with arrays
+        printArray(numbers);
+        printStringArray(names);
+        
+        // Methods that modify arrays
+        doubleValues(numbers);
+        System.out.println("\nAfter doubling: " + java.util.Arrays.toString(numbers));
+        
+        capitalizeNames(names);
+        System.out.println("Capitalized names: " + java.util.Arrays.toString(names));
+        
+        // Methods that return values
+        int sum = calculateSum(numbers);
+        double average = calculateAverage(prices);
+        int max = findMaximum(numbers);
+        String longest = findLongestString(names);
+        
+        System.out.println("\nCalculated values:");
+        System.out.println("Sum: " + sum);
+        System.out.println("Average price: $" + String.format("%.2f", average));
+        System.out.println("Maximum number: " + max);
+        System.out.println("Longest name: " + longest);
+        
+        // Methods that return arrays
+        int[] evenNumbers = filterEvenNumbers(numbers);
+        String[] shortNames = filterShortNames(names, 5);
+        double[] discountedPrices = applyDiscount(prices, 0.1);
+        
+        System.out.println("\nFiltered/Modified arrays:");
+        System.out.println("Even numbers: " + java.util.Arrays.toString(evenNumbers));
+        System.out.println("Short names: " + java.util.Arrays.toString(shortNames));
+        System.out.println("Discounted prices: " + java.util.Arrays.toString(discountedPrices));
+        
+        // Array sorting and searching
+        int[] sortedNumbers = getSortedCopy(numbers);
+        System.out.println("\nSorted copy: " + java.util.Arrays.toString(sortedNumbers));
+        
+        int searchValue = 50;
+        int index = linearSearch(numbers, searchValue);
+        if (index != -1) {
+            System.out.println("Found " + searchValue + " at index " + index);
+        } else {
+            System.out.println(searchValue + " not found in array");
+        }
+        
+        // 2D array methods
+        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        print2DArray(matrix);
+        
+        int matrixSum = sum2DArray(matrix);
+        System.out.println("Matrix sum: " + matrixSum);
+        
+        int[][] transposed = transpose(matrix);
+        System.out.println("\nTransposed matrix:");
+        print2DArray(transposed);
+    }
+    
+    // Method to print integer array
+    public static void printArray(int[] arr) {
+        System.out.println("\nPrinting array:");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+    
+    // Method to print string array
+    public static void printStringArray(String[] arr) {
+        System.out.println("\nString array contents:");
+        for (String str : arr) {
+            System.out.println("- " + str);
+        }
+    }
+    
+    // Method that modifies array elements
+    public static void doubleValues(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] *= 2;
+        }
+    }
+    
+    // Method that modifies string array
+    public static void capitalizeNames(String[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].toUpperCase();
+        }
+    }
+    
+    // Method that returns a calculated value
+    public static int calculateSum(int[] arr) {
+        int sum = 0;
+        for (int num : arr) {
+            sum += num;
+        }
+        return sum;
+    }
+    
+    // Method that calculates average
+    public static double calculateAverage(double[] arr) {
+        double sum = 0;
+        for (double num : arr) {
+            sum += num;
+        }
+        return sum / arr.length;
+    }
+    
+    // Method that finds maximum value
+    public static int findMaximum(int[] arr) {
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+    
+    // Method that finds longest string
+    public static String findLongestString(String[] arr) {
+        String longest = arr[0];
+        for (String str : arr) {
+            if (str.length() > longest.length()) {
+                longest = str;
+            }
+        }
+        return longest;
+    }
+    
+    // Method that returns a new array
+    public static int[] filterEvenNumbers(int[] arr) {
+        // Count even numbers first
+        int count = 0;
+        for (int num : arr) {
+            if (num % 2 == 0) count++;
+        }
+        
+        // Create array for even numbers
+        int[] evenNumbers = new int[count];
+        int index = 0;
+        for (int num : arr) {
+            if (num % 2 == 0) {
+                evenNumbers[index++] = num;
+            }
+        }
+        return evenNumbers;
+    }
+    
+    // Method that filters strings by length
+    public static String[] filterShortNames(String[] arr, int maxLength) {
+        int count = 0;
+        for (String str : arr) {
+            if (str.length() < maxLength) count++;
+        }
+        
+        String[] shortNames = new String[count];
+        int index = 0;
+        for (String str : arr) {
+            if (str.length() < maxLength) {
+                shortNames[index++] = str;
+            }
+        }
+        return shortNames;
+    }
+    
+    // Method that applies discount to prices
+    public static double[] applyDiscount(double[] prices, double discountRate) {
+        double[] discounted = new double[prices.length];
+        for (int i = 0; i < prices.length; i++) {
+            discounted[i] = prices[i] * (1 - discountRate);
+        }
+        return discounted;
+    }
+    
+    // Method that returns sorted copy
+    public static int[] getSortedCopy(int[] arr) {
+        int[] copy = arr.clone();
+        java.util.Arrays.sort(copy);
+        return copy;
+    }
+    
+    // Linear search method
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i;
+            }
+        }
+        return -1; // Not found
+    }
+    
+    // 2D array methods
+    public static void print2DArray(int[][] arr) {
+        System.out.println("\n2D Array:");
+        for (int[] row : arr) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+    }
+    
+    public static int sum2DArray(int[][] arr) {
+        int sum = 0;
+        for (int[] row : arr) {
+            for (int element : row) {
+                sum += element;
+            }
+        }
+        return sum;
+    }
+    
+    public static int[][] transpose(int[][] arr) {
+        int rows = arr.length;
+        int cols = arr[0].length;
+        int[][] result = new int[cols][rows];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[j][i] = arr[i][j];
+            }
+        }
+        return result;
+    }
+}`
+          },
+          arraysAndObjectReferences: {
+            title: "Arrays and Object References",
+            description: "Understanding how arrays store references to objects rather than the objects themselves.",
+            example: `// Arrays with object references demonstration
+public class ArrayObjectReferencesDemo {
+    public static void main(String[] args) {
+        // String array - stores references to String objects
+        String[] names = new String[3];
+        names[0] = "Alice";
+        names[1] = "Bob";
+        names[2] = "Charlie";
+        
+        System.out.println("String Array:");
+        for (int i = 0; i < names.length; i++) {
+            System.out.println("names[" + i + "] = " + names[i]);
+        }
+        
+        // Student object array
+        Student[] students = new Student[3];
+        students[0] = new Student("Alice Johnson", 20, 3.8);
+        students[1] = new Student("Bob Smith", 19, 3.6);
+        students[2] = new Student("Charlie Brown", 21, 3.9);
+        
+        System.out.println("\nStudent Array:");
+        for (Student student : students) {
+            student.displayInfo();
+        }
+        
+        // Demonstrate reference sharing
+        Student[] studentRefs = new Student[2];
+        studentRefs[0] = students[0];  // Same reference as students[0]
+        studentRefs[1] = students[1];  // Same reference as students[1]
+        
+        System.out.println("\nBefore modification:");
+        System.out.println("students[0]: " + students[0].getName());
+        System.out.println("studentRefs[0]: " + studentRefs[0].getName());
+        
+        // Modify through one reference
+        studentRefs[0].setName("Alice Williams");
+        
+        System.out.println("\nAfter modification through studentRefs[0]:");
+        System.out.println("students[0]: " + students[0].getName());
+        System.out.println("studentRefs[0]: " + studentRefs[0].getName());
+        
+        // Array of different object types
+        Object[] objects = new Object[5];
+        objects[0] = "Hello World";           // String object
+        objects[1] = new Integer(42);         // Integer object
+        objects[2] = new Double(3.14);        // Double object
+        objects[3] = new Student("Diana", 22, 3.7); // Student object
+        objects[4] = new int[]{1, 2, 3};      // Array object
+        
+        System.out.println("\nObject Array (Polymorphism):");
+        for (int i = 0; i < objects.length; i++) {
+            System.out.println("objects[" + i + "] = " + objects[i] + 
+                             " (Type: " + objects[i].getClass().getSimpleName() + ")");
+        }
+        
+        // Null references in arrays
+        String[] nullableStrings = new String[3];
+        nullableStrings[0] = "First";
+        // nullableStrings[1] remains null
+        nullableStrings[2] = "Third";
+        
+        System.out.println("\nArray with null references:");
+        for (int i = 0; i < nullableStrings.length; i++) {
+            if (nullableStrings[i] != null) {
+                System.out.println("nullableStrings[" + i + "] = " + nullableStrings[i]);
+            } else {
+                System.out.println("nullableStrings[" + i + "] = null");
+            }
+        }
+        
+        // Safe iteration with null checking
+        System.out.println("\nSafe iteration:");
+        for (String str : nullableStrings) {
+            if (str != null) {
+                System.out.println("Length of '" + str + "': " + str.length());
+            } else {
+                System.out.println("Null reference encountered");
+            }
+        }
+        
+        // Array copying with object references
+        Student[] originalStudents = {students[0], students[1]};
+        Student[] copiedStudents = originalStudents.clone();
+        
+        System.out.println("\nArray copying demonstration:");
+        System.out.println("Original and copied arrays are different objects: " + 
+                          (originalStudents != copiedStudents));
+        System.out.println("But they contain references to same Student objects: " + 
+                          (originalStudents[0] == copiedStudents[0]));
+        
+        // Modify student through copied array
+        copiedStudents[0].setGpa(4.0);
+        System.out.println("\nAfter modifying student through copied array:");
+        System.out.println("Original array student GPA: " + originalStudents[0].getGpa());
+        System.out.println("Copied array student GPA: " + copiedStudents[0].getGpa());
+    }
+}
+
+// Student class for demonstration
+class Student {
+    private String name;
+    private int age;
+    private double gpa;
+    
+    public Student(String name, int age, double gpa) {
+        this.name = name;
+        this.age = age;
+        this.gpa = gpa;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Student: " + name + ", Age: " + age + ", GPA: " + gpa);
+    }
+    
+    // Getters and setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+    public double getGpa() { return gpa; }
+    public void setGpa(double gpa) { this.gpa = gpa; }
+    
+    @Override
+    public String toString() {
+        return name + "(" + age + ", GPA: " + gpa + ")";
+    }
+}`
+          },
+          arraysUtilityClass: {
+            title: "Arrays Utility Class (java.util.Arrays)",
+            description: "The Arrays class provides static methods for common array operations like sorting, searching, and comparing.",
+            methods: {
+              sort: {
+                method: "Arrays.sort(arr)",
+                description: "Sort array in ascending order"
+              },
+              toString: {
+                method: "Arrays.toString(arr)",
+                description: "Convert array to string representation"
+              },
+              copyOf: {
+                method: "Arrays.copyOf(arr, newLength)",
+                description: "Create a copy of array with specified length"
+              },
+              equals: {
+                method: "Arrays.equals(arr1, arr2)",
+                description: "Compare two arrays for equality"
+              },
+              fill: {
+                method: "Arrays.fill(arr, value)",
+                description: "Fill array with specified value"
+              },
+              binarySearch: {
+                method: "Arrays.binarySearch(arr, key)",
+                description: "Search for element in sorted array"
+              }
+            },
+            example: `import java.util.Arrays;
+
+// Arrays utility class demonstration
+public class ArraysUtilityDemo {
+    public static void main(String[] args) {
+        // Original arrays for demonstration
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90};
+        String[] fruits = {"banana", "apple", "orange", "grape", "kiwi"};
+        double[] prices = {19.99, 25.50, 12.75, 8.99, 15.25};
+        
+        System.out.println("Original Arrays:");
+        System.out.println("Numbers: " + Arrays.toString(numbers));
+        System.out.println("Fruits: " + Arrays.toString(fruits));
+        System.out.println("Prices: " + Arrays.toString(prices));
+        
+        // 1. Arrays.sort() - Sort arrays
+        int[] sortedNumbers = numbers.clone();
+        Arrays.sort(sortedNumbers);
+        
+        String[] sortedFruits = fruits.clone();
+        Arrays.sort(sortedFruits);
+        
+        double[] sortedPrices = prices.clone();
+        Arrays.sort(sortedPrices);
+        
+        System.out.println("\nAfter Sorting:");
+        System.out.println("Sorted Numbers: " + Arrays.toString(sortedNumbers));
+        System.out.println("Sorted Fruits: " + Arrays.toString(sortedFruits));
+        System.out.println("Sorted Prices: " + Arrays.toString(sortedPrices));
+        
+        // 2. Arrays.copyOf() - Copy arrays
+        int[] shortCopy = Arrays.copyOf(numbers, 3);        // Copy first 3 elements
+        int[] longCopy = Arrays.copyOf(numbers, 10);        // Copy with padding
+        String[] fruitCopy = Arrays.copyOf(fruits, fruits.length);
+        
+        System.out.println("\nArray Copying:");
+        System.out.println("Short copy (3 elements): " + Arrays.toString(shortCopy));
+        System.out.println("Long copy (10 elements): " + Arrays.toString(longCopy));
+        System.out.println("Fruit copy: " + Arrays.toString(fruitCopy));
+        
+        // 3. Arrays.copyOfRange() - Copy specific range
+        int[] rangeCopy = Arrays.copyOfRange(numbers, 2, 5); // Copy elements 2-4
+        System.out.println("Range copy (index 2-4): " + Arrays.toString(rangeCopy));
+        
+        // 4. Arrays.equals() - Compare arrays
+        int[] numbers2 = {64, 34, 25, 12, 22, 11, 90};
+        int[] numbers3 = {1, 2, 3, 4, 5};
+        
+        System.out.println("\nArray Comparison:");
+        System.out.println("numbers equals numbers2: " + Arrays.equals(numbers, numbers2));
+        System.out.println("numbers equals numbers3: " + Arrays.equals(numbers, numbers3));
+        System.out.println("fruits equals fruitCopy: " + Arrays.equals(fruits, fruitCopy));
+        
+        // 5. Arrays.fill() - Fill array with value
+        int[] fillArray = new int[5];
+        Arrays.fill(fillArray, 42);
+        
+        double[] fillPrices = new double[4];
+        Arrays.fill(fillPrices, 9.99);
+        
+        System.out.println("\nFilled Arrays:");
+        System.out.println("Fill with 42: " + Arrays.toString(fillArray));
+        System.out.println("Fill with 9.99: " + Arrays.toString(fillPrices));
+        
+        // Fill specific range
+        int[] partialFill = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        Arrays.fill(partialFill, 3, 7, 0); // Fill indices 3-6 with 0
+        System.out.println("Partial fill (index 3-6 with 0): " + Arrays.toString(partialFill));
+        
+        // 6. Arrays.binarySearch() - Search in sorted array
+        System.out.println("\nBinary Search (requires sorted array):");
+        int searchIndex = Arrays.binarySearch(sortedNumbers, 25);
+        System.out.println("Index of 25 in sorted array: " + searchIndex);
+        
+        int notFoundIndex = Arrays.binarySearch(sortedNumbers, 100);
+        System.out.println("Index of 100 (not found): " + notFoundIndex + " (negative value indicates insertion point)");
+        
+        // String binary search
+        int fruitIndex = Arrays.binarySearch(sortedFruits, "grape");
+        System.out.println("Index of 'grape' in sorted fruits: " + fruitIndex);
+        
+        // 7. Arrays.deepToString() - For multidimensional arrays
+        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        System.out.println("\n2D Array Representation:");
+        System.out.println("Using toString(): " + Arrays.toString(matrix)); // Shows references
+        System.out.println("Using deepToString(): " + Arrays.deepToString(matrix)); // Shows content
+        
+        // 8. Arrays.deepEquals() - For multidimensional arrays
+        int[][] matrix2 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        int[][] matrix3 = {{1, 2}, {3, 4}};
+        
+        System.out.println("\n2D Array Comparison:");
+        System.out.println("matrix equals matrix2: " + Arrays.deepEquals(matrix, matrix2));
+        System.out.println("matrix equals matrix3: " + Arrays.deepEquals(matrix, matrix3));
+        
+        // 9. Arrays.asList() - Convert array to List
+        String[] colorArray = {"Red", "Green", "Blue"};
+        java.util.List<String> colorList = Arrays.asList(colorArray);
+        
+        System.out.println("\nArray to List conversion:");
+        System.out.println("Original array: " + Arrays.toString(colorArray));
+        System.out.println("Converted list: " + colorList);
+        
+        // Note: The list is backed by the array, so changes affect both
+        colorList.set(0, "Yellow");
+        System.out.println("After modifying list:");
+        System.out.println("Array: " + Arrays.toString(colorArray));
+        System.out.println("List: " + colorList);
+        
+        // 10. Practical example: Array operations workflow
+        demonstrateArrayWorkflow();
+    }
+    
+    public static void demonstrateArrayWorkflow() {
+        System.out.println("\n=== Array Operations Workflow ===");
+        
+        // Step 1: Create and fill array
+        int[] data = new int[10];
+        Arrays.fill(data, -1);
+        System.out.println("1. Initial array: " + Arrays.toString(data));
+        
+        // Step 2: Add some data
+        int[] actualData = {45, 23, 67, 12, 89, 34, 56, 78};
+        System.arraycopy(actualData, 0, data, 0, actualData.length);
+        System.out.println("2. With data: " + Arrays.toString(data));
+        
+        // Step 3: Create working copy
+        int[] workingCopy = Arrays.copyOf(data, actualData.length);
+        System.out.println("3. Working copy: " + Arrays.toString(workingCopy));
+        
+        // Step 4: Sort the working copy
+        Arrays.sort(workingCopy);
+        System.out.println("4. Sorted copy: " + Arrays.toString(workingCopy));
+        
+        // Step 5: Search for values
+        int searchValue = 67;
+        int index = Arrays.binarySearch(workingCopy, searchValue);
+        System.out.println("5. Found " + searchValue + " at index: " + index);
+        
+        // Step 6: Compare arrays
+        boolean arraysEqual = Arrays.equals(data, workingCopy);
+        System.out.println("6. Original equals sorted: " + arraysEqual);
+        
+        System.out.println("Workflow completed successfully!");
+    }
+}`
+          }
+        },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
