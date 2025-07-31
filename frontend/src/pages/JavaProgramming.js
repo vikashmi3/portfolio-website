@@ -9071,6 +9071,499 @@ class SleepYieldDemo implements Runnable {
     }
 }`
           },
+          threadLifecycle: {
+            title: "Thread Lifecycle",
+            description: "Understanding the different states a thread goes through during its lifetime.",
+            states: {
+              newState: {
+                title: "New – Thread created",
+                description: "Thread object created but start() not called yet"
+              },
+              runnable: {
+                title: "Runnable – Ready to run",
+                description: "Thread is ready to run and waiting for CPU time"
+              },
+              running: {
+                title: "Running – Currently executing",
+                description: "Thread is currently executing its run() method"
+              },
+              blocked: {
+                title: "Blocked/Waiting – Temporarily inactive",
+                description: "Thread is waiting for a resource or another thread"
+              },
+              terminated: {
+                title: "Terminated – Finished",
+                description: "Thread has completed execution or was terminated"
+              }
+            },
+            example: `// Thread lifecycle demonstration
+public class ThreadLifecycleDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Thread Lifecycle Demonstration ===");
+        
+        LifecycleThread thread = new LifecycleThread();
+        
+        // NEW state
+        System.out.println("1. NEW state: " + thread.getState());
+        System.out.println("   isAlive: " + thread.isAlive());
+        
+        // Start thread - moves to RUNNABLE
+        thread.start();
+        System.out.println("\n2. After start() - RUNNABLE state: " + thread.getState());
+        System.out.println("   isAlive: " + thread.isAlive());
+        
+        // Monitor thread states
+        Thread monitor = new Thread(() -> {
+            while (thread.isAlive()) {
+                Thread.State currentState = thread.getState();
+                System.out.println("   Current state: " + currentState);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        });
+        monitor.start();
+        
+        // Wait for thread to complete
+        try {
+            thread.join();
+            monitor.interrupt();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        // TERMINATED state
+        System.out.println("\n3. TERMINATED state: " + thread.getState());
+        System.out.println("   isAlive: " + thread.isAlive());
+        
+        // Demonstrate blocked state
+        demonstrateBlockedState();
+    }
+    
+    public static void demonstrateBlockedState() {
+        System.out.println("\n=== Blocked State Demonstration ===");
+        
+        Object lock = new Object();
+        
+        Thread thread1 = new Thread(() -> {
+            synchronized (lock) {
+                System.out.println("Thread 1 acquired lock");
+                try {
+                    Thread.sleep(3000); // Hold lock for 3 seconds
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println("Thread 1 releasing lock");
+            }
+        }, "Thread-1");
+        
+        Thread thread2 = new Thread(() -> {
+            System.out.println("Thread 2 trying to acquire lock");
+            synchronized (lock) {
+                System.out.println("Thread 2 acquired lock");
+            }
+        }, "Thread-2");
+        
+        thread1.start();
+        
+        // Give thread1 time to acquire lock
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        thread2.start();
+        
+        // Check thread2 state (should be BLOCKED)
+        try {
+            Thread.sleep(500);
+            System.out.println("Thread 2 state while waiting for lock: " + thread2.getState());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class LifecycleThread extends Thread {
+    @Override
+    public void run() {
+        System.out.println("\n   Thread started - RUNNING state");
+        
+        // Simulate some work
+        for (int i = 1; i <= 3; i++) {
+            System.out.println("   Working... step " + i);
+            try {
+                Thread.sleep(1000); // TIMED_WAITING state
+            } catch (InterruptedException e) {
+                System.out.println("   Thread interrupted");
+                return;
+            }
+        }
+        
+        System.out.println("   Thread work completed");
+    }
+}`
+          },
+          threadPriority: {
+            title: "Thread Priority",
+            description: "Thread scheduling based on priority levels from 1 to 10.",
+            priorityLevels: {
+              min: "Thread.MIN_PRIORITY (1)",
+              norm: "Thread.NORM_PRIORITY (5) - Default",
+              max: "Thread.MAX_PRIORITY (10)"
+            },
+            example: `// Thread priority demonstration
+public class ThreadPriorityDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Thread Priority Demonstration ===");
+        
+        // Create threads with different priorities
+        PriorityTask lowPriorityTask = new PriorityTask("Low Priority", 5);
+        PriorityTask normalPriorityTask = new PriorityTask("Normal Priority", 5);
+        PriorityTask highPriorityTask = new PriorityTask("High Priority", 5);
+        
+        Thread lowThread = new Thread(lowPriorityTask, "Low-Thread");
+        Thread normalThread = new Thread(normalPriorityTask, "Normal-Thread");
+        Thread highThread = new Thread(highPriorityTask, "High-Thread");
+        
+        // Set priorities
+        lowThread.setPriority(Thread.MIN_PRIORITY);    // 1
+        normalThread.setPriority(Thread.NORM_PRIORITY); // 5 (default)
+        highThread.setPriority(Thread.MAX_PRIORITY);   // 10
+        
+        System.out.println("Thread Priorities:");
+        System.out.println("Low Thread: " + lowThread.getPriority());
+        System.out.println("Normal Thread: " + normalThread.getPriority());
+        System.out.println("High Thread: " + highThread.getPriority());
+        
+        // Start all threads simultaneously
+        System.out.println("\nStarting all threads...");
+        long startTime = System.currentTimeMillis();
+        
+        lowThread.start();
+        normalThread.start();
+        highThread.start();
+        
+        // Wait for all threads to complete
+        try {
+            lowThread.join();
+            normalThread.join();
+            highThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        long totalTime = System.currentTimeMillis() - startTime;
+        System.out.println("\nAll threads completed in " + totalTime + "ms");
+        
+        // Display completion order
+        System.out.println("\nCompletion order:");
+        System.out.println("1st: " + PriorityTask.completionOrder.get(0));
+        System.out.println("2nd: " + PriorityTask.completionOrder.get(1));
+        System.out.println("3rd: " + PriorityTask.completionOrder.get(2));
+        
+        // Demonstrate main thread priority
+        demonstrateMainThreadPriority();
+    }
+    
+    public static void demonstrateMainThreadPriority() {
+        System.out.println("\n=== Main Thread Priority ===");
+        
+        Thread mainThread = Thread.currentThread();
+        System.out.println("Main thread name: " + mainThread.getName());
+        System.out.println("Main thread priority: " + mainThread.getPriority());
+        System.out.println("Main thread group: " + mainThread.getThreadGroup().getName());
+        
+        // Create child thread - inherits parent priority
+        Thread childThread = new Thread(() -> {
+            Thread current = Thread.currentThread();
+            System.out.println("Child thread priority (inherited): " + current.getPriority());
+        }, "Child-Thread");
+        
+        childThread.start();
+        
+        try {
+            childThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class PriorityTask implements Runnable {
+    private String taskName;
+    private int iterations;
+    public static java.util.List<String> completionOrder = 
+        new java.util.concurrent.CopyOnWriteArrayList<>();
+    
+    public PriorityTask(String taskName, int iterations) {
+        this.taskName = taskName;
+        this.iterations = iterations;
+    }
+    
+    @Override
+    public void run() {
+        Thread currentThread = Thread.currentThread();
+        System.out.println(taskName + " started (Priority: " + 
+                          currentThread.getPriority() + ")");
+        
+        long startTime = System.currentTimeMillis();
+        
+        // Simulate CPU-intensive work
+        for (int i = 1; i <= iterations; i++) {
+            // Perform some computation
+            for (int j = 0; j < 1000000; j++) {
+                Math.sqrt(j);
+            }
+            
+            System.out.println(taskName + " - Iteration " + i + " completed");
+            
+            // Small delay to allow thread switching
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        
+        long executionTime = System.currentTimeMillis() - startTime;
+        System.out.println(taskName + " finished in " + executionTime + "ms");
+        
+        completionOrder.add(taskName);
+    }
+}`
+          },
+          threadSynchronization: {
+            title: "Thread Synchronization",
+            description: "Preventing race conditions when multiple threads access shared resources.",
+            raceCondition: {
+              title: "Race Condition Problem",
+              description: "When multiple threads access shared data simultaneously, leading to inconsistent results."
+            },
+            synchronizedMethod: {
+              title: "Synchronized Methods",
+              syntax: "synchronized void methodName() { ... }",
+              description: "Entire method is synchronized, only one thread can execute it at a time."
+            },
+            synchronizedBlock: {
+              title: "Synchronized Blocks",
+              syntax: "synchronized(object) { ... }",
+              description: "Only specific code block is synchronized, more granular control."
+            },
+            example: `// Thread synchronization demonstration
+public class ThreadSynchronizationDemo {
+    public static void main(String[] args) {
+        System.out.println("=== Thread Synchronization Demo ===");
+        
+        // Demonstrate race condition without synchronization
+        System.out.println("\n1. Without Synchronization (Race Condition):");
+        demonstrateRaceCondition();
+        
+        // Demonstrate synchronized methods
+        System.out.println("\n2. With Synchronized Methods:");
+        demonstrateSynchronizedMethods();
+        
+        // Demonstrate synchronized blocks
+        System.out.println("\n3. With Synchronized Blocks:");
+        demonstrateSynchronizedBlocks();
+    }
+    
+    public static void demonstrateRaceCondition() {
+        UnsafeCounter counter = new UnsafeCounter();
+        
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 1000; j++) {
+                    counter.increment();
+                }
+            }, "Thread-" + (i + 1));
+        }
+        
+        // Start all threads
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        System.out.println("Expected count: 5000");
+        System.out.println("Actual count: " + counter.getCount());
+        System.out.println("Data corruption occurred: " + (counter.getCount() != 5000));
+    }
+    
+    public static void demonstrateSynchronizedMethods() {
+        SafeCounter counter = new SafeCounter();
+        
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 1000; j++) {
+                    counter.increment();
+                }
+            }, "Safe-Thread-" + (i + 1));
+        }
+        
+        // Start all threads
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        System.out.println("Expected count: 5000");
+        System.out.println("Actual count: " + counter.getCount());
+        System.out.println("Data integrity maintained: " + (counter.getCount() == 5000));
+    }
+    
+    public static void demonstrateSynchronizedBlocks() {
+        BankAccount account = new BankAccount(1000);
+        
+        // Multiple threads trying to withdraw money
+        Thread[] withdrawThreads = new Thread[3];
+        for (int i = 0; i < withdrawThreads.length; i++) {
+            final int threadId = i + 1;
+            withdrawThreads[i] = new Thread(() -> {
+                for (int j = 0; j < 5; j++) {
+                    account.withdraw(50, "Thread-" + threadId);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }, "Withdraw-Thread-" + threadId);
+        }
+        
+        // Multiple threads trying to deposit money
+        Thread[] depositThreads = new Thread[2];
+        for (int i = 0; i < depositThreads.length; i++) {
+            final int threadId = i + 1;
+            depositThreads[i] = new Thread(() -> {
+                for (int j = 0; j < 3; j++) {
+                    account.deposit(100, "Deposit-Thread-" + threadId);
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }, "Deposit-Thread-" + threadId);
+        }
+        
+        // Start all threads
+        for (Thread thread : withdrawThreads) {
+            thread.start();
+        }
+        for (Thread thread : depositThreads) {
+            thread.start();
+        }
+        
+        // Wait for all threads to complete
+        for (Thread thread : withdrawThreads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Thread thread : depositThreads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        System.out.println("Final account balance: $" + account.getBalance());
+    }
+}
+
+// Unsafe counter (race condition)
+class UnsafeCounter {
+    private int count = 0;
+    
+    public void increment() {
+        count++; // Not atomic operation
+    }
+    
+    public int getCount() {
+        return count;
+    }
+}
+
+// Safe counter with synchronized methods
+class SafeCounter {
+    private int count = 0;
+    
+    public synchronized void increment() {
+        count++; // Atomic operation due to synchronization
+    }
+    
+    public synchronized int getCount() {
+        return count;
+    }
+}
+
+// Bank account with synchronized blocks
+class BankAccount {
+    private double balance;
+    private final Object lock = new Object();
+    
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+    
+    public void withdraw(double amount, String threadName) {
+        synchronized (lock) {
+            if (balance >= amount) {
+                System.out.println(threadName + " withdrawing $" + amount);
+                balance -= amount;
+                System.out.println(threadName + " withdrawal successful. Balance: $" + balance);
+            } else {
+                System.out.println(threadName + " withdrawal failed. Insufficient funds. Balance: $" + balance);
+            }
+        }
+    }
+    
+    public void deposit(double amount, String threadName) {
+        synchronized (lock) {
+            System.out.println(threadName + " depositing $" + amount);
+            balance += amount;
+            System.out.println(threadName + " deposit successful. Balance: $" + balance);
+        }
+    }
+    
+    public synchronized double getBalance() {
+        return balance;
+    }
+}`
+          },
       advancedTheory: {
         jvmInternals: {
           title: "JVM Internal Architecture",
