@@ -1546,18 +1546,312 @@ public class StudentManagementExample {
 
         {/* Exception Handling */}
         <section id="exceptions" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">10. Exception Handling</h2>
+          <h2 className="text-3xl font-bold mb-6">12. Exception Handling</h2>
+          <p className="text-gray-700 mb-6">
+            Exception handling allows programs to handle runtime errors gracefully without crashing.
+          </p>
           
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-3">Try-Catch Example</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`public class ExceptionExample {
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Try-Catch-Finally</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`public class ExceptionHandling {
     public static void main(String[] args) {
         try {
-            int result = 10 / 0;
-        } catch (ArithmeticException e) {
-            System.out.println("Cannot divide by zero!");
+            int[] arr = {1, 2, 3};
+            System.out.println(arr[5]); // ArrayIndexOutOfBoundsException
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("General exception: " + e.getMessage());
+        } finally {
+            System.out.println("This always executes");
         }
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Custom Exceptions</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class CustomExceptionExample {
+    public static void validateAge(int age) throws InvalidAgeException {
+        if (age < 0 || age > 150) {
+            throw new InvalidAgeException("Age must be between 0 and 150");
+        }
+        System.out.println("Valid age: " + age);
+    }
+    
+    public static void main(String[] args) {
+        try {
+            validateAge(25);
+            validateAge(-5);
+        } catch (InvalidAgeException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}`}
+            </pre>
+          </div>
+        </section>
+
+        {/* File I/O */}
+        <section id="fileio" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">13. File I/O</h2>
+          <p className="text-gray-700 mb-6">
+            Java provides various classes for reading from and writing to files.
+          </p>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">File Reading and Writing</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class FileIOExample {
+    public static void main(String[] args) {
+        // Writing to file
+        try {
+            FileWriter writer = new FileWriter("example.txt");
+            writer.write("Hello World!\n");
+            writer.write("Java File I/O\n");
+            writer.close();
+            System.out.println("File written successfully");
+        } catch (IOException e) {
+            System.out.println("Error writing file: " + e.getMessage());
+        }
+        
+        // Reading from file
+        try {
+            Scanner scanner = new Scanner(new File("example.txt"));
+            while (scanner.hasNextLine()) {
+                System.out.println(scanner.nextLine());
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">BufferedReader and BufferedWriter</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`import java.io.*;
+
+public class BufferedIOExample {
+    public static void main(String[] args) {
+        // Writing with BufferedWriter
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt"))) {
+            writer.write("Line 1");
+            writer.newLine();
+            writer.write("Line 2");
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+        // Reading with BufferedReader
+        try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Collections */}
+        <section id="collections" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">14. Collections</h2>
+          <p className="text-gray-700 mb-6">
+            Collections framework provides data structures like List, Set, and Map.
+          </p>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">ArrayList and LinkedList</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`import java.util.*;
+
+public class ListExample {
+    public static void main(String[] args) {
+        // ArrayList
+        List<String> arrayList = new ArrayList<>();
+        arrayList.add("Apple");
+        arrayList.add("Banana");
+        arrayList.add("Cherry");
+        
+        System.out.println("ArrayList: " + arrayList);
+        System.out.println("Size: " + arrayList.size());
+        System.out.println("Get index 1: " + arrayList.get(1));
+        
+        // LinkedList
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        linkedList.add(10);
+        linkedList.add(20);
+        linkedList.addFirst(5);
+        linkedList.addLast(30);
+        
+        System.out.println("LinkedList: " + linkedList);
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">HashMap and TreeMap</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`import java.util.*;
+
+public class MapExample {
+    public static void main(String[] args) {
+        // HashMap
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("Alice", 25);
+        hashMap.put("Bob", 30);
+        hashMap.put("Charlie", 35);
+        
+        System.out.println("HashMap: " + hashMap);
+        System.out.println("Alice's age: " + hashMap.get("Alice"));
+        
+        // TreeMap (sorted)
+        Map<String, Integer> treeMap = new TreeMap<>();
+        treeMap.put("Zebra", 1);
+        treeMap.put("Apple", 2);
+        treeMap.put("Banana", 3);
+        
+        System.out.println("TreeMap (sorted): " + treeMap);
+    }
+}`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Multithreading */}
+        <section id="synchronization" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">15. Multithreading & Synchronization</h2>
+          <p className="text-gray-700 mb-6">
+            Multithreading allows concurrent execution of multiple threads.
+          </p>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Creating Threads</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Method 1: Extending Thread class
+class MyThread extends Thread {
+    private String name;
+    
+    public MyThread(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(name + ": " + i);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
+
+// Method 2: Implementing Runnable interface
+class MyRunnable implements Runnable {
+    private String name;
+    
+    public MyRunnable(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(name + ": " + i);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
+
+public class ThreadExample {
+    public static void main(String[] args) {
+        // Using Thread class
+        MyThread thread1 = new MyThread("Thread-1");
+        thread1.start();
+        
+        // Using Runnable interface
+        Thread thread2 = new Thread(new MyRunnable("Thread-2"));
+        thread2.start();
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Synchronization</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`class Counter {
+    private int count = 0;
+    
+    // Synchronized method
+    public synchronized void increment() {
+        count++;
+    }
+    
+    public int getCount() {
+        return count;
+    }
+}
+
+class CounterThread extends Thread {
+    private Counter counter;
+    
+    public CounterThread(Counter counter) {
+        this.counter = counter;
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            counter.increment();
+        }
+    }
+}
+
+public class SynchronizationExample {
+    public static void main(String[] args) throws InterruptedException {
+        Counter counter = new Counter();
+        
+        CounterThread t1 = new CounterThread(counter);
+        CounterThread t2 = new CounterThread(counter);
+        
+        t1.start();
+        t2.start();
+        
+        t1.join();
+        t2.join();
+        
+        System.out.println("Final count: " + counter.getCount());
     }
 }`}
             </pre>
