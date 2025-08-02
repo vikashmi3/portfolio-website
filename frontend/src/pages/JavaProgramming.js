@@ -850,32 +850,351 @@ public class OOPExample {
         {/* Inheritance */}
         <section id="inheritance" className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-3xl font-bold mb-6">8. Inheritance</h2>
+          <p className="text-gray-700 mb-6">
+            Inheritance allows a class to inherit properties and methods from another class. It promotes code reusability and establishes an "is-a" relationship.
+          </p>
           
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-3">Basic Inheritance</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`class Animal {
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Basic Inheritance</h3>
+            <p className="text-gray-700 mb-4">Child class inherits from parent class using the 'extends' keyword.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Parent class (Superclass)
+class Animal {
     protected String name;
+    protected int age;
     
-    public Animal(String name) {
+    public Animal(String name, int age) {
         this.name = name;
+        this.age = age;
     }
     
     public void eat() {
         System.out.println(name + " is eating");
     }
+    
+    public void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+    
+    public void displayInfo() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
 }
 
+// Child class (Subclass)
 class Dog extends Animal {
-    public Dog(String name) {
-        super(name);
+    private String breed;
+    
+    public Dog(String name, int age, String breed) {
+        super(name, age); // Call parent constructor
+        this.breed = breed;
     }
     
     public void bark() {
         System.out.println(name + " is barking");
     }
+    
+    public void wagTail() {
+        System.out.println(name + " is wagging tail");
+    }
+    
+    @Override
+    public void displayInfo() {
+        super.displayInfo(); // Call parent method
+        System.out.println("Breed: " + breed);
+    }
+}
+
+public class InheritanceExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy", 3, "Golden Retriever");
+        
+        // Inherited methods
+        dog.eat();
+        dog.sleep();
+        
+        // Own methods
+        dog.bark();
+        dog.wagTail();
+        
+        // Overridden method
+        dog.displayInfo();
+    }
 }`}
             </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Types of Inheritance</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-blue-700">Single Inheritance</h4>
+                <p className="text-sm text-gray-700">One child class inherits from one parent class</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-green-700">Multilevel Inheritance</h4>
+                <p className="text-sm text-gray-700">Chain of inheritance: A → B → C</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-purple-700">Hierarchical Inheritance</h4>
+                <p className="text-sm text-gray-700">Multiple child classes inherit from one parent</p>
+              </div>
+              <div className="bg-red-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-red-700">Multiple Inheritance</h4>
+                <p className="text-sm text-gray-700">Not supported in Java (use interfaces)</p>
+              </div>
+            </div>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Multilevel Inheritance Example
+class Vehicle {
+    protected String brand;
+    protected int year;
+    
+    public Vehicle(String brand, int year) {
+        this.brand = brand;
+        this.year = year;
+    }
+    
+    public void start() {
+        System.out.println(brand + " is starting");
+    }
+}
+
+class Car extends Vehicle {
+    protected int doors;
+    
+    public Car(String brand, int year, int doors) {
+        super(brand, year);
+        this.doors = doors;
+    }
+    
+    public void drive() {
+        System.out.println("Driving the " + brand);
+    }
+}
+
+class SportsCar extends Car {
+    private int topSpeed;
+    
+    public SportsCar(String brand, int year, int doors, int topSpeed) {
+        super(brand, year, doors);
+        this.topSpeed = topSpeed;
+    }
+    
+    public void turboBoost() {
+        System.out.println(brand + " activating turbo! Top speed: " + topSpeed + " mph");
+    }
+}
+
+// Hierarchical Inheritance Example
+class Shape {
+    protected String color;
+    
+    public Shape(String color) {
+        this.color = color;
+    }
+    
+    public void display() {
+        System.out.println("This is a " + color + " shape");
+    }
+}
+
+class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, double radius) {
+        super(color);
+        this.radius = radius;
+    }
+    
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle extends Shape {
+    private double length, width;
+    
+    public Rectangle(String color, double length, double width) {
+        super(color);
+        this.length = length;
+        this.width = width;
+    }
+    
+    public double getArea() {
+        return length * width;
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Super Keyword</h3>
+            <p className="text-gray-700 mb-4">Used to access parent class members and constructors.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`class Parent {
+    protected String name = "Parent";
+    
+    public Parent() {
+        System.out.println("Parent constructor called");
+    }
+    
+    public Parent(String message) {
+        System.out.println("Parent constructor: " + message);
+    }
+    
+    public void display() {
+        System.out.println("Parent display method");
+    }
+    
+    public void greet() {
+        System.out.println("Hello from Parent");
+    }
+}
+
+class Child extends Parent {
+    private String name = "Child";
+    
+    public Child() {
+        super(); // Call parent default constructor
+        System.out.println("Child constructor called");
+    }
+    
+    public Child(String message) {
+        super(message); // Call parent parameterized constructor
+        System.out.println("Child constructor: " + message);
+    }
+    
+    @Override
+    public void display() {
+        super.display(); // Call parent method
+        System.out.println("Child display method");
+    }
+    
+    public void showNames() {
+        System.out.println("Child name: " + this.name);
+        System.out.println("Parent name: " + super.name);
+    }
+    
+    public void greet() {
+        super.greet(); // Call parent greet
+        System.out.println("Hello from Child");
+    }
+}
+
+public class SuperKeywordExample {
+    public static void main(String[] args) {
+        Child child = new Child("Hello");
+        child.display();
+        child.showNames();
+        child.greet();
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-red-700">Method Overriding</h3>
+            <p className="text-gray-700 mb-4">Child class provides specific implementation of parent class method.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`class Employee {
+    protected String name;
+    protected double baseSalary;
+    
+    public Employee(String name, double baseSalary) {
+        this.name = name;
+        this.baseSalary = baseSalary;
+    }
+    
+    public double calculateSalary() {
+        return baseSalary;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Employee: " + name + ", Salary: $" + calculateSalary());
+    }
+}
+
+class Manager extends Employee {
+    private double bonus;
+    
+    public Manager(String name, double baseSalary, double bonus) {
+        super(name, baseSalary);
+        this.bonus = bonus;
+    }
+    
+    @Override
+    public double calculateSalary() {
+        return baseSalary + bonus;
+    }
+    
+    @Override
+    public void displayInfo() {
+        System.out.println("Manager: " + name + ", Base: $" + baseSalary + 
+                          ", Bonus: $" + bonus + ", Total: $" + calculateSalary());
+    }
+}
+
+class Developer extends Employee {
+    private double overtimePay;
+    
+    public Developer(String name, double baseSalary, double overtimePay) {
+        super(name, baseSalary);
+        this.overtimePay = overtimePay;
+    }
+    
+    @Override
+    public double calculateSalary() {
+        return baseSalary + overtimePay;
+    }
+}
+
+public class MethodOverridingExample {
+    public static void main(String[] args) {
+        Employee emp = new Employee("John", 50000);
+        Manager mgr = new Manager("Alice", 70000, 15000);
+        Developer dev = new Developer("Bob", 60000, 8000);
+        
+        emp.displayInfo();
+        mgr.displayInfo();
+        dev.displayInfo();
+        
+        // Polymorphic behavior
+        Employee[] employees = {emp, mgr, dev};
+        for (Employee e : employees) {
+            System.out.println(e.name + "'s salary: $" + e.calculateSalary());
+        }
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-orange-700">Inheritance Benefits and Rules</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-green-700">Benefits</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Code reusability</li>
+                  <li>Method overriding</li>
+                  <li>Runtime polymorphism</li>
+                  <li>Hierarchical classification</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-red-700">Rules</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Single inheritance only</li>
+                  <li>Private members not inherited</li>
+                  <li>Constructors not inherited</li>
+                  <li>Use super() for parent constructor</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1737,21 +2056,374 @@ public class PaymentSystemExample {
 
         {/* Exception Handling */}
         <section id="exceptions" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">10. Exception Handling</h2>
+          <h2 className="text-3xl font-bold mb-6">12. Exception Handling</h2>
+          <p className="text-gray-700 mb-6">
+            Exception handling allows programs to handle runtime errors gracefully without crashing. It provides a way to catch and handle exceptional situations.
+          </p>
+          <p>
+            <h1>What is an Exception?
+            An exception is an unwanted or unexpected event that occurs during the execution of a program, disrupting the normal flow of instructions.</h1>
+
+            <b>For example:</b>
+
+            Dividing a number by zero.
+
+            Accessing an invalid array index.
+
+            File not found during read/write.
+
+
+          </p>
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Exception Hierarchy</h3>
+            <div className="bg-blue-50 p-4 rounded-lg mb-4">
+              <h4 className="font-semibold mb-2">Exception Class Hierarchy:</h4>
+              <ul className="list-disc list-inside text-gray-700 space-y-1">
+                <li><strong>Throwable</strong> - Root class for all exceptions</li>
+                <li><strong>Exception</strong> - Checked exceptions (must be handled)</li>
+                <li><strong>RuntimeException</strong> - Unchecked exceptions</li>
+                <li><strong>Error</strong> - System-level errors (not handled by programs)</li>
+              </ul>
+            </div>
+          </div>
           
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-3">Try-Catch Example</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`public class ExceptionExample {
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Try-Catch-Finally</h3>
+            <p className="text-gray-700 mb-4">Basic exception handling structure with try, catch, and finally blocks.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`public class ExceptionHandling {
     public static void main(String[] args) {
         try {
-            int result = 10 / 0;
+            // Code that might throw an exception
+            int[] arr = {1, 2, 3};
+            System.out.println(arr[5]); // ArrayIndexOutOfBoundsException
+            
+            int result = 10 / 0; // ArithmeticException
+            
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds: " + e.getMessage());
+            
         } catch (ArithmeticException e) {
-            System.out.println("Cannot divide by zero!");
+            System.out.println("Arithmetic error: " + e.getMessage());
+            
+        } catch (Exception e) {
+            // Generic catch block for any other exception
+            System.out.println("General exception: " + e.getMessage());
+            
+        } finally {
+            // This block always executes
+            System.out.println("Finally block executed");
+        }
+        
+        System.out.println("Program continues...");
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Checked vs Unchecked Exceptions</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-red-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-red-700">Checked Exceptions</h4>
+                <p className="text-sm text-gray-700 mb-2">Must be handled at compile time</p>
+                <ul className="text-xs text-gray-600 list-disc list-inside">
+                  <li>IOException</li>
+                  <li>SQLException</li>
+                  <li>ClassNotFoundException</li>
+                </ul>
+              </div>
+              <div className="bg-orange-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-orange-700">Unchecked Exceptions</h4>
+                <p className="text-sm text-gray-700 mb-2">Runtime exceptions, optional to handle</p>
+                <ul className="text-xs text-gray-600 list-disc list-inside">
+                  <li>NullPointerException</li>
+                  <li>ArrayIndexOutOfBoundsException</li>
+                  <li>IllegalArgumentException</li>
+                </ul>
+              </div>
+            </div>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`import java.io.*;
+
+public class CheckedVsUnchecked {
+    public static void main(String[] args) {
+        // Checked Exception - Must be handled
+        try {
+            FileReader file = new FileReader("nonexistent.txt");
+            BufferedReader reader = new BufferedReader(file);
+            String line = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+        
+        // Unchecked Exception - Optional to handle
+        try {
+            String str = null;
+            int length = str.length(); // NullPointerException
+        } catch (NullPointerException e) {
+            System.out.println("Null pointer exception: " + e.getMessage());
+        }
+        
+        // Multiple exceptions in one catch (Java 7+)
+        try {
+            int[] arr = new int[5];
+            arr[10] = 50;
+            int result = 10 / 0;
+        } catch (ArrayIndexOutOfBoundsException | ArithmeticException e) {
+            System.out.println("Multiple exception handling: " + e.getMessage());
         }
     }
 }`}
             </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-red-700">Throws and Throw Keywords</h3>
+            <p className="text-gray-700 mb-4">Using throws to declare exceptions and throw to manually throw exceptions.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`public class ThrowsAndThrow {
+    
+    // Method declares it might throw an exception
+    public static void validateAge(int age) throws IllegalArgumentException {
+        if (age < 0 || age > 150) {
+            throw new IllegalArgumentException("Age must be between 0 and 150");
+        }
+        System.out.println("Valid age: " + age);
+    }
+    
+    // Method that throws checked exception
+    public static void readFile(String filename) throws IOException {
+        FileReader file = new FileReader(filename);
+        // File operations
+        file.close();
+    }
+    
+    // Method with multiple exceptions
+    public static void processData(String data) throws IOException, NumberFormatException {
+        if (data == null) {
+            throw new IOException("Data cannot be null");
+        }
+        
+        int number = Integer.parseInt(data); // Can throw NumberFormatException
+        System.out.println("Processed number: " + number);
+    }
+    
+    public static void main(String[] args) {
+        // Handling thrown exceptions
+        try {
+            validateAge(25);  // Valid
+            validateAge(-5);  // Throws exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("Age validation error: " + e.getMessage());
+        }
+        
+        try {
+            readFile("test.txt");
+        } catch (IOException e) {
+            System.out.println("File error: " + e.getMessage());
+        }
+        
+        try {
+            processData("123");    // Valid
+            processData("abc");    // NumberFormatException
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Processing error: " + e.getMessage());
+        }
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-orange-700">Custom Exceptions</h3>
+            <p className="text-gray-700 mb-4">Creating your own exception classes for specific error conditions.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Custom checked exception
+class InsufficientFundsException extends Exception {
+    private double amount;
+    
+    public InsufficientFundsException(double amount) {
+        super("Insufficient funds. Required: $" + amount);
+        this.amount = amount;
+    }
+    
+    public double getAmount() {
+        return amount;
+    }
+}
+
+// Custom unchecked exception
+class InvalidAccountException extends RuntimeException {
+    public InvalidAccountException(String message) {
+        super(message);
+    }
+}
+
+class BankAccount {
+    private String accountNumber;
+    private double balance;
+    
+    public BankAccount(String accountNumber, double initialBalance) {
+        if (accountNumber == null || accountNumber.length() < 5) {
+            throw new InvalidAccountException("Account number must be at least 5 characters");
+        }
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+    }
+    
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (amount > balance) {
+            throw new InsufficientFundsException(amount - balance);
+        }
+        balance -= amount;
+        System.out.println("Withdrawn: $" + amount + ", Balance: $" + balance);
+    }
+    
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        }
+        balance += amount;
+        System.out.println("Deposited: $" + amount + ", Balance: $" + balance);
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+}
+
+public class CustomExceptionExample {
+    public static void main(String[] args) {
+        try {
+            BankAccount account = new BankAccount("ACC123456", 1000.0);
+            
+            account.deposit(500.0);
+            account.withdraw(800.0);
+            account.withdraw(1000.0); // This will throw InsufficientFundsException
+            
+        } catch (InsufficientFundsException e) {
+            System.out.println("Transaction failed: " + e.getMessage());
+            System.out.println("Shortfall: $" + e.getAmount());
+        } catch (InvalidAccountException e) {
+            System.out.println("Account error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input: " + e.getMessage());
+        }
+        
+        // This will throw InvalidAccountException
+        try {
+            BankAccount invalidAccount = new BankAccount("123", 100.0);
+        } catch (InvalidAccountException e) {
+            System.out.println("Account creation failed: " + e.getMessage());
+        }
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-indigo-700">Try-with-Resources</h3>
+            <p className="text-gray-700 mb-4">Automatic resource management for objects that implement AutoCloseable.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`import java.io.*;
+import java.util.Scanner;
+
+public class TryWithResources {
+    
+    // Traditional approach (verbose)
+    public static void readFileTraditional(String filename) {
+        FileReader file = null;
+        BufferedReader reader = null;
+        
+        try {
+            file = new FileReader(filename);
+            reader = new BufferedReader(file);
+            String line = reader.readLine();
+            System.out.println("First line: " + line);
+            
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        } finally {
+            try {
+                if (reader != null) reader.close();
+                if (file != null) file.close();
+            } catch (IOException e) {
+                System.out.println("Error closing file: " + e.getMessage());
+            }
+        }
+    }
+    
+    // Try-with-resources approach (clean)
+    public static void readFileWithResources(String filename) {
+        try (FileReader file = new FileReader(filename);
+             BufferedReader reader = new BufferedReader(file)) {
+            
+            String line = reader.readLine();
+            System.out.println("First line: " + line);
+            
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        // Resources automatically closed
+    }
+    
+    // Multiple resources
+    public static void copyFile(String source, String destination) {
+        try (FileInputStream input = new FileInputStream(source);
+             FileOutputStream output = new FileOutputStream(destination);
+             Scanner scanner = new Scanner(input)) {
+            
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                output.write((line + "\n").getBytes());
+            }
+            System.out.println("File copied successfully");
+            
+        } catch (IOException e) {
+            System.out.println("Error copying file: " + e.getMessage());
+        }
+    }
+    
+    public static void main(String[] args) {
+        readFileTraditional("test.txt");
+        readFileWithResources("test.txt");
+        copyFile("source.txt", "destination.txt");
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-teal-700">Exception Handling Best Practices</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-green-700">Do's</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Catch specific exceptions first</li>
+                  <li>Use try-with-resources for AutoCloseable</li>
+                  <li>Log exceptions with meaningful messages</li>
+                  <li>Clean up resources in finally block</li>
+                  <li>Create custom exceptions for business logic</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-red-700">Don'ts</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Don't catch and ignore exceptions</li>
+                  <li>Don't use exceptions for control flow</li>
+                  <li>Don't catch Exception or Throwable</li>
+                  <li>Don't throw exceptions in finally block</li>
+                  <li>Don't create unnecessary custom exceptions</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1909,22 +2581,436 @@ public class TreeMapExample {
 
         {/* Project 2 */}
         <section id="project2" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">13. Project 2: Banking System</h2>
+          <h2 className="text-3xl font-bold mb-6">14. Project 2: Banking System</h2>
           
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-3">Project Overview</h3>
             <p className="text-gray-700 mb-4">
-              A banking system demonstrating inheritance and polymorphism.
+              Complete banking system demonstrating inheritance, polymorphism, abstraction, and exception handling.
             </p>
             
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`abstract class Account {
+            <div className="bg-green-50 p-4 rounded-lg mb-4">
+              <h4 className="font-semibold mb-2">Features:</h4>
+              <ul className="list-disc list-inside text-gray-700 space-y-1">
+                <li>Multiple account types (Savings, Checking, Credit)</li>
+                <li>Customer management</li>
+                <li>Transaction processing</li>
+                <li>Interest calculation</li>
+                <li>Account statements and reports</li>
+              </ul>
+            </div>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`import java.util.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+// Custom Exceptions
+class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
+}
+
+class InvalidAmountException extends Exception {
+    public InvalidAmountException(String message) {
+        super(message);
+    }
+}
+
+class AccountNotFoundException extends Exception {
+    public AccountNotFoundException(String message) {
+        super(message);
+    }
+}
+
+// Transaction class
+class Transaction {
+    private String transactionId;
+    private String type;
+    private double amount;
+    private LocalDateTime timestamp;
+    private double balanceAfter;
+    
+    public Transaction(String type, double amount, double balanceAfter) {
+        this.transactionId = "TXN" + System.currentTimeMillis();
+        this.type = type;
+        this.amount = amount;
+        this.balanceAfter = balanceAfter;
+        this.timestamp = LocalDateTime.now();
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s | %s | $%.2f | Balance: $%.2f | %s",
+                           transactionId, type, amount, balanceAfter,
+                           timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    }
+    
+    // Getters
+    public String getTransactionId() { return transactionId; }
+    public String getType() { return type; }
+    public double getAmount() { return amount; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public double getBalanceAfter() { return balanceAfter; }
+}
+
+// Abstract Account class
+abstract class Account {
+    protected String accountNumber;
+    protected String customerName;
     protected double balance;
+    protected List<Transaction> transactions;
+    protected LocalDate dateOpened;
     
-    public abstract void deposit(double amount);
-    public abstract void withdraw(double amount);
+    public Account(String accountNumber, String customerName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.customerName = customerName;
+        this.balance = initialBalance;
+        this.transactions = new ArrayList<>();
+        this.dateOpened = LocalDate.now();
+        
+        if (initialBalance > 0) {
+            transactions.add(new Transaction("INITIAL_DEPOSIT", initialBalance, balance));
+        }
+    }
     
+    // Abstract methods
+    public abstract void deposit(double amount) throws InvalidAmountException;
+    public abstract void withdraw(double amount) throws InsufficientFundsException, InvalidAmountException;
+    public abstract double calculateInterest();
+    public abstract String getAccountType();
+    
+    // Concrete methods
+    public String getAccountNumber() { return accountNumber; }
+    public String getCustomerName() { return customerName; }
     public double getBalance() { return balance; }
+    public List<Transaction> getTransactions() { return transactions; }
+    public LocalDate getDateOpened() { return dateOpened; }
+    
+    protected void addTransaction(String type, double amount) {
+        transactions.add(new Transaction(type, amount, balance));
+    }
+    
+    public void printStatement() {
+        System.out.println("\n=== ACCOUNT STATEMENT ===");
+        System.out.println("Account: " + accountNumber + " (" + getAccountType() + ")");
+        System.out.println("Customer: " + customerName);
+        System.out.println("Current Balance: $" + String.format("%.2f", balance));
+        System.out.println("Date Opened: " + dateOpened);
+        System.out.println("\n--- TRANSACTIONS ---");
+        for (Transaction t : transactions) {
+            System.out.println(t);
+        }
+        System.out.println("========================\n");
+    }
+}`}
+            </pre>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Savings Account
+class SavingsAccount extends Account {
+    private static final double MIN_BALANCE = 100.0;
+    private static final double INTEREST_RATE = 0.03; // 3% annual
+    private static final double WITHDRAWAL_LIMIT = 1000.0;
+    
+    public SavingsAccount(String accountNumber, String customerName, double initialBalance) {
+        super(accountNumber, customerName, initialBalance);
+    }
+    
+    @Override
+    public void deposit(double amount) throws InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Deposit amount must be positive");
+        }
+        balance += amount;
+        addTransaction("DEPOSIT", amount);
+        System.out.println("Deposited $" + amount + " to Savings Account");
+    }
+    
+    @Override
+    public void withdraw(double amount) throws InsufficientFundsException, InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Withdrawal amount must be positive");
+        }
+        if (amount > WITHDRAWAL_LIMIT) {
+            throw new InvalidAmountException("Withdrawal limit exceeded. Max: $" + WITHDRAWAL_LIMIT);
+        }
+        if (balance - amount < MIN_BALANCE) {
+            throw new InsufficientFundsException("Insufficient funds. Minimum balance required: $" + MIN_BALANCE);
+        }
+        balance -= amount;
+        addTransaction("WITHDRAWAL", amount);
+        System.out.println("Withdrawn $" + amount + " from Savings Account");
+    }
+    
+    @Override
+    public double calculateInterest() {
+        return balance * INTEREST_RATE / 12; // Monthly interest
+    }
+    
+    @Override
+    public String getAccountType() {
+        return "SAVINGS";
+    }
+}
+
+// Checking Account
+class CheckingAccount extends Account {
+    private static final double OVERDRAFT_LIMIT = 500.0;
+    private static final double OVERDRAFT_FEE = 35.0;
+    private static final double MONTHLY_FEE = 10.0;
+    
+    public CheckingAccount(String accountNumber, String customerName, double initialBalance) {
+        super(accountNumber, customerName, initialBalance);
+    }
+    
+    @Override
+    public void deposit(double amount) throws InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Deposit amount must be positive");
+        }
+        balance += amount;
+        addTransaction("DEPOSIT", amount);
+        System.out.println("Deposited $" + amount + " to Checking Account");
+    }
+    
+    @Override
+    public void withdraw(double amount) throws InsufficientFundsException, InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Withdrawal amount must be positive");
+        }
+        
+        if (balance >= amount) {
+            // Normal withdrawal
+            balance -= amount;
+            addTransaction("WITHDRAWAL", amount);
+        } else if (balance + OVERDRAFT_LIMIT >= amount) {
+            // Overdraft withdrawal
+            balance -= amount;
+            balance -= OVERDRAFT_FEE;
+            addTransaction("WITHDRAWAL", amount);
+            addTransaction("OVERDRAFT_FEE", OVERDRAFT_FEE);
+            System.out.println("Overdraft fee of $" + OVERDRAFT_FEE + " applied");
+        } else {
+            throw new InsufficientFundsException("Insufficient funds including overdraft limit");
+        }
+        
+        System.out.println("Withdrawn $" + amount + " from Checking Account");
+    }
+    
+    public void applyMonthlyFee() {
+        balance -= MONTHLY_FEE;
+        addTransaction("MONTHLY_FEE", MONTHLY_FEE);
+        System.out.println("Monthly fee of $" + MONTHLY_FEE + " applied");
+    }
+    
+    @Override
+    public double calculateInterest() {
+        return 0.0; // No interest on checking accounts
+    }
+    
+    @Override
+    public String getAccountType() {
+        return "CHECKING";
+    }
+}
+
+// Credit Account
+class CreditAccount extends Account {
+    private double creditLimit;
+    private static final double INTEREST_RATE = 0.18; // 18% annual
+    private static final double MIN_PAYMENT_RATE = 0.02; // 2% of balance
+    
+    public CreditAccount(String accountNumber, String customerName, double creditLimit) {
+        super(accountNumber, customerName, 0.0);
+        this.creditLimit = creditLimit;
+    }
+    
+    @Override
+    public void deposit(double amount) throws InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Payment amount must be positive");
+        }
+        balance -= amount; // Credit accounts have negative balance for debt
+        addTransaction("PAYMENT", amount);
+        System.out.println("Payment of $" + amount + " applied to Credit Account");
+    }
+    
+    @Override
+    public void withdraw(double amount) throws InsufficientFundsException, InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Charge amount must be positive");
+        }
+        if (balance + amount > creditLimit) {
+            throw new InsufficientFundsException("Credit limit exceeded");
+        }
+        balance += amount;
+        addTransaction("CHARGE", amount);
+        System.out.println("Charged $" + amount + " to Credit Account");
+    }
+    
+    @Override
+    public double calculateInterest() {
+        return balance > 0 ? balance * INTEREST_RATE / 12 : 0.0;
+    }
+    
+    public double getMinimumPayment() {
+        return balance > 0 ? Math.max(25.0, balance * MIN_PAYMENT_RATE) : 0.0;
+    }
+    
+    public double getAvailableCredit() {
+        return creditLimit - balance;
+    }
+    
+    @Override
+    public String getAccountType() {
+        return "CREDIT";
+    }
+    
+    public double getCreditLimit() { return creditLimit; }
+}`}
+            </pre>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`// Banking System
+class BankingSystem {
+    private Map<String, Account> accounts;
+    private int accountCounter;
+    
+    public BankingSystem() {
+        accounts = new HashMap<>();
+        accountCounter = 1000;
+    }
+    
+    public String createSavingsAccount(String customerName, double initialDeposit) {
+        String accountNumber = "SAV" + (++accountCounter);
+        Account account = new SavingsAccount(accountNumber, customerName, initialDeposit);
+        accounts.put(accountNumber, account);
+        System.out.println("Savings account created: " + accountNumber);
+        return accountNumber;
+    }
+    
+    public String createCheckingAccount(String customerName, double initialDeposit) {
+        String accountNumber = "CHK" + (++accountCounter);
+        Account account = new CheckingAccount(accountNumber, customerName, initialDeposit);
+        accounts.put(accountNumber, account);
+        System.out.println("Checking account created: " + accountNumber);
+        return accountNumber;
+    }
+    
+    public String createCreditAccount(String customerName, double creditLimit) {
+        String accountNumber = "CRD" + (++accountCounter);
+        Account account = new CreditAccount(accountNumber, customerName, creditLimit);
+        accounts.put(accountNumber, account);
+        System.out.println("Credit account created: " + accountNumber);
+        return accountNumber;
+    }
+    
+    public Account getAccount(String accountNumber) throws AccountNotFoundException {
+        Account account = accounts.get(accountNumber);
+        if (account == null) {
+            throw new AccountNotFoundException("Account not found: " + accountNumber);
+        }
+        return account;
+    }
+    
+    public void transfer(String fromAccount, String toAccount, double amount) 
+            throws AccountNotFoundException, InsufficientFundsException, InvalidAmountException {
+        
+        Account from = getAccount(fromAccount);
+        Account to = getAccount(toAccount);
+        
+        from.withdraw(amount);
+        to.deposit(amount);
+        
+        System.out.println("Transferred $" + amount + " from " + fromAccount + " to " + toAccount);
+    }
+    
+    public void applyInterestToAllAccounts() {
+        System.out.println("\n=== Applying Monthly Interest ===");
+        for (Account account : accounts.values()) {
+            double interest = account.calculateInterest();
+            if (interest > 0) {
+                try {
+                    account.deposit(interest);
+                    System.out.println("Interest applied to " + account.getAccountNumber() + ": $" + 
+                                     String.format("%.2f", interest));
+                } catch (InvalidAmountException e) {
+                    System.out.println("Error applying interest: " + e.getMessage());
+                }
+            }
+        }
+    }
+    
+    public void generateMonthlyReport() {
+        System.out.println("\n=== MONTHLY BANK REPORT ===");
+        double totalDeposits = 0;
+        int savingsCount = 0, checkingCount = 0, creditCount = 0;
+        
+        for (Account account : accounts.values()) {
+            System.out.println(account.getAccountNumber() + " (" + account.getAccountType() + ") - " +
+                             account.getCustomerName() + " - Balance: $" + 
+                             String.format("%.2f", account.getBalance()));
+            
+            totalDeposits += account.getBalance();
+            
+            switch (account.getAccountType()) {
+                case "SAVINGS": savingsCount++; break;
+                case "CHECKING": checkingCount++; break;
+                case "CREDIT": creditCount++; break;
+            }
+        }
+        
+        System.out.println("\nSummary:");
+        System.out.println("Total Accounts: " + accounts.size());
+        System.out.println("Savings: " + savingsCount + ", Checking: " + checkingCount + ", Credit: " + creditCount);
+        System.out.println("Total Deposits: $" + String.format("%.2f", totalDeposits));
+        System.out.println("===========================\n");
+    }
+}
+
+// Main Banking Application
+public class BankingSystemApp {
+    public static void main(String[] args) {
+        BankingSystem bank = new BankingSystem();
+        
+        try {
+            // Create accounts
+            String savings1 = bank.createSavingsAccount("Alice Johnson", 1000.0);
+            String checking1 = bank.createCheckingAccount("Bob Smith", 500.0);
+            String credit1 = bank.createCreditAccount("Charlie Brown", 2000.0);
+            
+            // Perform transactions
+            Account aliceAccount = bank.getAccount(savings1);
+            aliceAccount.deposit(200.0);
+            aliceAccount.withdraw(150.0);
+            
+            Account bobAccount = bank.getAccount(checking1);
+            bobAccount.withdraw(600.0); // This will trigger overdraft
+            
+            Account charlieAccount = bank.getAccount(credit1);
+            charlieAccount.withdraw(500.0); // Charge to credit
+            charlieAccount.deposit(100.0);  // Payment
+            
+            // Transfer money
+            bank.transfer(savings1, checking1, 300.0);
+            
+            // Print statements
+            aliceAccount.printStatement();
+            bobAccount.printStatement();
+            charlieAccount.printStatement();
+            
+            // Apply interest
+            bank.applyInterestToAllAccounts();
+            
+            // Generate report
+            bank.generateMonthlyReport();
+            
+        } catch (AccountNotFoundException | InsufficientFundsException | InvalidAmountException e) {
+            System.out.println("Banking Error: " + e.getMessage());
+        }
+    }
 }`}
             </pre>
           </div>
