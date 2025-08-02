@@ -53,14 +53,18 @@ const JavaProgramming = () => {
               <li><a href="#control" className="text-blue-600 hover:underline">4. Control Structures</a></li>
               <li><a href="#arrays" className="text-blue-600 hover:underline">5. Arrays</a></li>
               <li><a href="#methods" className="text-blue-600 hover:underline">6. Methods</a></li>
+              <li><a href="#oop" className="text-blue-600 hover:underline">7. Object-Oriented Programming</a></li>
             </ul>
             <ul className="space-y-2">
-              <li><a href="#oop" className="text-blue-600 hover:underline">7. Object-Oriented Programming</a></li>
+              
               <li><a href="#inheritance" className="text-blue-600 hover:underline">8. Inheritance</a></li>
               <li><a href="#polymorphism" className="text-blue-600 hover:underline">9. Polymorphism</a></li>
-              <li><a href="#exceptions" className="text-blue-600 hover:underline">10. Exception Handling</a></li>
-              <li><a href="#project1" className="text-blue-600 hover:underline">11. Project 1: Library Management</a></li>
-              <li><a href="#project2" className="text-blue-600 hover:underline">12. Project 2: Banking System</a></li>
+              <li><a href="#polymorphism" className="text-blue-600 hover:underline">10 Encapsulation</a></li>
+              <li><a href="#polymorphism" className="text-blue-600 hover:underline">10 Encapsulation or File handling</a></li>
+              <li><a href="#exceptions" className="text-blue-600 hover:underline">11. Exception Handling</a></li>
+              <li><a href="#exceptions" className="text-blue-600 hover:underline">12. Multithreading & Synchronization</a></li>
+              <li><a href="#project1" className="text-blue-600 hover:underline">13. Project 1: Library Management</a></li>
+              <li><a href="#project2" className="text-blue-600 hover:underline">14. Project 2: Banking System</a></li>
             </ul>
           </div>
         </div>
@@ -549,148 +553,19 @@ Comparable<String> comp = "Hello";`}
         {/* Operators */}
         <section id="operators" className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-3xl font-bold mb-6">3. Operators</h2>
-          <p className="text-gray-700 mb-6">
-            Operators are special symbols that perform operations on variables and values. Java has several types of operators for different purposes.
-          </p>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-700">1. Arithmetic Operators</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
+          <h3>Operators in programming are special symbols that perform operations on variables and values. They are used to manipulate data and variables in various ways, such as performing arithmetic, comparison, and logical operations. Operators are a fundamental part of programming.</h3>
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-3">Arithmetic Operators</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
 {`public class ArithmeticOperators {
     public static void main(String[] args) {
-        int a = 15, b = 4;
+        int a = 10, b = 3;
         
-        System.out.println("Addition: " + (a + b));       // 19
-        System.out.println("Subtraction: " + (a - b));    // 11
-        System.out.println("Multiplication: " + (a * b)); // 60
+        System.out.println("Addition: " + (a + b));       // 13
+        System.out.println("Subtraction: " + (a - b));    // 7
+        System.out.println("Multiplication: " + (a * b)); // 30
         System.out.println("Division: " + (a / b));       // 3
-        System.out.println("Modulus: " + (a % b));        // 3
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-green-700">2. Assignment Operators</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
-{`public class AssignmentOperators {
-    public static void main(String[] args) {
-        int x = 10;
-        
-        x += 5;  // x = x + 5 → 15
-        System.out.println("After +=: " + x);
-        
-        x -= 3;  // x = x - 3 → 12
-        System.out.println("After -=: " + x);
-        
-        x *= 2;  // x = x * 2 → 24
-        System.out.println("After *=: " + x);
-        
-        x /= 4;  // x = x / 4 → 6
-        System.out.println("After /=: " + x);
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-purple-700">3. Comparison Operators</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
-{`public class ComparisonOperators {
-    public static void main(String[] args) {
-        int a = 10, b = 20;
-        
-        System.out.println("a == b: " + (a == b));  // false
-        System.out.println("a != b: " + (a != b));  // true
-        System.out.println("a > b: " + (a > b));    // false
-        System.out.println("a < b: " + (a < b));    // true
-        System.out.println("a >= b: " + (a >= b));  // false
-        System.out.println("a <= b: " + (a <= b));  // true
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-red-700">4. Logical Operators</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
-{`public class LogicalOperators {
-    public static void main(String[] args) {
-        boolean a = true, b = false;
-        
-        System.out.println("a && b: " + (a && b));  // false (AND)
-        System.out.println("a || b: " + (a || b));  // true (OR)
-        System.out.println("!a: " + (!a));          // false (NOT)
-        
-        // Short-circuit evaluation
-        int x = 5, y = 0;
-        if (y != 0 && x / y > 2) {
-            System.out.println("Safe division");
-        } else {
-            System.out.println("Division by zero avoided");
-        }
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-orange-700">5. Unary Operators</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
-{`public class UnaryOperators {
-    public static void main(String[] args) {
-        int x = 5;
-        
-        System.out.println("Original x: " + x);     // 5
-        System.out.println("++x: " + (++x));        // 6 (pre-increment)
-        System.out.println("x++: " + (x++));        // 6 (post-increment)
-        System.out.println("After x++: " + x);      // 7
-        System.out.println("--x: " + (--x));        // 6 (pre-decrement)
-        System.out.println("x--: " + (x--));        // 6 (post-decrement)
-        System.out.println("Final x: " + x);        // 5
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-indigo-700">6. Bitwise Operators</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
-{`public class BitwiseOperators {
-    public static void main(String[] args) {
-        int a = 5;  // Binary: 101
-        int b = 3;  // Binary: 011
-        
-        System.out.println("a & b: " + (a & b));    // 1 (AND)
-        System.out.println("a | b: " + (a | b));    // 7 (OR)
-        System.out.println("a ^ b: " + (a ^ b));    // 6 (XOR)
-        System.out.println("~a: " + (~a));          // -6 (NOT)
-        System.out.println("a << 1: " + (a << 1));  // 10 (Left shift)
-        System.out.println("a >> 1: " + (a >> 1));  // 2 (Right shift)
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-teal-700">7. Ternary Operator</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`public class TernaryOperator {
-    public static void main(String[] args) {
-        int age = 18;
-        
-        // Syntax: condition ? value_if_true : value_if_false
-        String status = (age >= 18) ? "Adult" : "Minor";
-        System.out.println("Status: " + status);
-        
-        int a = 10, b = 20;
-        int max = (a > b) ? a : b;
-        System.out.println("Maximum: " + max);
-        
-        // Nested ternary
-        int score = 85;
-        String grade = (score >= 90) ? "A" : (score >= 80) ? "B" : "C";
-        System.out.println("Grade: " + grade);
+        System.out.println("Modulus: " + (a % b));        // 1
     }
 }`}
             </pre>
@@ -1546,128 +1421,17 @@ public class StudentManagementExample {
 
         {/* Exception Handling */}
         <section id="exceptions" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">12. Exception Handling</h2>
-          <p className="text-gray-700 mb-6">
-            Exception handling allows programs to handle runtime errors gracefully without crashing.
-          </p>
+          <h2 className="text-3xl font-bold mb-6">10. Exception Handling</h2>
           
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Try-Catch-Finally</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
-{`public class ExceptionHandling {
-    public static void main(String[] args) {
-        try {
-            int[] arr = {1, 2, 3};
-            System.out.println(arr[5]); // ArrayIndexOutOfBoundsException
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Array index out of bounds: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("General exception: " + e.getMessage());
-        } finally {
-            System.out.println("This always executes");
-        }
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-green-700">Custom Exceptions</h3>
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-3">Try-Catch Example</h3>
             <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`class InvalidAgeException extends Exception {
-    public InvalidAgeException(String message) {
-        super(message);
-    }
-}
-
-public class CustomExceptionExample {
-    public static void validateAge(int age) throws InvalidAgeException {
-        if (age < 0 || age > 150) {
-            throw new InvalidAgeException("Age must be between 0 and 150");
-        }
-        System.out.println("Valid age: " + age);
-    }
-    
+{`public class ExceptionExample {
     public static void main(String[] args) {
         try {
-            validateAge(25);
-            validateAge(-5);
-        } catch (InvalidAgeException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-}`}
-            </pre>
-          </div>
-        </section>
-
-        {/* File I/O */}
-        <section id="fileio" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">13. File I/O</h2>
-          <p className="text-gray-700 mb-6">
-            Java provides various classes for reading from and writing to files.
-          </p>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-700">File Reading and Writing</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
-{`import java.io.*;
-import java.nio.file.*;
-import java.util.*;
-
-public class FileIOExample {
-    public static void main(String[] args) {
-        // Writing to file
-        try {
-            FileWriter writer = new FileWriter("example.txt");
-            writer.write("Hello World!\n");
-            writer.write("Java File I/O\n");
-            writer.close();
-            System.out.println("File written successfully");
-        } catch (IOException e) {
-            System.out.println("Error writing file: " + e.getMessage());
-        }
-        
-        // Reading from file
-        try {
-            Scanner scanner = new Scanner(new File("example.txt"));
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
-        }
-    }
-}`}
-            </pre>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-green-700">BufferedReader and BufferedWriter</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`import java.io.*;
-
-public class BufferedIOExample {
-    public static void main(String[] args) {
-        // Writing with BufferedWriter
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt"))) {
-            writer.write("Line 1");
-            writer.newLine();
-            writer.write("Line 2");
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        
-        // Reading with BufferedReader
-        try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot divide by zero!");
         }
     }
 }`}
@@ -1677,190 +1441,130 @@ public class BufferedIOExample {
 
         {/* Collections */}
         <section id="collections" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">14. Collections</h2>
+          <h2 className="text-3xl font-bold mb-6">11. Collections Framework</h2>
           <p className="text-gray-700 mb-6">
-            Collections framework provides data structures like List, Set, and Map.
+            Java Collections Framework provides data structures to store and manipulate groups of objects efficiently.
           </p>
           
           <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-700">ArrayList and LinkedList</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">HashMap - Detailed Implementation</h3>
+            <p className="text-gray-700 mb-4">
+              HashMap uses hash table for storage. It allows null values and keys, is not synchronized.
+            </p>
+            
             <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
 {`import java.util.*;
 
-public class ListExample {
+public class HashMapExample {
     public static void main(String[] args) {
-        // ArrayList
-        List<String> arrayList = new ArrayList<>();
-        arrayList.add("Apple");
-        arrayList.add("Banana");
-        arrayList.add("Cherry");
+        // Creating HashMap
+        HashMap<String, Integer> map = new HashMap<>();
         
-        System.out.println("ArrayList: " + arrayList);
-        System.out.println("Size: " + arrayList.size());
-        System.out.println("Get index 1: " + arrayList.get(1));
+        // Adding elements
+        map.put("Apple", 100);
+        map.put("Banana", 200);
+        map.put("Orange", 150);
+        map.put(null, 50); // null key allowed
         
-        // LinkedList
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        linkedList.add(10);
-        linkedList.add(20);
-        linkedList.addFirst(5);
-        linkedList.addLast(30);
+        System.out.println("HashMap: " + map);
         
-        System.out.println("LinkedList: " + linkedList);
+        // Accessing elements
+        System.out.println("Apple price: " + map.get("Apple"));
+        System.out.println("Contains Banana: " + map.containsKey("Banana"));
+        
+        // Iterating through HashMap
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " = " + entry.getValue());
+        }
+        
+        // HashMap methods
+        System.out.println("Size: " + map.size());
+        System.out.println("Keys: " + map.keySet());
+        System.out.println("Values: " + map.values());
     }
 }`}
             </pre>
           </div>
           
           <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-green-700">HashMap and TreeMap</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">TreeMap - Detailed Implementation</h3>
+            <p className="text-gray-700 mb-4">
+              TreeMap uses Red-Black tree. It maintains sorted order of keys and doesn't allow null keys.
+            </p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
 {`import java.util.*;
 
-public class MapExample {
+public class TreeMapExample {
     public static void main(String[] args) {
-        // HashMap
-        Map<String, Integer> hashMap = new HashMap<>();
-        hashMap.put("Alice", 25);
-        hashMap.put("Bob", 30);
-        hashMap.put("Charlie", 35);
+        // Creating TreeMap
+        TreeMap<String, Integer> treeMap = new TreeMap<>();
         
-        System.out.println("HashMap: " + hashMap);
-        System.out.println("Alice's age: " + hashMap.get("Alice"));
-        
-        // TreeMap (sorted)
-        Map<String, Integer> treeMap = new TreeMap<>();
-        treeMap.put("Zebra", 1);
-        treeMap.put("Apple", 2);
-        treeMap.put("Banana", 3);
+        // Adding elements (will be sorted by keys)
+        treeMap.put("Zebra", 100);
+        treeMap.put("Apple", 200);
+        treeMap.put("Mango", 150);
+        treeMap.put("Banana", 180);
         
         System.out.println("TreeMap (sorted): " + treeMap);
-    }
-}`}
-            </pre>
-          </div>
-        </section>
-
-        {/* Multithreading */}
-        <section id="synchronization" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">15. Multithreading & Synchronization</h2>
-          <p className="text-gray-700 mb-6">
-            Multithreading allows concurrent execution of multiple threads.
-          </p>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Creating Threads</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
-{`// Method 1: Extending Thread class
-class MyThread extends Thread {
-    private String name;
-    
-    public MyThread(String name) {
-        this.name = name;
-    }
-    
-    @Override
-    public void run() {
-        for (int i = 1; i <= 5; i++) {
-            System.out.println(name + ": " + i);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-}
-
-// Method 2: Implementing Runnable interface
-class MyRunnable implements Runnable {
-    private String name;
-    
-    public MyRunnable(String name) {
-        this.name = name;
-    }
-    
-    @Override
-    public void run() {
-        for (int i = 1; i <= 5; i++) {
-            System.out.println(name + ": " + i);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-}
-
-public class ThreadExample {
-    public static void main(String[] args) {
-        // Using Thread class
-        MyThread thread1 = new MyThread("Thread-1");
-        thread1.start();
         
-        // Using Runnable interface
-        Thread thread2 = new Thread(new MyRunnable("Thread-2"));
-        thread2.start();
+        // NavigableMap methods
+        System.out.println("First key: " + treeMap.firstKey());
+        System.out.println("Last key: " + treeMap.lastKey());
+        System.out.println("Higher key than 'Banana': " + treeMap.higherKey("Banana"));
+        
+        // SubMap operations
+        System.out.println("SubMap from 'Banana' to 'Mango': " + 
+                          treeMap.subMap("Banana", "Mango"));
+        
+        // Descending operations
+        System.out.println("Descending KeySet: " + treeMap.descendingKeySet());
     }
 }`}
             </pre>
           </div>
           
           <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-green-700">Synchronization</h3>
-            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
-{`class Counter {
-    private int count = 0;
-    
-    // Synchronized method
-    public synchronized void increment() {
-        count++;
-    }
-    
-    public int getCount() {
-        return count;
-    }
-}
-
-class CounterThread extends Thread {
-    private Counter counter;
-    
-    public CounterThread(Counter counter) {
-        this.counter = counter;
-    }
-    
-    @Override
-    public void run() {
-        for (int i = 0; i < 1000; i++) {
-            counter.increment();
-        }
-    }
-}
-
-public class SynchronizationExample {
-    public static void main(String[] args) throws InterruptedException {
-        Counter counter = new Counter();
-        
-        CounterThread t1 = new CounterThread(counter);
-        CounterThread t2 = new CounterThread(counter);
-        
-        t1.start();
-        t2.start();
-        
-        t1.join();
-        t2.join();
-        
-        System.out.println("Final count: " + counter.getCount());
-    }
-}`}
-            </pre>
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">HashMap vs TreeMap Comparison</h3>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 px-4 py-2">Feature</th>
+                    <th className="border border-gray-300 px-4 py-2">HashMap</th>
+                    <th className="border border-gray-300 px-4 py-2">TreeMap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Data Structure</td>
+                    <td className="border border-gray-300 px-4 py-2">Hash Table</td>
+                    <td className="border border-gray-300 px-4 py-2">Red-Black Tree</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Time Complexity</td>
+                    <td className="border border-gray-300 px-4 py-2">O(1) average</td>
+                    <td className="border border-gray-300 px-4 py-2">O(log n)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Ordering</td>
+                    <td className="border border-gray-300 px-4 py-2">No ordering</td>
+                    <td className="border border-gray-300 px-4 py-2">Sorted by keys</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Null Keys</td>
+                    <td className="border border-gray-300 px-4 py-2">Allowed (one null key)</td>
+                    <td className="border border-gray-300 px-4 py-2">Not allowed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
         {/* Project 1 */}
         <section id="project1" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">11. Project 1: Library Management System</h2>
+          <h2 className="text-3xl font-bold mb-6">12. Project 1: Library Management System</h2>
           
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-3">Project Overview</h3>
@@ -1889,7 +1593,7 @@ public class SynchronizationExample {
 
         {/* Project 2 */}
         <section id="project2" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">12. Project 2: Banking System</h2>
+          <h2 className="text-3xl font-bold mb-6">13. Project 2: Banking System</h2>
           
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-3">Project Overview</h3>
