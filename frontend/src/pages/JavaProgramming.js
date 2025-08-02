@@ -59,8 +59,8 @@ const JavaProgramming = () => {
               
               <li><a href="#inheritance" className="text-blue-600 hover:underline">8. Inheritance</a></li>
               <li><a href="#polymorphism" className="text-blue-600 hover:underline">9. Polymorphism</a></li>
-              <li><a href="#polymorphism" className="text-blue-600 hover:underline">10 Encapsulation</a></li>
-              <li><a href="#polymorphism" className="text-blue-600 hover:underline">10 Encapsulation or File handling</a></li>
+              <li><a href="#encapsulation" className="text-blue-600 hover:underline">10. Encapsulation</a></li>
+              <li><a href="#abstraction" className="text-blue-600 hover:underline">11. Abstraction</a></li>
               <li><a href="#exceptions" className="text-blue-600 hover:underline">11. Exception Handling</a></li>
               <li><a href="#exceptions" className="text-blue-600 hover:underline">12. Multithreading & Synchronization</a></li>
               <li><a href="#project1" className="text-blue-600 hover:underline">13. Project 1: Library Management</a></li>
@@ -1412,6 +1412,322 @@ public class StudentManagementExample {
             
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+}`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Abstraction */}
+        <section id="abstraction" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">11. Abstraction</h2>
+          <p className="text-gray-700 mb-6">
+            Abstraction hides complex implementation details and shows only essential features. It's achieved through abstract classes and interfaces.
+          </p>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Abstract Classes</h3>
+            <p className="text-gray-700 mb-4">Classes that cannot be instantiated and may contain abstract methods.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Abstract class
+abstract class Shape {
+    protected String color;
+    
+    public Shape(String color) {
+        this.color = color;
+    }
+    
+    // Concrete method
+    public void displayColor() {
+        System.out.println("Color: " + color);
+    }
+    
+    // Abstract methods - must be implemented by subclasses
+    public abstract double calculateArea();
+    public abstract void draw();
+}
+
+// Concrete implementation
+class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, double radius) {
+        super(color);
+        this.radius = radius;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a " + color + " circle");
+    }
+}
+
+class Rectangle extends Shape {
+    private double width, height;
+    
+    public Rectangle(String color, double width, double height) {
+        super(color);
+        this.width = width;
+        this.height = height;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return width * height;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing a " + color + " rectangle");
+    }
+}
+
+public class AbstractExample {
+    public static void main(String[] args) {
+        // Cannot instantiate abstract class
+        // Shape shape = new Shape(); // Error
+        
+        Shape circle = new Circle("Red", 5);
+        Shape rectangle = new Rectangle("Blue", 4, 6);
+        
+        circle.displayColor();
+        circle.draw();
+        System.out.println("Area: " + circle.calculateArea());
+        
+        rectangle.displayColor();
+        rectangle.draw();
+        System.out.println("Area: " + rectangle.calculateArea());
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Interfaces</h3>
+            <p className="text-gray-700 mb-4">Contracts that define what methods a class must implement.</p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`// Interface definitions
+interface Drawable {
+    void draw();
+    void resize(double factor);
+}
+
+interface Movable {
+    void move(int x, int y);
+    void getPosition();
+}
+
+// Multiple interface implementation
+class GameCharacter implements Drawable, Movable {
+    private String name;
+    private int x, y;
+    private double size;
+    
+    public GameCharacter(String name, int x, int y, double size) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing " + name + " at (" + x + ", " + y + ")");
+    }
+    
+    @Override
+    public void resize(double factor) {
+        size *= factor;
+        System.out.println(name + " resized to " + size);
+    }
+    
+    @Override
+    public void move(int newX, int newY) {
+        this.x = newX;
+        this.y = newY;
+        System.out.println(name + " moved to (" + x + ", " + y + ")");
+    }
+    
+    @Override
+    public void getPosition() {
+        System.out.println(name + " is at (" + x + ", " + y + ")");
+    }
+}
+
+public class InterfaceExample {
+    public static void main(String[] args) {
+        GameCharacter player = new GameCharacter("Hero", 0, 0, 1.0);
+        
+        player.draw();
+        player.move(10, 20);
+        player.resize(1.5);
+        player.getPosition();
+        
+        // Polymorphism with interfaces
+        Drawable drawable = player;
+        drawable.draw();
+        
+        Movable movable = player;
+        movable.move(30, 40);
+    }
+}`}
+            </pre>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Abstract Class vs Interface</h3>
+            <div className="overflow-x-auto mb-6">
+              <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 px-4 py-2">Feature</th>
+                    <th className="border border-gray-300 px-4 py-2">Abstract Class</th>
+                    <th className="border border-gray-300 px-4 py-2">Interface</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Methods</td>
+                    <td className="border border-gray-300 px-4 py-2">Abstract and concrete methods</td>
+                    <td className="border border-gray-300 px-4 py-2">Only abstract methods (default in Java 8+)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Variables</td>
+                    <td className="border border-gray-300 px-4 py-2">Instance variables allowed</td>
+                    <td className="border border-gray-300 px-4 py-2">Only public static final constants</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Inheritance</td>
+                    <td className="border border-gray-300 px-4 py-2">Single inheritance (extends)</td>
+                    <td className="border border-gray-300 px-4 py-2">Multiple inheritance (implements)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">Constructor</td>
+                    <td className="border border-gray-300 px-4 py-2">Can have constructors</td>
+                    <td className="border border-gray-300 px-4 py-2">Cannot have constructors</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-red-700">Real-world Example: Payment System</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`// Abstract class for common payment functionality
+abstract class Payment {
+    protected double amount;
+    protected String currency;
+    
+    public Payment(double amount, String currency) {
+        this.amount = amount;
+        this.currency = currency;
+    }
+    
+    // Concrete method
+    public void displayAmount() {
+        System.out.println("Amount: " + amount + " " + currency);
+    }
+    
+    // Abstract methods
+    public abstract boolean processPayment();
+    public abstract void sendConfirmation();
+}
+
+// Interface for refundable payments
+interface Refundable {
+    boolean refund(double amount);
+    double getRefundableAmount();
+}
+
+// Concrete implementations
+class CreditCardPayment extends Payment implements Refundable {
+    private String cardNumber;
+    
+    public CreditCardPayment(double amount, String currency, String cardNumber) {
+        super(amount, currency);
+        this.cardNumber = cardNumber;
+    }
+    
+    @Override
+    public boolean processPayment() {
+        System.out.println("Processing credit card payment");
+        return true;
+    }
+    
+    @Override
+    public void sendConfirmation() {
+        System.out.println("Credit card payment confirmation sent");
+    }
+    
+    @Override
+    public boolean refund(double refundAmount) {
+        System.out.println("Refunding " + refundAmount + " to credit card");
+        return true;
+    }
+    
+    @Override
+    public double getRefundableAmount() {
+        return amount;
+    }
+}
+
+class PayPalPayment extends Payment implements Refundable {
+    private String email;
+    
+    public PayPalPayment(double amount, String currency, String email) {
+        super(amount, currency);
+        this.email = email;
+    }
+    
+    @Override
+    public boolean processPayment() {
+        System.out.println("Processing PayPal payment");
+        return true;
+    }
+    
+    @Override
+    public void sendConfirmation() {
+        System.out.println("PayPal confirmation sent to " + email);
+    }
+    
+    @Override
+    public boolean refund(double refundAmount) {
+        System.out.println("Refunding to PayPal account");
+        return true;
+    }
+    
+    @Override
+    public double getRefundableAmount() {
+        return amount * 0.95; // 5% processing fee
+    }
+}
+
+public class PaymentSystemExample {
+    public static void main(String[] args) {
+        Payment[] payments = {
+            new CreditCardPayment(100.0, "USD", "1234-5678"),
+            new PayPalPayment(75.0, "EUR", "user@email.com")
+        };
+        
+        for (Payment payment : payments) {
+            payment.displayAmount();
+            payment.processPayment();
+            payment.sendConfirmation();
+            
+            if (payment instanceof Refundable) {
+                Refundable refundablePayment = (Refundable) payment;
+                System.out.println("Refundable: " + refundablePayment.getRefundableAmount());
+            }
+            System.out.println("---");
         }
     }
 }`}
