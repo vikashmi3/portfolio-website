@@ -1,952 +1,1479 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import {
-  FaArrowLeft,
-  FaCogs,
-  FaClipboardList,
-  FaFileAlt,
-  FaBook,
-  FaCode,
-  FaCopy,
-  FaChevronDown,
-  FaChevronUp
-} from 'react-icons/fa';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const PythonProgramming = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('syllabus');
-  const [expandedExample, setExpandedExample] = useState(null);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Header */}
+      <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 text-white py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-black opacity-10"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-white opacity-10 rounded-full animate-pulse"></div>
+          <div className="absolute top-32 right-20 w-16 h-16 bg-yellow-300 opacity-20 rounded-full animate-bounce"></div>
+          <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-green-400 opacity-15 rounded-full animate-ping"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <nav className="mb-8 flex items-center space-x-2 text-sm">
+            <Link to="/" className="text-blue-200 hover:text-white transition-colors duration-200 flex items-center">
+              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+              </svg>
+              Home
+            </Link>
+            <span className="text-blue-300">→</span>
+            <Link to="/courses" className="text-blue-200 hover:text-white transition-colors duration-200">Courses</Link>
+            <span className="text-blue-300">→</span>
+            <span className="text-white font-medium">Python Programming</span>
+          </nav>
+          
+          <div className="text-center">
+            <div className="inline-flex items-center bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              🐍 Most Popular Course
+            </div>
+            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              Python Programming
+            </h1>
+            <h2 className="text-2xl md:text-3xl font-light mb-8 text-blue-100">
+              Master Python from Zero to Hero
+            </h2>
+            <p className="text-xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Learn Python programming with hands-on projects, real-world examples, and comprehensive coverage from basics to advanced concepts.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <Link to="/courses" className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <span className="flex items-center">
+                  <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
+                  </svg>
+                  Back to Courses
+                </span>
+              </Link>
+              <Link to="#introduction" className="group bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <span className="flex items-center">
+                  Start Learning
+                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                  </svg>
+                </span>
+              </Link>
+            </div>
+            
+            <div className="flex justify-center space-x-8 text-blue-200">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white">15</div>
+                <div className="text-sm">Chapters</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white">5</div>
+                <div className="text-sm">Projects</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white">50+</div>
+                <div className="text-sm">Examples</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  const courseDetails = {
-    name: "Python Programming",
-    description: "Learn Python from basics to advanced topics. Covers data structures, algorithms, and real-world applications.",
-    fullDescription: "Master Python programming with comprehensive coverage of syntax, data structures, object-oriented programming, web development, data analysis, and automation. Build real-world projects and learn industry best practices.",
-    duration: "10 weeks",
-    level: "Beginner",
-    instructor: "Dr. Lisa Wang",
-    introduction: {
-      overview: "Python is a high-level, interpreted programming language known for its simplicity and readability. Created by Guido van Rossum, Python emphasizes code readability and allows programmers to express concepts in fewer lines of code than languages like C++ or Java.",
-      keyFeatures: [
-        "Simple Syntax - Easy to learn and read, similar to English",
-        "Interpreted Language - No compilation step, immediate execution",
-        "Dynamic Typing - Variables don't need explicit type declarations",
-        "Extensive Libraries - Rich standard library and third-party packages",
-        "Cross-Platform - Runs on Windows, macOS, Linux, and more",
-        "Versatile - Web development, data science, AI, automation, and more",
-        "Large Community - Active community with extensive documentation",
-        "Open Source - Free to use and modify"
-      ],
-      syntax: {
-        basic: `# Python Basic Syntax Overview
+      {/* Table of Contents */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex gap-8">
+          <aside className="hidden lg:block w-80 sticky top-8 h-fit">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Course Navigation
+              </h3>
+              <nav className="space-y-2">
+                <a href="#introduction" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">01.</span> Introduction
+                </a>
+                <a href="#setup" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">02.</span> Environment Setup
+                </a>
+                <a href="#syntax" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">03.</span> Basic Syntax
+                </a>
+                <a href="#variables" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">04.</span> Variables & Data Types
+                </a>
+                <a href="#operators" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-colors">
+                  <span className="font-medium">05.</span> Operators
+                </a>
+                <a href="#control" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">06.</span> Control Structures
+                </a>
+                <a href="#functions" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">07.</span> Functions
+                </a>
+                <a href="#data-structures" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">08.</span> Data Structures
+                </a>
+                <a href="#oop" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">09.</span> OOP
+                </a>
+                <a href="#challenges" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">10.</span> Challenges
+                </a>
+                <a href="#projects" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">11.</span> Projects
+                </a>
+                <a href="#quiz" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">12.</span> Quiz
+                </a>
+              </nav>
+              
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="text-xs text-gray-500 mb-2">Progress</div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full" style={{width: '0%'}}></div>
+                </div>
+                <div className="text-xs text-gray-500 mt-1">0% Complete</div>
+              </div>
+            </div>
+          </aside>
+          
+          <main className="flex-1 max-w-4xl">
+        <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-xl p-8 mb-12 border border-blue-100">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Course Contents</h2>
+            <p className="text-gray-600">Complete roadmap to Python mastery</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-800">Fundamentals</h3>
+              </div>
+              <ul className="space-y-3">
+                <li><a href="#introduction" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600 mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">1</span>
+                  Introduction
+                </a></li>
+                <li><a href="#setup" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600 mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">2</span>
+                  Environment Setup
+                </a></li>
+                <li><a href="#syntax" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600 mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">3</span>
+                  Basic Syntax
+                </a></li>
+                <li><a href="#variables" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600 mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">4</span>
+                  Variables & Data Types
+                </a></li>
+                <li><a href="#operators" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600 mr-3 group-hover:bg-blue-600 group-hover:text-white transition-all">5</span>
+                  Operators
+                </a></li>
+              </ul>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-green-500">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-800">Core Concepts</h3>
+              </div>
+              <ul className="space-y-3">
+                <li><a href="#control" className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-xs font-bold text-green-600 mr-3 group-hover:bg-green-600 group-hover:text-white transition-all">6</span>
+                  Control Structures
+                </a></li>
+                <li><a href="#functions" className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-xs font-bold text-green-600 mr-3 group-hover:bg-green-600 group-hover:text-white transition-all">7</span>
+                  Functions
+                </a></li>
+                <li><a href="#data-structures" className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-xs font-bold text-green-600 mr-3 group-hover:bg-green-600 group-hover:text-white transition-all">8</span>
+                  Data Structures
+                </a></li>
+                <li><a href="#oop" className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-xs font-bold text-green-600 mr-3 group-hover:bg-green-600 group-hover:text-white transition-all">9</span>
+                  Object-Oriented Programming
+                </a></li>
+                <li><a href="#modules" className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-xs font-bold text-green-600 mr-3 group-hover:bg-green-600 group-hover:text-white transition-all">10</span>
+                  Modules & Packages
+                </a></li>
+              </ul>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-purple-500">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                  <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg text-gray-800">Advanced & Projects</h3>
+              </div>
+              <ul className="space-y-3">
+                <li><a href="#exceptions" className="flex items-center text-gray-700 hover:text-purple-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600 mr-3 group-hover:bg-purple-600 group-hover:text-white transition-all">11</span>
+                  Exception Handling
+                </a></li>
+                <li><a href="#file-io" className="flex items-center text-gray-700 hover:text-purple-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600 mr-3 group-hover:bg-purple-600 group-hover:text-white transition-all">12</span>
+                  File I/O
+                </a></li>
+                <li><a href="#challenges" className="flex items-center text-gray-700 hover:text-purple-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600 mr-3 group-hover:bg-purple-600 group-hover:text-white transition-all">13</span>
+                  Mini Challenges
+                </a></li>
+                <li><a href="#projects" className="flex items-center text-gray-700 hover:text-purple-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600 mr-3 group-hover:bg-purple-600 group-hover:text-white transition-all">14</span>
+                  Final Projects
+                </a></li>
+                <li><a href="#quiz" className="flex items-center text-gray-700 hover:text-purple-600 transition-colors duration-200 group">
+                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600 mr-3 group-hover:bg-purple-600 group-hover:text-white transition-all">15</span>
+                  Quiz & Assessment
+                </a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-# 1. Variables and Data Types
-name = "Python"              # String
-age = 30                     # Integer
-height = 5.9                 # Float
-is_student = True            # Boolean
-scores = [85, 92, 78]        # List
-info = {"name": "John"}      # Dictionary
-coordinates = (10, 20)       # Tuple
-unique_items = {1, 2, 3}     # Set
+        {/* Introduction */}
+            <section id="introduction" className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-gray-200">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                  <span className="text-blue-600 font-bold text-lg">01</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-800">Introduction to Python</h2>
+                  <p className="text-sm text-gray-500">Get started with Python basics</p>
+                </div>
+              </div>
 
-# 2. Control Structures
-if condition:
-    # if block
-elif another_condition:
-    # elif block
-else:
-    # else block
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">What is Python?</h3>
+            <p className="text-gray-700 mb-4">
+              Python is a high-level, interpreted programming language known for its simplicity and readability. 
+              Created by Guido van Rossum in 1991, Python emphasizes code readability and allows programmers 
+              to express concepts in fewer lines of code.
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-green-700">Why Choose Python?</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Easy to learn and read</li>
+                  <li>Versatile and powerful</li>
+                  <li>Large community support</li>
+                  <li>Extensive libraries</li>
+                  <li>Cross-platform compatibility</li>
+                  <li>Great for beginners</li>
+                </ul>
+              </div>
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-blue-700">Python Applications</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Web Development (Django, Flask)</li>
+                  <li>Data Science & Analytics</li>
+                  <li>Machine Learning & AI</li>
+                  <li>Automation & Scripting</li>
+                  <li>Desktop Applications</li>
+                  <li>Game Development</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-# 3. Loops
-for item in iterable:
-    # for loop
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Python Philosophy - The Zen of Python</h3>
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <pre className="text-sm text-gray-700">
+{`Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Readability counts.`}
+              </pre>
+            </div>
+          </div>
+        </section>
 
-while condition:
-    # while loop
+        {/* Environment Setup */}
+        <section id="setup" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">2. Environment Setup</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Installing Python</h3>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-blue-700">Windows</h4>
+                <ol className="text-sm text-gray-700 list-decimal list-inside space-y-1">
+                  <li>Visit python.org</li>
+                  <li>Download Python installer</li>
+                  <li>Run installer as administrator</li>
+                  <li>Check "Add to PATH"</li>
+                  <li>Verify: <code>python --version</code></li>
+                </ol>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-green-700">macOS</h4>
+                <ol className="text-sm text-gray-700 list-decimal list-inside space-y-1">
+                  <li>Install Homebrew</li>
+                  <li><code>brew install python</code></li>
+                  <li>Or download from python.org</li>
+                  <li>Verify: <code>python3 --version</code></li>
+                </ol>
+              </div>
+              <div className="bg-orange-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-orange-700">Linux</h4>
+                <ol className="text-sm text-gray-700 list-decimal list-inside space-y-1">
+                  <li>Ubuntu: <code>sudo apt install python3</code></li>
+                  <li>CentOS: <code>sudo yum install python3</code></li>
+                  <li>Verify: <code>python3 --version</code></li>
+                </ol>
+              </div>
+            </div>
+          </div>
 
-# 4. Functions
-def function_name(parameters):
-    """Function docstring"""
-    # function body
-    return value  # optional
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Development Environment</h3>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Recommended IDEs</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li><strong>PyCharm</strong> - Professional IDE</li>
+                  <li><strong>VS Code</strong> - Lightweight, extensible</li>
+                  <li><strong>Jupyter Notebook</strong> - Data science</li>
+                  <li><strong>IDLE</strong> - Built-in Python IDE</li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Package Management</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li><strong>pip</strong> - Python package installer</li>
+                  <li><strong>conda</strong> - Anaconda package manager</li>
+                  <li><strong>virtualenv</strong> - Virtual environments</li>
+                  <li><strong>pipenv</strong> - Modern dependency management</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-# 5. Classes
-class ClassName:
-    def __init__(self, parameters):
-        self.attribute = value
-    
-    def method_name(self):
-        # method body
-        pass
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Your First Python Program</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`# hello_world.py
+print("Hello, World!")
+print("Welcome to Python Programming!")
 
-# 6. List Comprehensions
-new_list = [expression for item in iterable if condition]
+# Run this program:
+# python hello_world.py`}
+            </pre>
+          </div>
+        </section>
 
-# 7. Exception Handling
-try:
-    # risky code
-except SpecificException as e:
-    # handle exception
-finally:
-    # cleanup code
+        {/* Basic Syntax */}
+        <section id="syntax" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">3. Basic Syntax</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Python Syntax Rules</h3>
+            
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-blue-700">Key Features</h4>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                  <li>Indentation defines code blocks</li>
+                  <li>No semicolons required</li>
+                  <li>Case-sensitive language</li>
+                  <li>Dynamic typing</li>
+                  <li>Interactive interpreter</li>
+                </ul>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-green-700">Comments</h4>
+                <pre className="text-xs text-gray-700">
+{`# Single line comment
 
-# 8. File Operations
-with open('file.txt', 'r') as file:
-    content = file.read()
-
-# 9. Imports
-import module_name
-from module import function
-import module as alias`,
-        conventions: [
-          "Use snake_case for variables and functions (e.g., my_variable, calculate_total)",
-          "Use PascalCase for classes (e.g., MyClass, StudentRecord)",
-          "Use UPPER_SNAKE_CASE for constants (e.g., MAX_SIZE, PI_VALUE)",
-          "Indentation: 4 spaces (no tabs)",
-          "Line length: maximum 79 characters",
-          "Use descriptive names for variables and functions",
-          "Add docstrings to functions and classes",
-          "Follow PEP 8 style guide"
-        ]
-      }
-    },
-    syllabus: [
-      {
-        week: 1,
-        title: "Python Basics and Syntax",
-        topics: [
-          "Python installation and setup",
-          "Variables and data types",
-          "Input/output operations",
-          "Basic operators",
-          "Control structures"
-        ],
-        practicals: [
-          "Setup Python environment",
-          "Create basic programs",
-          "Build simple calculator"
-        ],
-        examples: [
-          {
-            title: "Python Syntax and Data Types",
-            code: `#!/usr/bin/env python3
 """
-Python Fundamentals and Syntax Demonstration
-This script covers basic Python concepts with detailed examples.
+Multi-line comment
+or docstring
 """
 
-import math
-import random
-from datetime import datetime, timedelta
-from collections import Counter, defaultdict
+'''
+Another way for
+multi-line comments
+'''`}
+                </pre>
+              </div>
+            </div>
+          </div>
 
-def main():
-    """Main function demonstrating Python fundamentals."""
-    print("=== PYTHON FUNDAMENTALS DEMONSTRATION ===")
-    
-    # ===== DATA TYPES AND VARIABLES =====
-    print("\n1. DATA TYPES AND VARIABLES:")
-    
-    # Basic data types
-    integer_num = 42
-    float_num = 3.14159
-    string_text = "Hello, Python!"
-    boolean_val = True
-    none_val = None
-    
-    # Complex data types
-    list_data = [1, 2, 3, "mixed", True]
-    tuple_data = (10, 20, 30)  # Immutable
-    dict_data = {"name": "Alice", "age": 25, "city": "New York"}
-    set_data = {1, 2, 3, 4, 5}  # Unique elements
-    
-    print(f"Integer: {integer_num} (type: {type(integer_num).__name__})")
-    print(f"Float: {float_num} (type: {type(float_num).__name__})")
-    print(f"String: '{string_text}' (type: {type(string_text).__name__})")
-    print(f"Boolean: {boolean_val} (type: {type(boolean_val).__name__})")
-    print(f"None: {none_val} (type: {type(none_val).__name__})")
-    print(f"List: {list_data} (length: {len(list_data)})")
-    print(f"Tuple: {tuple_data} (length: {len(tuple_data)})")
-    print(f"Dictionary: {dict_data} (keys: {len(dict_data)})")
-    print(f"Set: {set_data} (unique elements: {len(set_data)})")
-    
-    # Type checking and conversion
-    print(f"\nType checking: isinstance(42, int) = {isinstance(42, int)}")
-    print(f"Type conversion: int('123') = {int('123')}")
-    print(f"Type conversion: str(456) = '{str(456)}'")
-    print(f"Type conversion: float('3.14') = {float('3.14')}")
-    
-    # ===== OPERATORS =====
-    print("\n2. OPERATORS:")
-    
-    a, b = 10, 3
-    
-    # Arithmetic operators
-    print(f"Arithmetic: {a} + {b} = {a + b}")
-    print(f"Arithmetic: {a} - {b} = {a - b}")
-    print(f"Arithmetic: {a} * {b} = {a * b}")
-    print(f"Arithmetic: {a} / {b} = {a / b:.2f}")      # Float division
-    print(f"Arithmetic: {a} // {b} = {a // b}")        # Integer division
-    print(f"Arithmetic: {a} % {b} = {a % b}")          # Modulus
-    print(f"Arithmetic: {a} ** {b} = {a ** b}")        # Exponentiation
-    
-    # Comparison operators
-    print(f"Comparison: {a} > {b} = {a > b}")
-    print(f"Comparison: {a} == {b} = {a == b}")
-    print(f"Comparison: {a} != {b} = {a != b}")
-    
-    # Logical operators
-    x, y = True, False
-    print(f"Logical: {x} and {y} = {x and y}")
-    print(f"Logical: {x} or {y} = {x or y}")
-    print(f"Logical: not {x} = {not x}")
-    
-    # Membership operators
-    numbers = [1, 2, 3, 4, 5]
-    print(f"Membership: 3 in {numbers} = {3 in numbers}")
-    print(f"Membership: 6 not in {numbers} = {6 not in numbers}")
-    
-    # Identity operators
-    list1 = [1, 2, 3]
-    list2 = [1, 2, 3]
-    list3 = list1
-    print(f"Identity: list1 is list2 = {list1 is list2}")  # False (different objects)
-    print(f"Identity: list1 is list3 = {list1 is list3}")  # True (same object)
-    print(f"Equality: list1 == list2 = {list1 == list2}")  # True (same content)
-    
-    # ===== CONTROL STRUCTURES =====
-    print("\n3. CONTROL STRUCTURES:")
-    
-    # If-elif-else
-    score = 85
-    if score >= 90:
-        grade = "A"
-    elif score >= 80:
-        grade = "B"
-    elif score >= 70:
-        grade = "C"
-    elif score >= 60:
-        grade = "D"
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Indentation & Code Blocks</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
+{`# Correct indentation
+if 5 > 2:
+    print("Five is greater than two!")
+    print("This is inside the if block")
+
+print("This is outside the if block")
+
+# Nested indentation
+for i in range(3):
+    print(f"Outer loop: {i}")
+    for j in range(2):
+        print(f"  Inner loop: {j}")
+    print("Back to outer loop")
+
+# Function with proper indentation
+def greet(name):
+    if name:
+        print(f"Hello, {name}!")
+        return True
     else:
-        grade = "F"
-    
-    print(f"Score: {score}, Grade: {grade}")
-    
-    # Ternary operator (conditional expression)
-    status = "Pass" if score >= 60 else "Fail"
-    print(f"Status: {status}")
-    
-    # Match statement (Python 3.10+)
-    day_num = 3
-    match day_num:
-        case 1:
-            day_name = "Monday"
-        case 2:
-            day_name = "Tuesday"
-        case 3:
-            day_name = "Wednesday"
-        case 4:
-            day_name = "Thursday"
-        case 5:
-            day_name = "Friday"
-        case 6 | 7:  # Multiple patterns
-            day_name = "Weekend"
-        case _:  # Default case
-            day_name = "Invalid day"
-    
-    print(f"Day {day_num} is {day_name}")
-    
-    # ===== LOOPS =====
-    print("\n4. LOOPS:")
-    
-    # For loop with range
-    print("For loop (1-5): ", end="")
-    for i in range(1, 6):
-        print(i, end=" ")
-    print()
-    
-    # For loop with list
-    fruits = ["apple", "banana", "orange", "grape"]
-    print("Fruits: ", end="")
-    for fruit in fruits:
-        print(fruit, end=" ")
-    print()
-    
-    # For loop with enumerate (index and value)
-    print("Enumerated fruits:")
-    for index, fruit in enumerate(fruits, 1):
-        print(f"  {index}. {fruit}")
-    
-    # For loop with dictionary
-    person = {"name": "John", "age": 30, "city": "NYC"}
-    print("Person info:")
-    for key, value in person.items():
-        print(f"  {key}: {value}")
-    
-    # While loop
-    print("While loop countdown: ", end="")
-    countdown = 5
-    while countdown > 0:
-        print(countdown, end=" ")
-        countdown -= 1
-    print("Blast off!")
-    
-    # List comprehensions
-    print("\nList comprehensions:")
-    squares = [x**2 for x in range(1, 6)]
-    print(f"Squares: {squares}")
-    
-    even_squares = [x**2 for x in range(1, 11) if x % 2 == 0]
-    print(f"Even squares: {even_squares}")
-    
-    # Dictionary comprehension
-    square_dict = {x: x**2 for x in range(1, 6)}
-    print(f"Square dictionary: {square_dict}")
-    
-    # Set comprehension
-    unique_lengths = {len(word) for word in ["python", "java", "c", "javascript", "go"]}
-    print(f"Unique word lengths: {unique_lengths}")
-    
-    # ===== FUNCTIONS =====
-    print("\n5. FUNCTIONS:")
-    
-    # Basic function
-    def greet(name, greeting="Hello"):
-        """Greet a person with a custom or default greeting."""
-        return f"{greeting}, {name}!"
-    
-    print(greet("Alice"))
-    print(greet("Bob", "Hi"))
-    
-    # Function with *args and **kwargs
-    def flexible_function(*args, **kwargs):
-        """Function that accepts any number of arguments."""
-        print(f"Positional arguments: {args}")
-        print(f"Keyword arguments: {kwargs}")
-        return len(args) + len(kwargs)
-    
-    result = flexible_function(1, 2, 3, name="John", age=30)
-    print(f"Total arguments: {result}")
-    
-    # Lambda functions
-    square = lambda x: x**2
-    add = lambda x, y: x + y
-    
-    print(f"Lambda square(5): {square(5)}")
-    print(f"Lambda add(3, 4): {add(3, 4)}")
-    
-    # Higher-order functions
-    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
-    # map() function
-    squared_numbers = list(map(lambda x: x**2, numbers))
-    print(f"Mapped squares: {squared_numbers[:5]}...")  # Show first 5
-    
-    # filter() function
-    even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
-    print(f"Filtered evens: {even_numbers}")
-    
-    # reduce() function
-    from functools import reduce
-    sum_all = reduce(lambda x, y: x + y, numbers)
-    print(f"Reduced sum: {sum_all}")
-    
-    # ===== STRING OPERATIONS =====
-    print("\n6. STRING OPERATIONS:")
-    
-    text = "  Python Programming Language  "
-    print(f"Original: '{text}'")
-    print(f"Length: {len(text)}")
-    print(f"Stripped: '{text.strip()}'")
-    print(f"Upper: '{text.upper()}'")
-    print(f"Lower: '{text.lower()}'")
-    print(f"Title: '{text.title()}'")
-    print(f"Replace: '{text.replace('Python', 'Advanced Python')}'")
-    
-    # String formatting
-    name = "Developer"
-    age = 25
-    salary = 75000.50
-    
-    # f-strings (Python 3.6+)
-    message1 = f"Hello, {name}! You are {age} years old and earn \${salary:,.2f}"
-    print(f"f-string: {message1}")
-    
-    # .format() method
-    message2 = "Hello, {}! You are {} years old and earn \${:,.2f}".format(name, age, salary)
-    print(f"format(): {message2}")
-    
-    # % formatting (older style)
-    message3 = "Hello, %s! You are %d years old and earn $%.2f" % (name, age, salary)
-    print(f"% formatting: {message3}")
-    
-    # String methods
-    sample_text = "python,java,javascript,c++,go"
-    languages = sample_text.split(",")
-    print(f"Split: {languages}")
-    print(f"Join: {' | '.join(languages)}")
-    print(f"Starts with 'python': {sample_text.startswith('python')}")
-    print(f"Ends with 'go': {sample_text.endswith('go')}")
-    print(f"Find 'java': {sample_text.find('java')}")
-    print(f"Count 'a': {sample_text.count('a')}")
-    
-    # ===== COLLECTIONS AND DATA STRUCTURES =====
-    print("\n7. COLLECTIONS AND DATA STRUCTURES:")
-    
-    # Lists (mutable, ordered)
-    my_list = [1, 2, 3, 4, 5]
-    my_list.append(6)
-    my_list.insert(0, 0)
-    my_list.extend([7, 8, 9])
-    print(f"List operations: {my_list}")
-    print(f"List slicing [2:5]: {my_list[2:5]}")
-    print(f"List slicing [::-1]: {my_list[::-1]}")  # Reverse
-    
-    # Tuples (immutable, ordered)
-    coordinates = (10, 20, 30)
-    x, y, z = coordinates  # Unpacking
-    print(f"Tuple unpacking: x={x}, y={y}, z={z}")
-    
-    # Dictionaries (mutable, key-value pairs)
-    student = {
-        "name": "Alice",
-        "age": 22,
-        "grades": [85, 92, 78, 96],
-        "is_enrolled": True
-    }
-    
-    student["gpa"] = sum(student["grades"]) / len(student["grades"])
-    print(f"Student: {student['name']}, GPA: {student['gpa']:.2f}")
-    print(f"Dictionary keys: {list(student.keys())}")
-    print(f"Dictionary values: {list(student.values())}")
-    
-    # Sets (mutable, unique elements)
-    set1 = {1, 2, 3, 4, 5}
-    set2 = {4, 5, 6, 7, 8}
-    
-    print(f"Set union: {set1 | set2}")
-    print(f"Set intersection: {set1 & set2}")
-    print(f"Set difference: {set1 - set2}")
-    print(f"Set symmetric difference: {set1 ^ set2}")
-    
-    # Advanced collections
-    from collections import Counter, defaultdict, namedtuple
-    
-    # Counter
-    text_sample = "hello world"
-    char_count = Counter(text_sample)
-    print(f"Character count: {char_count}")
-    print(f"Most common: {char_count.most_common(3)}")
-    
-    # defaultdict
-    dd = defaultdict(list)
-    dd['fruits'].append('apple')
-    dd['fruits'].append('banana')
-    dd['vegetables'].append('carrot')
-    print(f"defaultdict: {dict(dd)}")
-    
-    # namedtuple
-    Point = namedtuple('Point', ['x', 'y'])
-    p1 = Point(10, 20)
-    print(f"Named tuple: {p1}, x={p1.x}, y={p1.y}")
-    
-    # ===== FILE OPERATIONS =====
-    print("\n8. FILE OPERATIONS:")
-    
-    # Writing to file
-    filename = "sample_output.txt"
-    with open(filename, 'w') as file:
-        file.write("Hello, Python!\n")
-        file.write("This is a sample file.\n")
-        file.writelines(["Line 1\n", "Line 2\n", "Line 3\n"])
-    
-    print(f"File '{filename}' created and written.")
-    
-    # Reading from file
-    try:
-        with open(filename, 'r') as file:
-            content = file.read()
-            print(f"File content:\n{content}")
-    except FileNotFoundError:
-        print(f"File '{filename}' not found.")
-    
-    # ===== ERROR HANDLING =====
-    print("\n9. ERROR HANDLING:")
-    
-    def safe_divide(a, b):
-        """Safely divide two numbers with error handling."""
-        try:
-            result = a / b
-            return result
-        except ZeroDivisionError:
-            print(f"Error: Cannot divide {a} by zero!")
-            return None
-        except TypeError:
-            print(f"Error: Invalid types for division: {type(a)}, {type(b)}")
-            return None
-        finally:
-            print(f"Division operation attempted: {a} / {b}")
-    
-    print(f"Safe divide 10/2: {safe_divide(10, 2)}")
-    print(f"Safe divide 10/0: {safe_divide(10, 0)}")
-    print(f"Safe divide 'a'/2: {safe_divide('a', 2)}")
-    
-    # ===== MODULES AND IMPORTS =====
-    print("\n10. MODULES AND IMPORTS:")
-    
-    # Math module
-    print(f"Math.pi: {math.pi:.4f}")
-    print(f"Math.sqrt(16): {math.sqrt(16)}")
-    print(f"Math.factorial(5): {math.factorial(5)}")
-    
-    # Random module
-    print(f"Random integer (1-10): {random.randint(1, 10)}")
-    print(f"Random choice: {random.choice(['apple', 'banana', 'orange'])}")
-    
-    # Datetime module
-    now = datetime.now()
-    tomorrow = now + timedelta(days=1)
-    print(f"Current time: {now.strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Tomorrow: {tomorrow.strftime('%Y-%m-%d')}")
-    
-    print("\n=== DEMONSTRATION COMPLETE ===")
+        print("Hello, stranger!")
+        return False`}
+            </pre>
+          </div>
 
-if __name__ == "__main__":
-    main()`,
-            explanation: "Comprehensive Python fundamentals covering all basic concepts including data types, operators, control structures, functions, collections, file operations, and error handling with practical examples."
-          },
-          {
-            title: "Advanced Python Features and Best Practices",
-            code: `# Python Basics - Variables and Data Types
-name = "Python Programmer"
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Python Keywords</h3>
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <div className="grid grid-cols-4 gap-2 text-sm">
+                <span className="bg-blue-100 px-2 py-1 rounded">and</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">as</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">assert</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">break</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">class</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">continue</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">def</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">del</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">elif</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">else</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">except</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">finally</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">for</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">from</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">global</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">if</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">import</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">in</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">is</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">lambda</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">not</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">or</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">pass</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">raise</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">return</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">try</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">while</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">with</span>
+                <span className="bg-blue-100 px-2 py-1 rounded">yield</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Variables & Data Types */}
+        <section id="variables" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">4. Variables & Data Types</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Variables</h3>
+            <p className="text-gray-700 mb-4">
+              Python variables are dynamically typed - you don't need to declare their type explicitly.
+            </p>
+            
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# Variable assignment
+name = "Alice"
 age = 25
-height = 5.8
+height = 5.6
 is_student = True
-languages = ["Python", "JavaScript", "Java"]
 
-print(f"Name: {name}")
-print(f"Age: {age}")
-print(f"Height: {height}")
-print(f"Is Student: {is_student}")
-print(f"Languages: {', '.join(languages)}")
+# Multiple assignment
+x, y, z = 1, 2, 3
+a = b = c = 10
 
-# Input and basic operations
-user_name = input("Enter your name: ")
-user_age = int(input("Enter your age: "))
+# Variable naming rules
+valid_name = "Good"
+_private_var = "Also good"
+name2 = "Numbers allowed"
+# 2name = "Invalid - starts with number"
+# my-var = "Invalid - contains hyphen"
 
-if user_age >= 18:
-    print(f"Hello {user_name}, you are an adult!")
+# Check variable type
+print(type(name))    # <class 'str'>
+print(type(age))     # <class 'int'>
+print(type(height))  # <class 'float'>
+print(type(is_student))  # <class 'bool'>`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Data Types</h3>
+            
+            <div className="overflow-x-auto mb-6">
+              <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 px-4 py-2 text-left">Data Type</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Description</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">int</td>
+                    <td className="border border-gray-300 px-4 py-2">Integer numbers</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>42, -17, 0</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">float</td>
+                    <td className="border border-gray-300 px-4 py-2">Decimal numbers</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>3.14, -2.5, 1.0</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">str</td>
+                    <td className="border border-gray-300 px-4 py-2">Text strings</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>"Hello", 'World'</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">bool</td>
+                    <td className="border border-gray-300 px-4 py-2">Boolean values</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>True, False</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">list</td>
+                    <td className="border border-gray-300 px-4 py-2">Ordered, mutable collection</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>[1, 2, 3]</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">tuple</td>
+                    <td className="border border-gray-300 px-4 py-2">Ordered, immutable collection</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>(1, 2, 3)</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">dict</td>
+                    <td className="border border-gray-300 px-4 py-2">Key-value pairs</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>{'{"key": "value"}'}</code></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2 font-semibold">set</td>
+                    <td className="border border-gray-300 px-4 py-2">Unordered, unique elements</td>
+                    <td className="border border-gray-300 px-4 py-2"><code>{'{'}{1, 2, 3}{'}'}</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">String Operations</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`# String creation
+single_quote = 'Hello'
+double_quote = "World"
+triple_quote = """Multi-line
+string example"""
+
+# String concatenation
+full_name = "John" + " " + "Doe"
+greeting = f"Hello, {full_name}!"  # f-string (Python 3.6+)
+
+# String methods
+text = "Python Programming"
+print(text.upper())        # PYTHON PROGRAMMING
+print(text.lower())        # python programming
+print(text.replace("Python", "Java"))  # Java Programming
+print(text.split())        # ['Python', 'Programming']
+print(len(text))           # 18
+
+# String slicing
+print(text[0:6])          # Python
+print(text[:6])           # Python
+print(text[7:])           # Programming
+print(text[-11:])         # Programming`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Operators */}
+        <section id="operators" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">5. Operators</h2>
+          
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-blue-700">Arithmetic Operators</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse border border-gray-300 text-sm">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 px-2 py-1">Operator</th>
+                      <th className="border border-gray-300 px-2 py-1">Description</th>
+                      <th className="border border-gray-300 px-2 py-1">Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td className="border border-gray-300 px-2 py-1">+</td><td className="border border-gray-300 px-2 py-1">Addition</td><td className="border border-gray-300 px-2 py-1">5 + 3 = 8</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">-</td><td className="border border-gray-300 px-2 py-1">Subtraction</td><td className="border border-gray-300 px-2 py-1">5 - 3 = 2</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">*</td><td className="border border-gray-300 px-2 py-1">Multiplication</td><td className="border border-gray-300 px-2 py-1">5 * 3 = 15</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">/</td><td className="border border-gray-300 px-2 py-1">Division</td><td className="border border-gray-300 px-2 py-1">5 / 2 = 2.5</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">//</td><td className="border border-gray-300 px-2 py-1">Floor Division</td><td className="border border-gray-300 px-2 py-1">5 // 2 = 2</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">%</td><td className="border border-gray-300 px-2 py-1">Modulus</td><td className="border border-gray-300 px-2 py-1">5 % 2 = 1</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">**</td><td className="border border-gray-300 px-2 py-1">Exponentiation</td><td className="border border-gray-300 px-2 py-1">5 ** 2 = 25</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-green-700">Comparison Operators</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse border border-gray-300 text-sm">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 px-2 py-1">Operator</th>
+                      <th className="border border-gray-300 px-2 py-1">Description</th>
+                      <th className="border border-gray-300 px-2 py-1">Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td className="border border-gray-300 px-2 py-1">==</td><td className="border border-gray-300 px-2 py-1">Equal to</td><td className="border border-gray-300 px-2 py-1">5 == 5 → True</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">!=</td><td className="border border-gray-300 px-2 py-1">Not equal</td><td className="border border-gray-300 px-2 py-1">5 != 3 → True</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">&gt;</td><td className="border border-gray-300 px-2 py-1">Greater than</td><td className="border border-gray-300 px-2 py-1">5 &gt; 3 → True</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">&lt;</td><td className="border border-gray-300 px-2 py-1">Less than</td><td className="border border-gray-300 px-2 py-1">3 &lt; 5 → True</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">&gt;=</td><td className="border border-gray-300 px-2 py-1">Greater or equal</td><td className="border border-gray-300 px-2 py-1">5 &gt;= 5 → True</td></tr>
+                    <tr><td className="border border-gray-300 px-2 py-1">&lt;=</td><td className="border border-gray-300 px-2 py-1">Less or equal</td><td className="border border-gray-300 px-2 py-1">3 &lt;= 5 → True</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Logical & Assignment Operators</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`# Logical operators
+x, y = True, False
+print(x and y)    # False
+print(x or y)     # True
+print(not x)      # False
+
+# Assignment operators
+a = 10
+a += 5    # a = a + 5 → 15
+a -= 3    # a = a - 3 → 12
+a *= 2    # a = a * 2 → 24
+a /= 4    # a = a / 4 → 6.0
+a //= 2   # a = a // 2 → 3.0
+a %= 2    # a = a % 2 → 1.0
+a **= 3   # a = a ** 3 → 1.0
+
+# Identity operators
+list1 = [1, 2, 3]
+list2 = [1, 2, 3]
+list3 = list1
+
+print(list1 is list3)     # True (same object)
+print(list1 is list2)     # False (different objects)
+print(list1 == list2)     # True (same content)
+
+# Membership operators
+fruits = ['apple', 'banana', 'orange']
+print('apple' in fruits)      # True
+print('grape' not in fruits)  # True`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Control Structures */}
+        <section id="control" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">6. Control Structures</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Conditional Statements</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# if-elif-else statement
+age = 18
+
+if age < 13:
+    print("Child")
+elif age < 20:
+    print("Teenager")
+elif age < 60:
+    print("Adult")
 else:
-    print(f"Hello {user_name}, you are a minor!")
+    print("Senior")
 
-# Loop example
-print("\\nCounting from 1 to 5:")
-for i in range(1, 6):
-    print(i, end=" ")
-print()
+# Ternary operator (conditional expression)
+status = "Adult" if age >= 18 else "Minor"
+print(status)
 
-# List operations
+# Multiple conditions
+score = 85
+grade = 'A' if score >= 90 else 'B' if score >= 80 else 'C' if score >= 70 else 'F'
+
+# Nested conditions
+weather = "sunny"
+temperature = 25
+
+if weather == "sunny":
+    if temperature > 20:
+        print("Perfect day for outdoor activities!")
+    else:
+        print("Sunny but a bit cold")
+else:
+    print("Not ideal weather")`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Loops</h3>
+            
+            <h4 className="text-lg font-semibold mb-2 text-green-600">For Loops</h4>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
+{`# Basic for loop
+for i in range(5):
+    print(f"Count: {i}")
+
+# For loop with start, stop, step
+for i in range(2, 10, 2):
+    print(f"Even number: {i}")
+
+# Iterating over lists
+fruits = ['apple', 'banana', 'orange']
+for fruit in fruits:
+    print(f"I like {fruit}")
+
+# Enumerate for index and value
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+
+# Iterating over dictionaries
+person = {'name': 'Alice', 'age': 30, 'city': 'New York'}
+for key, value in person.items():
+    print(f"{key}: {value}")
+
+# List comprehension
+squares = [x**2 for x in range(10)]
+even_squares = [x**2 for x in range(10) if x % 2 == 0]`}
+            </pre>
+            
+            <h4 className="text-lg font-semibold mb-2 text-green-600">While Loops</h4>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-4">
+{`# Basic while loop
+count = 0
+while count < 5:
+    print(f"Count: {count}")
+    count += 1
+
+# While loop with break and continue
+number = 0
+while True:
+    number += 1
+    if number % 2 == 0:
+        continue  # Skip even numbers
+    if number > 10:
+        break     # Exit loop
+    print(f"Odd number: {number}")
+
+# While-else construct
+search_list = [1, 3, 5, 7, 9]
+target = 5
+index = 0
+
+while index < len(search_list):
+    if search_list[index] == target:
+        print(f"Found {target} at index {index}")
+        break
+    index += 1
+else:
+    print(f"{target} not found in list")`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Loop Control</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`# break - exit loop completely
+for i in range(10):
+    if i == 5:
+        break
+    print(i)  # Prints 0, 1, 2, 3, 4
+
+# continue - skip current iteration
+for i in range(10):
+    if i % 2 == 0:
+        continue
+    print(i)  # Prints 1, 3, 5, 7, 9
+
+# pass - placeholder (do nothing)
+for i in range(5):
+    if i == 2:
+        pass  # TODO: implement special case
+    else:
+        print(i)
+
+# Nested loops with labeled break (using exception)
+def nested_loop_example():
+    try:
+        for i in range(3):
+            for j in range(3):
+                if i == 1 and j == 1:
+                    raise StopIteration
+                print(f"i={i}, j={j}")
+    except StopIteration:
+        print("Broke out of nested loops")`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Functions */}
+        <section id="functions" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">7. Functions</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Function Basics</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# Basic function definition
+def greet(name):
+    """This function greets someone"""
+    return f"Hello, {name}!"
+
+# Function call
+message = greet("Alice")
+print(message)  # Hello, Alice!
+
+# Function with multiple parameters
+def add_numbers(a, b):
+    return a + b
+
+result = add_numbers(5, 3)
+print(result)  # 8
+
+# Function with default parameters
+def greet_with_title(name, title="Mr."):
+    return f"Hello, {title} {name}!"
+
+print(greet_with_title("Smith"))           # Hello, Mr. Smith!
+print(greet_with_title("Johnson", "Dr."))  # Hello, Dr. Johnson!
+
+# Function with variable arguments
+def sum_all(*args):
+    return sum(args)
+
+print(sum_all(1, 2, 3, 4, 5))  # 15
+
+# Function with keyword arguments
+def create_profile(**kwargs):
+    profile = {}
+    for key, value in kwargs.items():
+        profile[key] = value
+    return profile
+
+user = create_profile(name="Alice", age=30, city="New York")
+print(user)  # {'name': 'Alice', 'age': 30, 'city': 'New York'}`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Advanced Function Concepts</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# Lambda functions (anonymous functions)
+square = lambda x: x ** 2
+print(square(5))  # 25
+
+# Lambda with multiple arguments
+multiply = lambda x, y: x * y
+print(multiply(3, 4))  # 12
+
+# Higher-order functions
+def apply_operation(numbers, operation):
+    return [operation(num) for num in numbers]
+
 numbers = [1, 2, 3, 4, 5]
-squares = [x**2 for x in numbers]
-print(f"Numbers: {numbers}")
-print(f"Squares: {squares}")`,
-            explanation: "Basic Python syntax showing variables, data types, input/output, control structures, and list comprehensions."
-          }
-        ]
-      },
-      {
-        week: 2,
-        title: "Data Structures and Functions",
-        topics: [
-          "Lists, tuples, dictionaries, sets",
-          "Function definition and parameters",
-          "Lambda functions",
-          "Scope and closures",
-          "Decorators basics"
-        ],
-        practicals: [
-          "Work with data structures",
-          "Create custom functions",
-          "Build data processing tools"
-        ],
-        examples: [
-          {
-            title: "Data Structures and Functions",
-            code: `# Working with different data structures
-students = {
-    "Alice": {"age": 20, "grades": [85, 92, 78]},
-    "Bob": {"age": 21, "grades": [76, 84, 91]},
-    "Charlie": {"age": 19, "grades": [95, 88, 92]}
-}
+squared = apply_operation(numbers, lambda x: x ** 2)
+print(squared)  # [1, 4, 9, 16, 25]
 
-def calculate_average(grades):
-    """Calculate average of grades"""
-    return sum(grades) / len(grades) if grades else 0
-
-def get_grade_letter(average):
-    """Convert numeric grade to letter grade"""
-    if average >= 90: return 'A'
-    elif average >= 80: return 'B'
-    elif average >= 70: return 'C'
-    elif average >= 60: return 'D'
-    else: return 'F'
-
-# Process student data
-print("Student Report:")
-print("-" * 40)
-for name, info in students.items():
-    avg = calculate_average(info["grades"])
-    letter = get_grade_letter(avg)
-    print(f"{name}: Age {info['age']}, Average: {avg:.1f}, Grade: {letter}")
-
-# Lambda functions and higher-order functions
+# Built-in higher-order functions
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-# Filter even numbers
+# map() - apply function to all elements
+squares = list(map(lambda x: x ** 2, numbers))
+print(squares)
+
+# filter() - filter elements based on condition
 evens = list(filter(lambda x: x % 2 == 0, numbers))
-print(f"\\nEven numbers: {evens}")
+print(evens)  # [2, 4, 6, 8, 10]
 
-# Map to squares
-squares = list(map(lambda x: x**2, numbers))
-print(f"Squares: {squares}")
-
-# Reduce to sum (using functools)
+# reduce() - reduce list to single value
 from functools import reduce
-total = reduce(lambda x, y: x + y, numbers)
-print(f"Sum: {total}")
+sum_all = reduce(lambda x, y: x + y, numbers)
+print(sum_all)  # 55
+
+# Recursion
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))  # 120
+
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+print([fibonacci(i) for i in range(10)])  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Decorators</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`# Simple decorator
+def my_decorator(func):
+    def wrapper():
+        print("Something before the function")
+        func()
+        print("Something after the function")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Output:
+# Something before the function
+# Hello!
+# Something after the function
+
+# Decorator with arguments
+def timer_decorator(func):
+    import time
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"{func.__name__} took {end_time - start_time:.4f} seconds")
+        return result
+    return wrapper
+
+@timer_decorator
+def slow_function():
+    import time
+    time.sleep(1)
+    return "Done!"
+
+result = slow_function()  # slow_function took 1.0001 seconds`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Data Structures */}
+        <section id="data-structures" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">8. Data Structures</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Lists</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# List creation and basic operations
+fruits = ['apple', 'banana', 'orange']
+numbers = [1, 2, 3, 4, 5]
+mixed = ['hello', 42, 3.14, True]
+
+# List methods
+fruits.append('grape')          # Add to end
+fruits.insert(1, 'kiwi')       # Insert at index
+fruits.remove('banana')        # Remove first occurrence
+popped = fruits.pop()           # Remove and return last item
+fruits.extend(['mango', 'pear']) # Add multiple items
+
+print(fruits)  # ['apple', 'kiwi', 'orange', 'grape', 'mango', 'pear']
+
+# List slicing
+print(fruits[1:4])     # ['kiwi', 'orange', 'grape']
+print(fruits[:3])      # ['apple', 'kiwi', 'orange']
+print(fruits[::2])     # ['apple', 'orange', 'mango']
+print(fruits[::-1])    # Reverse list
+
+# List comprehensions
+squares = [x**2 for x in range(10)]
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+matrix = [[i*j for j in range(3)] for i in range(3)]
+
+# Sorting
+numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+numbers.sort()                    # In-place sort
+sorted_numbers = sorted(numbers)  # Return new sorted list
+numbers.sort(reverse=True)        # Descending order`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Dictionaries</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# Dictionary creation
+person = {
+    'name': 'Alice',
+    'age': 30,
+    'city': 'New York',
+    'hobbies': ['reading', 'swimming']
+}
+
+# Dictionary operations
+print(person['name'])           # Alice
+print(person.get('age'))        # 30
+print(person.get('country', 'Unknown'))  # Unknown (default value)
+
+# Adding/updating items
+person['email'] = 'alice@email.com'
+person.update({'phone': '123-456-7890', 'age': 31})
+
+# Dictionary methods
+keys = person.keys()            # dict_keys(['name', 'age', 'city', ...])
+values = person.values()        # dict_values(['Alice', 31, 'New York', ...])
+items = person.items()          # dict_items([('name', 'Alice'), ...])
+
+# Dictionary comprehension
+squares_dict = {x: x**2 for x in range(5)}
+print(squares_dict)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+# Nested dictionaries
+students = {
+    'alice': {'grade': 'A', 'subjects': ['math', 'science']},
+    'bob': {'grade': 'B', 'subjects': ['english', 'history']}
+}
+
+print(students['alice']['grade'])  # A`}
+            </pre>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-purple-700">Tuples & Sets</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+{`# Tuples (immutable)
+coordinates = (10, 20)
+rgb_color = (255, 128, 0)
+mixed_tuple = ('hello', 42, 3.14)
+
+# Tuple unpacking
+x, y = coordinates
+r, g, b = rgb_color
+
+# Named tuples
+from collections import namedtuple
+Point = namedtuple('Point', ['x', 'y'])
+p = Point(10, 20)
+print(p.x, p.y)  # 10 20
+
+# Sets (unique elements)
+fruits = {'apple', 'banana', 'orange'}
+numbers = {1, 2, 3, 4, 5}
 
 # Set operations
-set1 = {1, 2, 3, 4, 5}
-set2 = {4, 5, 6, 7, 8}
-print(f"\\nSet 1: {set1}")
-print(f"Set 2: {set2}")
-print(f"Union: {set1 | set2}")
-print(f"Intersection: {set1 & set2}")
-print(f"Difference: {set1 - set2}")`,
-            explanation: "Demonstrates Python data structures (dict, list, set), functions, lambda expressions, and built-in functions like map, filter, reduce."
-          }
-        ]
-      },
-      {
-        week: 3,
-        title: "Object-Oriented Programming",
-        topics: [
-          "Classes and objects",
-          "Inheritance and polymorphism",
-          "Encapsulation and properties",
-          "Magic methods",
-          "Class and static methods"
-        ],
-        practicals: [
-          "Create class hierarchies",
-          "Implement OOP principles",
-          "Build object-oriented applications"
-        ],
-        examples: [
-          {
-            title: "OOP in Python",
-            code: `class BankAccount:
-    """A simple bank account class demonstrating OOP concepts"""
-    
-    # Class variable
-    bank_name = "Python Bank"
-    account_count = 0
-    
-    def __init__(self, account_holder, initial_balance=0):
-        self.account_holder = account_holder
-        self._balance = max(0, initial_balance)  # Protected attribute
-        self.__account_number = f"ACC{BankAccount.account_count + 1:04d}"  # Private
-        BankAccount.account_count += 1
-    
-    @property
-    def balance(self):
-        """Getter for balance"""
-        return self._balance
-    
-    @property
-    def account_number(self):
-        """Getter for account number"""
-        return self.__account_number
-    
-    def deposit(self, amount):
-        """Deposit money to account"""
-        if amount > 0:
-            self._balance += amount
-            print(f"Deposited \${amount:.2f}. New balance: \${self._balance:.2f}")
-        else:
-            print("Invalid deposit amount!")
-    
-    def withdraw(self, amount):
-        """Withdraw money from account"""
-        if 0 < amount <= self._balance:
-            self._balance -= amount
-            print(f"Withdrew \${amount:.2f}. New balance: \${self._balance:.2f}")
-            return True
-        else:
-            print("Invalid withdrawal amount or insufficient funds!")
-            return False
-    
-    def __str__(self):
-        """String representation"""
-        return f"Account({self.__account_number}, {self.account_holder}, \${self._balance:.2f})"
-    
-    def __repr__(self):
-        """Developer representation"""
-        return f"BankAccount('{self.account_holder}', {self._balance})"
-    
-    @classmethod
-    def get_bank_info(cls):
-        """Class method to get bank information"""
-        return f"{cls.bank_name} - Total Accounts: {cls.account_count}"
-    
-    @staticmethod
-    def validate_amount(amount):
-        """Static method to validate amount"""
-        return isinstance(amount, (int, float)) and amount > 0
+fruits.add('grape')
+fruits.remove('banana')  # Raises error if not found
+fruits.discard('kiwi')   # No error if not found
 
-class SavingsAccount(BankAccount):
-    """Savings account with interest"""
+# Set operations
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5, 6}
+
+union = set1 | set2           # {1, 2, 3, 4, 5, 6}
+intersection = set1 & set2    # {3, 4}
+difference = set1 - set2      # {1, 2}
+symmetric_diff = set1 ^ set2  # {1, 2, 5, 6}
+
+# Set comprehension
+even_squares = {x**2 for x in range(10) if x % 2 == 0}
+print(even_squares)  # {0, 4, 16, 36, 64}`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Object-Oriented Programming */}
+        <section id="oop" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">9. Object-Oriented Programming</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Classes and Objects</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`# Class definition
+class Person:
+    # Class variable
+    species = "Homo sapiens"
     
-    def __init__(self, account_holder, initial_balance=0, interest_rate=0.02):
-        super().__init__(account_holder, initial_balance)
-        self.interest_rate = interest_rate
+    def __init__(self, name, age):
+        # Instance variables
+        self.name = name
+        self.age = age
     
-    def add_interest(self):
-        """Add interest to account"""
-        interest = self._balance * self.interest_rate
-        self._balance += interest
-        print(f"Interest added: \${interest:.2f}. New balance: \${self._balance:.2f}")
+    # Instance method
+    def introduce(self):
+        return f"Hi, I'm {self.name} and I'm {self.age} years old."
+    
+    def have_birthday(self):
+        self.age += 1
+        print(f"Happy birthday! {self.name} is now {self.age}")
+    
+    # Class method
+    @classmethod
+    def get_species(cls):
+        return cls.species
+    
+    # Static method
+    @staticmethod
+    def is_adult(age):
+        return age >= 18
+
+# Creating objects
+person1 = Person("Alice", 25)
+person2 = Person("Bob", 17)
+
+print(person1.introduce())  # Hi, I'm Alice and I'm 25 years old.
+print(Person.is_adult(person2.age))  # False
+person1.have_birthday()  # Happy birthday! Alice is now 26`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Mini Challenges */}
+        <section id="challenges" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">13. Mini Challenges</h2>
+          
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h4 className="font-semibold mb-2 text-blue-700">Challenge 1: Number Guessing Game</h4>
+              <p className="text-sm text-gray-700 mb-2">Create a game where the computer picks a random number and the user guesses it.</p>
+              <pre className="bg-gray-800 text-green-400 p-2 rounded text-xs overflow-x-auto">
+{`import random
+
+number = random.randint(1, 100)
+guesses = 0
+
+while True:
+    guess = int(input("Guess: "))
+    guesses += 1
+    
+    if guess == number:
+        print(f"Correct! {guesses} guesses")
+        break
+    elif guess < number:
+        print("Too low!")
+    else:
+        print("Too high!")`}
+              </pre>
+            </div>
+            
+            <div className="bg-green-50 p-4 rounded-lg">
+              <h4 className="font-semibold mb-2 text-green-700">Challenge 2: Word Counter</h4>
+              <p className="text-sm text-gray-700 mb-2">Count word frequency in a text.</p>
+              <pre className="bg-gray-800 text-green-400 p-2 rounded text-xs overflow-x-auto">
+{`def count_words(text):
+    words = text.lower().split()
+    word_count = {}
+    
+    for word in words:
+        word = word.strip('.,!?"')
+        word_count[word] = word_count.get(word, 0) + 1
+    
+    return word_count
+
+text = "Hello world hello python"
+result = count_words(text)
+print(result)  # {'hello': 2, 'world': 1, 'python': 1}`}
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        {/* Final Projects */}
+        <section id="projects" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">14. Final Projects</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Project 1: Task Manager</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`class Task:
+    def __init__(self, title, description, priority="medium"):
+        self.title = title
+        self.description = description
+        self.priority = priority
+        self.completed = False
+    
+    def mark_complete(self):
+        self.completed = True
     
     def __str__(self):
-        return f"SavingsAccount({self.account_number}, {self.account_holder}, \${self._balance:.2f}, {self.interest_rate*100}%)"
+        status = "✓" if self.completed else "○"
+        return f"{status} [{self.priority.upper()}] {self.title}"
+
+class TaskManager:
+    def __init__(self):
+        self.tasks = []
+    
+    def add_task(self, title, description, priority="medium"):
+        task = Task(title, description, priority)
+        self.tasks.append(task)
+        print(f"Added task: {title}")
+    
+    def complete_task(self, title):
+        for task in self.tasks:
+            if task.title.lower() == title.lower():
+                task.mark_complete()
+                print(f"Completed: {title}")
+                return
+        print(f"Task not found: {title}")
+    
+    def list_tasks(self, show_completed=True):
+        if not self.tasks:
+            print("No tasks found.")
+            return
+        
+        for task in self.tasks:
+            if show_completed or not task.completed:
+                print(task)
+    
+    def get_pending_tasks(self):
+        return [task for task in self.tasks if not task.completed]
 
 # Usage example
-print("=== Bank Account Demo ===")
-account1 = BankAccount("Alice Johnson", 1000)
-account2 = SavingsAccount("Bob Smith", 500, 0.03)
-
-print(account1)
-print(account2)
-
-account1.deposit(250)
-account1.withdraw(100)
-
-account2.deposit(200)
-account2.add_interest()
-
-print(f"\\n{BankAccount.get_bank_info()}")
-
-# Demonstrate polymorphism
-accounts = [account1, account2]
-print("\\nAll accounts:")
-for account in accounts:
-    print(account)`,
-            explanation: "Comprehensive OOP example showing classes, inheritance, encapsulation, properties, magic methods, and class/static methods."
-          }
-        ]
-      }
-    ],
-    features: [
-      "50 comprehensive lessons",
-      "10 hands-on programming projects",
-      "Interactive coding exercises",
-      "Lifetime access to content",
-      "Community support"
-    ]
-  };
-
-  const handleBack = () => {
-    navigate('/courses');
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.button
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          onClick={handleBack}
-          className="mb-6 flex items-center gap-2 text-primary hover:text-secondary transition-colors"
-        >
-          <FaArrowLeft />
-          Back to Courses
-        </motion.button>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8"
-        >
-          <div className="mb-6">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              {courseDetails.name}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              by {courseDetails.instructor}
-            </p>
+tm = TaskManager()
+tm.add_task("Buy groceries", "Milk, bread, eggs", "high")
+tm.add_task("Study Python", "Complete OOP chapter", "medium")
+tm.complete_task("Buy groceries")
+tm.list_tasks()`}
+            </pre>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
-            {courseDetails.fullDescription}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            {courseDetails.features.map((feature, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <FaFileAlt className="text-secondary" />
-                <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
-        >
-          <div className="border-b border-gray-200 dark:border-gray-700">
-            <nav className="flex space-x-8 px-8">
-              <button 
-                onClick={() => setActiveTab('syllabus')}
-                className={`flex items-center gap-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                  activeTab === 'syllabus' 
-                    ? 'border-primary text-primary' 
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <FaBook />
-                Syllabus
-              </button>
-              <button 
-                onClick={() => setActiveTab('examples')}
-                className={`flex items-center gap-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                  activeTab === 'examples' 
-                    ? 'border-primary text-primary' 
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <FaCode />
-                Code Examples
-              </button>
-            </nav>
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Project 2: Simple Calculator</h3>
+            <pre className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto mb-6">
+{`class Calculator:
+    def __init__(self):
+        self.history = []
+    
+    def add(self, a, b):
+        result = a + b
+        self.history.append(f"{a} + {b} = {result}")
+        return result
+    
+    def subtract(self, a, b):
+        result = a - b
+        self.history.append(f"{a} - {b} = {result}")
+        return result
+    
+    def multiply(self, a, b):
+        result = a * b
+        self.history.append(f"{a} * {b} = {result}")
+        return result
+    
+    def divide(self, a, b):
+        if b == 0:
+            raise ValueError("Cannot divide by zero")
+        result = a / b
+        self.history.append(f"{a} / {b} = {result}")
+        return result
+    
+    def power(self, a, b):
+        result = a ** b
+        self.history.append(f"{a} ^ {b} = {result}")
+        return result
+    
+    def show_history(self):
+        if not self.history:
+            print("No calculations yet.")
+        else:
+            print("Calculation History:")
+            for calculation in self.history:
+                print(f"  {calculation}")
+    
+    def clear_history(self):
+        self.history.clear()
+        print("History cleared.")
+
+def main():
+    calc = Calculator()
+    
+    while True:
+        print("\n=== Simple Calculator ===")
+        print("1. Add")
+        print("2. Subtract")
+        print("3. Multiply")
+        print("4. Divide")
+        print("5. Power")
+        print("6. Show History")
+        print("7. Clear History")
+        print("8. Exit")
+        
+        choice = input("Choose operation (1-8): ")
+        
+        if choice == '8':
+            print("Goodbye!")
+            break
+        elif choice == '6':
+            calc.show_history()
+        elif choice == '7':
+            calc.clear_history()
+        elif choice in ['1', '2', '3', '4', '5']:
+            try:
+                a = float(input("Enter first number: "))
+                b = float(input("Enter second number: "))
+                
+                if choice == '1':
+                    result = calc.add(a, b)
+                elif choice == '2':
+                    result = calc.subtract(a, b)
+                elif choice == '3':
+                    result = calc.multiply(a, b)
+                elif choice == '4':
+                    result = calc.divide(a, b)
+                elif choice == '5':
+                    result = calc.power(a, b)
+                
+                print(f"Result: {result}")
+            except ValueError as e:
+                print(f"Error: {e}")
+        else:
+            print("Invalid choice!")
+
+if __name__ == "__main__":
+    main()`}
+            </pre>
           </div>
+        </section>
+
+        {/* Quiz & Assessment */}
+        <section id="quiz" className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-3xl font-bold mb-6">15. Quiz & Assessment</h2>
           
-          <div className="p-8">
-            {activeTab === 'syllabus' && (
-              <div className="space-y-6">
-                {courseDetails.syllabus.map((week, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="border border-gray-200 dark:border-gray-700 rounded-lg p-6"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        Week {week.week}: {week.title}
-                      </h4>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <h5 className="font-semibold text-gray-800 dark:text-gray-200 mb-3">Topics Covered:</h5>
-                        <ul className="space-y-2">
-                          {week.topics.map((topic, topicIndex) => (
-                            <li key={topicIndex} className="flex items-start gap-2">
-                              <FaClipboardList className="text-primary mt-1 text-sm flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300 text-sm">{topic}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h5 className="font-semibold text-gray-800 dark:text-gray-200 mb-3">Practical Exercises:</h5>
-                        <ul className="space-y-2">
-                          {week.practicals.map((practical, practicalIndex) => (
-                            <li key={practicalIndex} className="flex items-start gap-2">
-                              <FaCogs className="text-secondary mt-1 text-sm flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300 text-sm">{practical}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-blue-700">Quick Quiz Questions</h3>
             
-            {activeTab === 'examples' && (
-              <div className="space-y-6">
-                {courseDetails.syllabus.map((week, weekIndex) => (
-                  week.examples && (
-                    <div key={weekIndex} className="mb-8">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                        Week {week.week}: {week.title}
-                      </h3>
-                      <div className="space-y-4">
-                        {week.examples.map((example, exampleIndex) => (
-                          <motion.div
-                            key={exampleIndex}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
-                          >
-                            <div 
-                              className="bg-gray-50 dark:bg-gray-700 p-4 cursor-pointer flex items-center justify-between"
-                              onClick={() => setExpandedExample(
-                                expandedExample === `${weekIndex}-${exampleIndex}` 
-                                  ? null 
-                                  : `${weekIndex}-${exampleIndex}`
-                              )}
-                            >
-                              <div className="flex items-center gap-3">
-                                <FaCode className="text-primary" />
-                                <h4 className="font-semibold text-gray-900 dark:text-white">
-                                  {example.title}
-                                </h4>
-                              </div>
-                              {expandedExample === `${weekIndex}-${exampleIndex}` ? 
-                                <FaChevronUp className="text-gray-500" /> : 
-                                <FaChevronDown className="text-gray-500" />
-                              }
-                            </div>
-                            
-                            {expandedExample === `${weekIndex}-${exampleIndex}` && (
-                              <div className="p-4">
-                                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                  {example.explanation}
-                                </p>
-                                <div className="bg-gray-900 rounded-lg overflow-hidden">
-                                  <div className="flex items-center justify-between bg-gray-800 px-4 py-2">
-                                    <span className="text-gray-300 text-sm font-mono">Python Code</span>
-                                    <button 
-                                      onClick={() => navigator.clipboard.writeText(example.code)}
-                                      className="text-gray-400 hover:text-white transition-colors"
-                                      title="Copy code"
-                                    >
-                                      <FaCopy />
-                                    </button>
-                                  </div>
-                                  <pre className="p-4 text-sm text-gray-100 overflow-x-auto">
-                                    <code>{example.code}</code>
-                                  </pre>
-                                </div>
-                              </div>
-                            )}
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  )
-                ))}
+            <div className="space-y-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Question 1: What will this code output?</h4>
+                <pre className="bg-gray-800 text-green-400 p-2 rounded text-sm mb-2">
+{`x = [1, 2, 3]
+y = x
+y.append(4)
+print(x)`}
+                </pre>
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-blue-600">Show Answer</summary>
+                  <p className="mt-2 text-gray-700">[1, 2, 3, 4] - Both x and y reference the same list object.</p>
+                </details>
               </div>
-            )}
+              
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Question 2: What's the difference between '==' and 'is'?</h4>
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-green-600">Show Answer</summary>
+                  <p className="mt-2 text-gray-700">'==' compares values, 'is' compares object identity (memory location).</p>
+                </details>
+              </div>
+              
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Question 3: How do you handle multiple exceptions?</h4>
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-purple-600">Show Answer</summary>
+                  <div className="mt-2 text-gray-700">
+                    <p>Multiple except blocks or tuple of exceptions:</p>
+                    <pre className="bg-gray-800 text-green-400 p-2 rounded mt-1">
+{`try:
+    # code
+except (ValueError, TypeError) as e:
+    # handle both`}
+                    </pre>
+                  </div>
+                </details>
+              </div>
+            </div>
           </div>
-        </motion.div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-green-700">Coding Challenges</h3>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Challenge: Fibonacci Sequence</h4>
+                <p className="text-sm text-gray-700 mb-2">Write a function to generate the first n Fibonacci numbers.</p>
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-blue-600">Show Solution</summary>
+                  <pre className="bg-gray-800 text-green-400 p-2 rounded text-xs mt-2">
+{`def fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    elif n == 2:
+        return [0, 1]
+    
+    fib = [0, 1]
+    for i in range(2, n):
+        fib.append(fib[i-1] + fib[i-2])
+    return fib
+
+print(fibonacci(10))  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]`}
+                  </pre>
+                </details>
+              </div>
+              
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Challenge: Palindrome Checker</h4>
+                <p className="text-sm text-gray-700 mb-2">Check if a string is a palindrome (ignoring spaces and case).</p>
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-blue-600">Show Solution</summary>
+                  <pre className="bg-gray-800 text-green-400 p-2 rounded text-xs mt-2">
+{`def is_palindrome(s):
+    # Remove spaces and convert to lowercase
+    cleaned = ''.join(s.split()).lower()
+    return cleaned == cleaned[::-1]
+
+print(is_palindrome("A man a plan a canal Panama"))  # True
+print(is_palindrome("race a car"))  # False`}
+                  </pre>
+                </details>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Course Completion */}
+        <div className="text-center py-8">
+          <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-8 rounded-lg mb-8">
+            <h2 className="text-3xl font-bold mb-4">🎉 Congratulations!</h2>
+            <p className="text-xl mb-6">You've completed the Python Programming Mastery course!</p>
+            <div className="flex justify-center gap-4 flex-wrap">
+              <Link to="/courses" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                ← Back to Courses
+              </Link>
+              <Link to="/advanced-python" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition-colors">
+                Advanced Python →
+              </Link>
+              <Link to="/python-projects" className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-400 transition-colors">
+                More Projects
+              </Link>
+            </div>
+          </div>
+        </div>
+          </main>
+        </div>
       </div>
     </div>
   );
