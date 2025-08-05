@@ -11,6 +11,8 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     { name: 'About', path: '/about' },
     { name: 'Projects', path: '/projects' },
     { name: 'Courses', path: '/courses' },
+    { name: 'Compiler', path: '/compiler' },
+    { name: 'AI Agent', path: '/ai-agent' },
     { name: 'Contact', path: '/contact' }
   ];
 

@@ -15,6 +15,8 @@ import ArtificialIntelligence from './pages/ArtificialIntelligence';
 import PythonProgramming from './pages/PythonProgramming';
 import ReactJS from './pages/ReactJS';
 import CSharpProgramming from './pages/CSharpProgramming';
+import Compiler from './pages/Compiler';
+import AIAgent from './pages/AIAgent';
 import NodeJS from './pages/NodeJS';
 import HTMLCSSMastery from './pages/HTMLCSSMastery';
 import JavaScriptFundamentals from './pages/JavaScriptFundamentals';
@@ -74,6 +76,8 @@ function App() {
           <Route path="/python-programming" element={<PythonProgramming />} />
           <Route path="/react-js" element={<ReactJS />} />
           <Route path="/csharp-programming" element={<CSharpProgramming />} />
+          <Route path="/compiler" element={<Compiler />} />
+          <Route path="/ai-agent" element={<AIAgent />} />
           <Route path="/nodejs" element={<NodeJS />} />
           <Route path="/html-css-mastery" element={<HTMLCSSMastery />} />
           <Route path="/javascript-fundamentals" element={<JavaScriptFundamentals />} />
