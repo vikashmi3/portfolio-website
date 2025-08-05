@@ -10,7 +10,7 @@ const winston = require('winston');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const mongoURI = process.env.MONGO_URI;
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/portfolio';
 
 // Logger Setup
 const logger = winston.createLogger({
@@ -22,11 +22,25 @@ const logger = winston.createLogger({
   ]
 });
 
-// MongoDB connection
+// MongoDB connection with better error handling
+if (!process.env.MONGO_URI) {
+  logger.warn('MONGO_URI not found in environment variables, using default: mongodb://localhost:27017/portfolio');
+}
+
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => logger.info('MongoDB connected')).catch(err => logger.error('MongoDB connection error:', err));
+})
+.then(() => {
+  logger.info('MongoDB connected successfully');
+  console.log('✅ Database connected:', mongoURI);
+})
+.catch(err => {
+  logger.error('MongoDB connection error:', err);
+  console.error('❌ Database connection failed:', err.message);
+  console.error('Please check your MONGO_URI in the .env file');
+  // Don't exit the server, just log the error
+});
 
 // Middleware
 app.use(cors());
