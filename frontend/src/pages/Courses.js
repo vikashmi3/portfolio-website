@@ -592,8 +592,98 @@ const Courses = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-16">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      <div className="min-h-screen pt-20 pb-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Loading Header */}
+          <div className="text-center mb-12">
+            <div className="h-12 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 rounded-lg mb-4 animate-pulse"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg max-w-2xl mx-auto animate-pulse"></div>
+          </div>
+
+          {/* Loading Search Bar */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-12">
+            <div className="flex flex-col lg:flex-row gap-4 items-center">
+              <div className="flex-1 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"></div>
+              <div className="w-48 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"></div>
+              <div className="w-40 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"></div>
+            </div>
+          </div>
+
+          {/* Loading Animation Center */}
+          <div className="flex flex-col items-center justify-center py-16">
+            {/* Animated Logo/Icon */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4 animate-pulse">
+                <FaGraduationCap className="text-4xl text-white" />
+              </div>
+              <div className="absolute inset-0 w-24 h-24 border-4 border-blue-500 rounded-full animate-spin border-t-transparent"></div>
+            </div>
+
+            {/* Loading Text */}
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Loading Courses</h2>
+              <p className="text-gray-600 dark:text-gray-300">Preparing your learning journey...</p>
+            </div>
+
+            {/* Progress Dots */}
+            <div className="flex space-x-2 mb-8">
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"
+                  style={{ animationDelay: `${i * 0.2}s` }}
+                ></div>
+              ))}
+            </div>
+
+            {/* Loading Stats */}
+            <div className="grid grid-cols-3 gap-8 text-center">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-2 animate-pulse">
+                  <FaCode className="text-blue-600 dark:text-blue-400" />
+                </div>
+                <span className="text-sm text-gray-600 dark:text-gray-300">Programming</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-2 animate-pulse">
+                  <FaDatabase className="text-green-600 dark:text-green-400" />
+                </div>
+                <span className="text-sm text-gray-600 dark:text-gray-300">Databases</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-2 animate-pulse">
+                  <FaBrain className="text-purple-600 dark:text-purple-400" />
+                </div>
+                <span className="text-sm text-gray-600 dark:text-gray-300">AI & ML</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Loading Course Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-pulse">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded flex-1"></div>
+                </div>
+                <div className="space-y-3 mb-4">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                </div>
+                <div className="flex gap-2 mb-4">
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-16"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded flex-1"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

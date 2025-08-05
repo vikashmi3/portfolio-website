@@ -31,28 +31,30 @@ const PythonProgramming = () => {
             <div className="inline-flex items-center bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-medium mb-6">
               🐍 Most Popular Course
             </div>
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
               Python Programming
             </h1>
-            <h2 className="text-2xl md:text-3xl font-light mb-8 text-blue-100">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-light mb-8 text-blue-100">
               Master Python from Zero to Hero
             </h2>
-            <p className="text-xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed px-4">
               Learn Python programming with hands-on projects, real-world examples, and comprehensive coverage from basics to advanced concepts.
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <Link to="/courses" className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                <span className="flex items-center">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-8 px-4">
+              <Link to="/courses" className="group bg-white text-blue-600 px-6 sm:px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <span className="flex items-center justify-center">
                   <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
                   </svg>
-                  Back to Courses
+                  <span className="sm:inline hidden">Back to Courses</span>
+                  <span className="sm:hidden">Back</span>
                 </span>
               </Link>
-              <Link to="#introduction" className="group bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                <span className="flex items-center">
-                  Start Learning
+              <Link to="#introduction" className="group bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 sm:px-8 py-4 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <span className="flex items-center justify-center">
+                  <span className="sm:inline hidden">Start Learning</span>
+                  <span className="sm:hidden">Start</span>
                   <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                   </svg>
@@ -60,18 +62,18 @@ const PythonProgramming = () => {
               </Link>
             </div>
             
-            <div className="flex justify-center space-x-8 text-blue-200">
+            <div className="flex justify-center space-x-4 sm:space-x-8 text-blue-200 px-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">15</div>
-                <div className="text-sm">Chapters</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">15</div>
+                <div className="text-xs sm:text-sm">Chapters</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">5</div>
-                <div className="text-sm">Projects</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">5</div>
+                <div className="text-xs sm:text-sm">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">50+</div>
-                <div className="text-sm">Examples</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">50+</div>
+                <div className="text-xs sm:text-sm">Examples</div>
               </div>
             </div>
           </div>
@@ -80,50 +82,50 @@ const PythonProgramming = () => {
 
       {/* Table of Contents */}
       <div className="container mx-auto px-4 py-8">
-        <div className="flex gap-8">
-          <aside className="hidden lg:block w-80 sticky top-8 h-fit">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <aside className="lg:w-80 lg:sticky lg:top-8 lg:h-fit order-2 lg:order-1">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-gray-200">
+              <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 Course Navigation
               </h3>
-              <nav className="space-y-2">
-                <a href="#introduction" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  <span className="font-medium">01.</span> Introduction
+              <nav className="grid grid-cols-2 lg:grid-cols-1 gap-1 lg:gap-2">
+                <a href="#introduction" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">01.</span> <span className="hidden sm:inline">Introduction</span><span className="sm:hidden">Intro</span>
                 </a>
-                <a href="#setup" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  <span className="font-medium">02.</span> Environment Setup
+                <a href="#setup" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">02.</span> <span className="hidden sm:inline">Environment Setup</span><span className="sm:hidden">Setup</span>
                 </a>
-                <a href="#syntax" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  <span className="font-medium">03.</span> Basic Syntax
+                <a href="#syntax" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">03.</span> <span className="hidden sm:inline">Basic Syntax</span><span className="sm:hidden">Syntax</span>
                 </a>
-                <a href="#variables" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  <span className="font-medium">04.</span> Variables & Data Types
+                <a href="#variables" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">04.</span> <span className="hidden sm:inline">Variables & Data Types</span><span className="sm:hidden">Variables</span>
                 </a>
-                <a href="#operators" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-colors">
+                <a href="#operators" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   <span className="font-medium">05.</span> Operators
                 </a>
-                <a href="#control" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  <span className="font-medium">06.</span> Control Structures
+                <a href="#control" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">06.</span> <span className="hidden sm:inline">Control Structures</span><span className="sm:hidden">Control</span>
                 </a>
-                <a href="#functions" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                <a href="#functions" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   <span className="font-medium">07.</span> Functions
                 </a>
-                <a href="#data-structures" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  <span className="font-medium">08.</span> Data Structures
+                <a href="#data-structures" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                  <span className="font-medium">08.</span> <span className="hidden sm:inline">Data Structures</span><span className="sm:hidden">Data</span>
                 </a>
-                <a href="#oop" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                <a href="#oop" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   <span className="font-medium">09.</span> OOP
                 </a>
-                <a href="#challenges" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                <a href="#challenges" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   <span className="font-medium">10.</span> Challenges
                 </a>
-                <a href="#projects" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                <a href="#projects" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   <span className="font-medium">11.</span> Projects
                 </a>
-                <a href="#quiz" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                <a href="#quiz" className="block px-2 lg:px-3 py-2 text-xs lg:text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   <span className="font-medium">12.</span> Quiz
                 </a>
               </nav>
@@ -138,21 +140,21 @@ const PythonProgramming = () => {
             </div>
           </aside>
           
-          <main className="flex-1 max-w-4xl">
-        <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-xl p-8 mb-12 border border-blue-100">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Course Contents</h2>
-            <p className="text-gray-600">Complete roadmap to Python mastery</p>
+          <main className="flex-1 max-w-4xl order-1 lg:order-2">
+        <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-8 lg:mb-12 border border-blue-100">
+          <div className="text-center mb-6 lg:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Course Contents</h2>
+            <p className="text-sm sm:text-base text-gray-600">Complete roadmap to Python mastery</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg text-gray-800">Fundamentals</h3>
+                <h3 className="font-bold text-base sm:text-lg text-gray-800">Fundamentals</h3>
               </div>
               <ul className="space-y-3">
                 <li><a href="#introduction" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors duration-200 group">
@@ -178,14 +180,14 @@ const PythonProgramming = () => {
               </ul>
             </div>
             
-            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-green-500">
+            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-green-500">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg text-gray-800">Core Concepts</h3>
+                <h3 className="font-bold text-base sm:text-lg text-gray-800">Core Concepts</h3>
               </div>
               <ul className="space-y-3">
                 <li><a href="#control" className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200 group">
@@ -211,14 +213,14 @@ const PythonProgramming = () => {
               </ul>
             </div>
             
-            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-purple-500">
+            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-purple-500">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                  <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg text-gray-800">Advanced & Projects</h3>
+                <h3 className="font-bold text-base sm:text-lg text-gray-800">Advanced & Projects</h3>
               </div>
               <ul className="space-y-3">
                 <li><a href="#exceptions" className="flex items-center text-gray-700 hover:text-purple-600 transition-colors duration-200 group">
@@ -247,14 +249,14 @@ const PythonProgramming = () => {
         </div>
 
         {/* Introduction */}
-            <section id="introduction" className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-gray-200">
-              <div className="flex items-center mb-6">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                  <span className="text-blue-600 font-bold text-lg">01</span>
+            <section id="introduction" className="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-6 lg:mb-8 border border-gray-200">
+              <div className="flex items-center mb-4 lg:mb-6">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                  <span className="text-blue-600 font-bold text-sm sm:text-lg">01</span>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">Introduction to Python</h2>
-                  <p className="text-sm text-gray-500">Get started with Python basics</p>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Introduction to Python</h2>
+                  <p className="text-xs sm:text-sm text-gray-500">Get started with Python basics</p>
                 </div>
               </div>
 
@@ -308,8 +310,8 @@ Readability counts.`}
         </section>
 
         {/* Environment Setup */}
-        <section id="setup" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">2. Environment Setup</h2>
+        <section id="setup" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">2. Environment Setup</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Installing Python</h3>
@@ -384,8 +386,8 @@ print("Welcome to Python Programming!")
         </section>
 
         {/* Basic Syntax */}
-        <section id="syntax" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">3. Basic Syntax</h2>
+        <section id="syntax" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">3. Basic Syntax</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Python Syntax Rules</h3>
@@ -487,8 +489,8 @@ def greet(name):
         </section>
 
         {/* Variables & Data Types */}
-        <section id="variables" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">4. Variables & Data Types</h2>
+        <section id="variables" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">4. Variables & Data Types</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Variables</h3>
@@ -611,8 +613,8 @@ print(text[-11:])         # Programming`}
         </section>
 
         {/* Operators */}
-        <section id="operators" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">5. Operators</h2>
+        <section id="operators" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">5. Operators</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div>
@@ -700,8 +702,8 @@ print('grape' not in fruits)  # True`}
         </section>
 
         {/* Control Structures */}
-        <section id="control" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">6. Control Structures</h2>
+        <section id="control" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">6. Control Structures</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Conditional Statements</h3>
@@ -842,8 +844,8 @@ def nested_loop_example():
         </section>
 
         {/* Functions */}
-        <section id="functions" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">7. Functions</h2>
+        <section id="functions" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">7. Functions</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Function Basics</h3>
@@ -985,8 +987,8 @@ result = slow_function()  # slow_function took 1.0001 seconds`}
         </section>
 
         {/* Data Structures */}
-        <section id="data-structures" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">8. Data Structures</h2>
+        <section id="data-structures" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">8. Data Structures</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Lists</h3>
@@ -1107,8 +1109,8 @@ print(even_squares)  # {0, 4, 16, 36, 64}`}
         </section>
 
         {/* Object-Oriented Programming */}
-        <section id="oop" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">9. Object-Oriented Programming</h2>
+        <section id="oop" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">9. Object-Oriented Programming</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Classes and Objects</h3>
@@ -1153,8 +1155,8 @@ person1.have_birthday()  # Happy birthday! Alice is now 26`}
         </section>
 
         {/* Mini Challenges */}
-        <section id="challenges" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">13. Mini Challenges</h2>
+        <section id="challenges" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">13. Mini Challenges</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-blue-50 p-4 rounded-lg">
@@ -1203,8 +1205,8 @@ print(result)  # {'hello': 2, 'world': 1, 'python': 1}`}
         </section>
 
         {/* Final Projects */}
-        <section id="projects" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">14. Final Projects</h2>
+        <section id="projects" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">14. Final Projects</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Project 1: Task Manager</h3>
@@ -1359,8 +1361,8 @@ if __name__ == "__main__":
         </section>
 
         {/* Quiz & Assessment */}
-        <section id="quiz" className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-3xl font-bold mb-6">15. Quiz & Assessment</h2>
+        <section id="quiz" className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 lg:mb-6">15. Quiz & Assessment</h2>
           
           <div className="mb-8">
             <h3 className="text-2xl font-semibold mb-4 text-blue-700">Quick Quiz Questions</h3>
@@ -1455,19 +1457,22 @@ print(is_palindrome("race a car"))  # False`}
         </section>
 
         {/* Course Completion */}
-        <div className="text-center py-8">
-          <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-8 rounded-lg mb-8">
-            <h2 className="text-3xl font-bold mb-4">🎉 Congratulations!</h2>
-            <p className="text-xl mb-6">You've completed the Python Programming Mastery course!</p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              <Link to="/courses" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                ← Back to Courses
+        <div className="text-center py-6 lg:py-8">
+          <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 sm:p-6 lg:p-8 rounded-lg mb-6 lg:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4">🎉 Congratulations!</h2>
+            <p className="text-lg sm:text-xl mb-6">You've completed the Python Programming Mastery course!</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 flex-wrap">
+              <Link to="/courses" className="bg-white text-blue-600 px-4 sm:px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                <span className="sm:inline hidden">← Back to Courses</span>
+                <span className="sm:hidden">← Courses</span>
               </Link>
-              <Link to="/advanced-python" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition-colors">
-                Advanced Python →
+              <Link to="/advanced-python" className="bg-blue-500 text-white px-4 sm:px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition-colors">
+                <span className="sm:inline hidden">Advanced Python →</span>
+                <span className="sm:hidden">Advanced →</span>
               </Link>
-              <Link to="/python-projects" className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-400 transition-colors">
-                More Projects
+              <Link to="/python-projects" className="bg-green-500 text-white px-4 sm:px-6 py-3 rounded-lg font-semibold hover:bg-green-400 transition-colors">
+                <span className="sm:inline hidden">More Projects</span>
+                <span className="sm:hidden">Projects</span>
               </Link>
             </div>
           </div>

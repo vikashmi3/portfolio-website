@@ -31,29 +31,29 @@ const HTMLCSSMastery = () => {
             <div className="inline-flex items-center bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-medium mb-6">
               🌐 Foundation Course
             </div>
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-orange-200 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-orange-200 bg-clip-text text-transparent">
               HTML & CSS Mastery
             </h1>
-            <h2 className="text-2xl md:text-3xl font-light mb-8 text-orange-100">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light mb-8 text-orange-100">
               Build Beautiful Web Pages from Scratch
             </h2>
-            <p className="text-xl text-orange-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-orange-100 mb-10 max-w-3xl mx-auto leading-relaxed px-4">
               Master HTML structure and CSS styling with comprehensive examples, live code demonstrations, and real-world projects.
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <Link to="/courses" className="group bg-white text-orange-600 px-8 py-4 rounded-xl font-semibold hover:bg-orange-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                <span className="flex items-center">
-                  <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-8 px-4">
+              <Link to="/courses" className="group bg-white text-orange-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-orange-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center">
+                <span className="flex items-center justify-center">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
                   </svg>
                   Back to Courses
                 </span>
               </Link>
-              <Link to="#introduction" className="group bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                <span className="flex items-center">
+              <Link to="#introduction" className="group bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center">
+                <span className="flex items-center justify-center">
                   Start Learning
-                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                   </svg>
                 </span>
@@ -70,7 +70,7 @@ const HTMLCSSMastery = () => {
                 <div className="text-sm">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">5</div>
+                <div className="text-2xl font-bold text-white">2</div>
                 <div className="text-sm">Projects</div>
               </div>
             </div>
@@ -79,18 +79,18 @@ const HTMLCSSMastery = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="flex gap-8">
-          <aside className="hidden lg:block w-80 sticky top-8 h-fit">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <aside className="lg:w-80 lg:sticky lg:top-8 lg:h-fit order-2 lg:order-1">
+            <div className="bg-white rounded-xl shadow-lg p-4 lg:p-6 border border-gray-200">
+              <h3 className="text-base lg:text-lg font-bold text-gray-800 mb-4 flex items-center">
+                <svg className="w-4 h-4 lg:w-5 lg:h-5 mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 Course Navigation
               </h3>
-              <nav className="space-y-2 max-h-96 overflow-y-auto">
-                <a href="#introduction" className="block px-3 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 rounded-lg transition-colors">
-                  <span className="font-medium">01.</span> Introduction to HTML
+              <nav className="grid grid-cols-2 lg:grid-cols-1 gap-1 lg:space-y-2 lg:max-h-96 lg:overflow-y-auto">
+                <a href="#introduction" className="block px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 rounded-lg transition-colors">
+                  <span className="font-medium">01.</span> <span className="hidden sm:inline">Introduction to</span> HTML
                 </a>
                 <a href="#basic-tags" className="block px-3 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-700 rounded-lg transition-colors">
                   <span className="font-medium">02.</span> Basic HTML Tags
@@ -185,16 +185,16 @@ const HTMLCSSMastery = () => {
             </div>
           </aside>
           
-          <main className="flex-1 max-w-4xl">
+          <main className="flex-1 max-w-4xl order-1 lg:order-2">
             {/* Introduction to HTML */}
-            <section id="introduction" className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-gray-200">
+            <section id="introduction" className="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-8 border border-gray-200">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
                   <span className="text-orange-600 font-bold text-lg">01</span>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">Introduction to HTML</h2>
-                  <p className="text-sm text-gray-500">Learn the fundamentals of HTML</p>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Introduction to HTML</h2>
+                  <p className="text-xs sm:text-sm text-gray-500">Learn the fundamentals of HTML</p>
                 </div>
               </div>
 
@@ -930,7 +930,7 @@ This text is on a new line.</p>
                       </article>
                     </main>
                     <footer className="border-t pt-4 mt-4 text-center text-sm text-gray-600">
-                      <p>&copy; 2024 My Website</p>
+                      <p>&copy; 2025 My Website</p>
                     </footer>
                   </div>
                 </div>
@@ -5079,8 +5079,8 @@ body {
                     <div>Practical</div>
                   </div>
                 </div>
-                <div className="flex justify-center gap-4 flex-wrap">
-                  <Link to="/courses" className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-orange-50 transition-colors">
+                <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 flex-wrap px-4">
+                  <Link to="/courses" className="bg-white text-orange-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-orange-50 transition-colors text-center text-sm sm:text-base">
                     ← Back to Courses
                   </Link>
                   <button 
@@ -5105,18 +5105,21 @@ body {
                       document.body.removeChild(a);
                       URL.revokeObjectURL(url);
                     }}
-                    className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-400 transition-colors flex items-center gap-2"
+                    className="bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-400 transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"></path>
                     </svg>
-                    Download Course
+                    <span className="hidden sm:inline">Download Course</span>
+                    <span className="sm:hidden">Download</span>
                   </button>
-                  <Link to="/javascript-fundamentals" className="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-400 transition-colors">
-                    JavaScript Next →
+                  <Link to="/javascript-fundamentals" className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-orange-400 transition-colors text-center text-sm sm:text-base">
+                    <span className="hidden sm:inline">JavaScript Next →</span>
+                    <span className="sm:hidden">JavaScript →</span>
                   </Link>
-                  <Link to="/css-advanced" className="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-400 transition-colors">
-                    Advanced CSS
+                  <Link to="/css-advanced" className="bg-red-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-red-400 transition-colors text-center text-sm sm:text-base">
+                    <span className="hidden sm:inline">Advanced CSS</span>
+                    <span className="sm:hidden">Advanced</span>
                   </Link>
                 </div>
               </div>
